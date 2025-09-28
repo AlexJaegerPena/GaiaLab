@@ -1,0 +1,140 @@
+[
+  {
+    "id": 1,
+    "text": "How do you mainly commute to work/daily?",
+    "category": "mobility",
+    "answers": [
+      { "id": 1, "text": "Car (alone)", "factor": 2200.0, "type": "ABSOLUTE" },
+      { "id": 2, "text": "Car (carpool)", "factor": 1100.0, "type": "ABSOLUTE" },
+      { "id": 3, "text": "Public transport", "factor": 400.0, "type": "ABSOLUTE" },
+      { "id": 4, "text": "Bicycle/walking", "factor": 0.0, "type": "ABSOLUTE" },
+      { "id": 5, "text": "Home office/not employed", "factor": 200.0, "type": "ABSOLUTE" }
+    ]
+  },
+  {
+    "id": 2,
+    "text": "How much do you drive per year? (Total)",
+    "category": "mobility",
+    "answers": [
+      { "id": 1, "text": "Little (0-5,000 km)", "factor": 0.8, "type": "MULTIPLIER" },
+      { "id": 2, "text": "Normal (5,000-15,000 km)", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 3, "text": "Much (15,000-25,000 km)", "factor": 1.6, "type": "MULTIPLIER" },
+      { "id": 4, "text": "Very much (over 25,000 km)", "factor": 2.2, "type": "MULTIPLIER" }
+    ]
+  },
+  {
+    "id": 3,
+    "text": "What type of car do you mainly drive?",
+    "category": "mobility",
+    "answers": [
+      { "id": 1, "text": "Small/efficient gasoline", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 2, "text": "Large gasoline/SUV", "factor": 1.4, "type": "MULTIPLIER" },
+      { "id": 3, "text": "Diesel vehicle", "factor": 1.1, "type": "MULTIPLIER" },
+      { "id": 4, "text": "Hybrid", "factor": 0.7, "type": "MULTIPLIER" },
+      { "id": 5, "text": "Electric car", "factor": 0.3, "type": "MULTIPLIER" }
+    ]
+  },
+  {
+    "id": 4,
+    "text": "How often do you fly per year?",
+    "category": "mobility",
+    "answers": [
+      { "id": 1, "text": "Never", "factor": 0.0, "type": "ABSOLUTE" },
+      { "id": 2, "text": "1-2 short flights", "factor": 800.0, "type": "ABSOLUTE" },
+      { "id": 3, "text": "1 long flight", "factor": 2500.0, "type": "ABSOLUTE" },
+      { "id": 4, "text": "Several flights/year", "factor": 4000.0, "type": "ABSOLUTE" },
+      { "id": 5, "text": "Frequent flyer (>5 flights)", "factor": 8000.0, "type": "ABSOLUTE" }
+    ]
+  },
+  {
+    "id": 5,
+    "text": "How do you live?",
+    "category": "housing",
+    "answers": [
+      { "id": 1, "text": "Small apartment (<50m²)", "factor": 1200.0, "type": "ABSOLUTE" },
+      { "id": 2, "text": "Normal apartment (50-100m²)", "factor": 2400.0, "type": "ABSOLUTE" },
+      { "id": 3, "text": "Large apartment/house (100-150m²)", "factor": 3600.0, "type": "ABSOLUTE" },
+      { "id": 4, "text": "Large house (>150m²)", "factor": 5400.0, "type": "ABSOLUTE" }
+    ]
+  },
+  {
+    "id": 6,
+    "text": "How many people live in your household?",
+    "category": "housing",
+    "answers": [
+      { "id": 1, "text": "1 person", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 2, "text": "2 people", "factor": 0.7, "type": "MULTIPLIER" },
+      { "id": 3, "text": "3 people", "factor": 0.5, "type": "MULTIPLIER" },
+      { "id": 4, "text": "4+ people", "factor": 0.4, "type": "MULTIPLIER" }
+    ]
+  },
+  {
+    "id": 7,
+    "text": "How do you heat and what electricity do you use?",
+    "category": "housing",
+    "answers": [
+      { "id": 1, "text": "Gas/oil + regular electricity", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 2, "text": "Gas/oil + green electricity", "factor": 0.8, "type": "MULTIPLIER" },
+      { "id": 3, "text": "Heat pump + regular electricity", "factor": 0.7, "type": "MULTIPLIER" },
+      { "id": 4, "text": "Heat pump + green electricity", "factor": 0.4, "type": "MULTIPLIER" },
+      { "id": 5, "text": "District heating + regular electricity", "factor": 0.9, "type": "MULTIPLIER" },
+      { "id": 6, "text": "District heating + green electricity", "factor": 0.7, "type": "MULTIPLIER" }
+    ]
+  },
+  {
+    "id": 8,
+    "text": "How do you eat?",
+    "category": "nutrition",
+    "answers": [
+      { "id": 1, "text": "Lots of meat (daily)", "factor": 1800.0, "type": "ABSOLUTE" },
+      { "id": 2, "text": "Normal (3-4x/week meat)", "factor": 1400.0, "type": "ABSOLUTE" },
+      { "id": 3, "text": "Little meat (1-2x/week)", "factor": 1100.0, "type": "ABSOLUTE" },
+      { "id": 4, "text": "Vegetarian", "factor": 800.0, "type": "ABSOLUTE" },
+      { "id": 5, "text": "Vegan", "factor": 600.0, "type": "ABSOLUTE" }
+    ]
+  },
+  {
+    "id": 9,
+    "text": "How do you shop?",
+    "category": "nutrition",
+    "answers": [
+      { "id": 1, "text": "Mostly conventional, little regional", "factor": 1.2, "type": "MULTIPLIER" },
+      { "id": 2, "text": "Mixed", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 3, "text": "Often organic and regional", "factor": 0.8, "type": "MULTIPLIER" },
+      { "id": 4, "text": "Almost only organic and regional", "factor": 0.7, "type": "MULTIPLIER" }
+    ]
+  },
+  {
+    "id": 10,
+    "text": "How much do you buy (clothing, electronics, etc.)?",
+    "category": "consumption",
+    "answers": [
+      { "id": 1, "text": "Very little, use for long time", "factor": 400.0, "type": "ABSOLUTE" },
+      { "id": 2, "text": "Normal", "factor": 800.0, "type": "ABSOLUTE" },
+      { "id": 3, "text": "Lots of shopping", "factor": 1400.0, "type": "ABSOLUTE" },
+      { "id": 4, "text": "Very much, often new things", "factor": 2000.0, "type": "ABSOLUTE" }
+    ]
+  },
+  {
+    "id": 11,
+    "text": "Do you often buy used/second hand?",
+    "category": "consumption",
+    "answers": [
+      { "id": 1, "text": "Yes, often", "factor": 0.6, "type": "MULTIPLIER" },
+      { "id": 2, "text": "Sometimes", "factor": 0.8, "type": "MULTIPLIER" },
+      { "id": 3, "text": "Rarely", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 4, "text": "Never, only new", "factor": 1.2, "type": "MULTIPLIER" }
+    ]
+  },
+  {
+    "id": 12,
+    "text": "How long do you use your things?",
+    "category": "consumption",
+    "answers": [
+      { "id": 1, "text": "Very long (repair)", "factor": 0.7, "type": "MULTIPLIER" },
+      { "id": 2, "text": "Normal duration", "factor": 1.0, "type": "MULTIPLIER" },
+      { "id": 3, "text": "Not so long", "factor": 1.3, "type": "MULTIPLIER" },
+      { "id": 4, "text": "Short (often throw away)", "factor": 1.6, "type": "MULTIPLIER" }
+    ]
+  }
+]

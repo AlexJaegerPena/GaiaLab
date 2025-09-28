@@ -1,0 +1,51 @@
+Voraussetzungen Abschlussprojekt:
+- CO2 Tracker
+    - Fragen und Antwortmöglichkeiten in -> Room
+    - Antworten speichern in             -> Room
+- Navigation
+- Profil
+- API Anbindung
+- Repository
+- Daten in Room (Room)
+- Möglichkeit zum favorisieren (Room)
+    - Wenn wir favoritisieren, dann soll eine Notification angezeigt werden. (Notification)
+- Dao über Repository und DI bereitstellen (DI)
+- Fakenews bestehen aus (Intents)
+    - Titel
+    - Inhalt
+    - Link
+
+
+Aufgaben:
+- Imports
+- Room implementieren:                              -> data/local
+    - Model erstellen für Fragen                    -> data/model
+    - Dao erstellen für das Model                   -> data/local
+    - Database erstellen                            -> data/local
+    - Repository erstellen                          -> data/repository
+- ViewModel                                         -> viewmodels bzw. ui/feature
+- NotificationService erstellen                     -> service
+- Permissions im Manifest anpassen + abfragen       -> utils/object PermissionUtils
+    - AlertDialoge                                  -> ui/components bzw. common
+- DI:                                               -> di
+    - App                                           -> di
+    - AppModule                                     -> di
+- Screen:                                           -> ui/screens bzw. ui/feature
+    - List von FakeNews
+    - FakeNewsComponent                             -> ui/components bzw ui/feature/components
+
+screens/components/viewmodels
+feature                                             -> ui/feature/ screen+vm /components
+
+Reihenfolge:
+Imports                                             -> Leider schon fertig im Voraus
+Manifest anpassen                                   -> Fertig
+Models/Entities                                     -> Fertig
+Dao, falls room vorhanden                           -> Fertig
+Database, falls room vorhanden                      -> Fertig
+Repository                                          -> Fertig
+NotificationService                                 -> Fertig
+PermissionUtils                                     -> Fertig
+DI                                                  -> Fertig
+ViewModel                                           -> Fertig
+UI                                                  -> Fertig
