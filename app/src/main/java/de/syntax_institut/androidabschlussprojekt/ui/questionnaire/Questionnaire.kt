@@ -37,19 +37,19 @@ fun Questionnaire(
 
 
     Box(modifier = Modifier) {
-        QuestionItem(question = question)
-        Row(modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 30.dp)) {
+        QuestionItem(viewModel = viewModel, question = question)
+        Row(modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 130.dp).padding(horizontal = 70.dp)) {
             Image(
                 painter = painterResource(R.drawable.q_arrow_left),
                 contentDescription = "previous",
-                modifier = Modifier.clickable(onClick = { viewModel.previousQuestion()})
+                modifier = Modifier.clickable(onClick = { viewModel.previousQuestion()}).align(Alignment.Bottom)
 
             )
             Spacer(modifier = modifier.weight(1f))
             Image(
                 painter = painterResource(if (question.id == 12) { R.drawable.q_arrow_result} else { R.drawable.q_arrow_right}),
                 contentDescription = "next",
-                modifier = Modifier.clickable(onClick = { viewModel.nextQuestion()})
+                modifier = Modifier.clickable(onClick = { viewModel.nextQuestion()}).align(Alignment.Bottom)
 
             )
         }

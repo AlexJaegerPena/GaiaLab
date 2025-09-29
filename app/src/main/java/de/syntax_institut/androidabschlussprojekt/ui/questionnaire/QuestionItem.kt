@@ -1,7 +1,9 @@
 package de.syntax_institut.androidabschlussprojekt.ui.questionnaire
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,29 +13,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.Answer
 import de.syntax_institut.androidabschlussprojekt.data.model.FactorType
 import de.syntax_institut.androidabschlussprojekt.data.model.Question
 import de.syntax_institut.androidabschlussprojekt.data.model.QuestionCategory
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
+import kotlinx.coroutines.time.delay
 
+
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun QuestionItem(
     modifier: Modifier = Modifier,
+    viewModel: QuestionnaireViewModel,
     question: Question
 ) {
 
@@ -46,6 +50,8 @@ fun QuestionItem(
     }
 
     val bgImage = categoryEnum.bgImg
+
+
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -64,21 +70,7 @@ fun QuestionItem(
                 Box(modifier = modifier
                    .fillMaxWidth()
                    .padding(top = 10.dp)
-                   .drawBehind {
-                    val strokeWidth = 8f
-                    val path = Path().apply {
-                        moveTo(0f, 0f)
-                        quadraticBezierTo(size.width * 0.15f, -10f, size.width, 0f)
-                        quadraticBezierTo(size.width + 10f, size.height * 0.2f, size.width, size.height)
-                        quadraticBezierTo(size.width * 0.25f, size.height + 10f, 0f, size.height)
-                        quadraticBezierTo(-10f, size.height * 0.2f, 0f, 0f)
-                    }
-                    drawPath(
-                        path = path,
-                        color = Color.Black,
-                        style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
-                    )
-                },
+                   .comicBorder(),
                   contentAlignment = Alignment.TopCenter
                 ) {
                     Image(
@@ -96,10 +88,9 @@ fun QuestionItem(
                         Text(text = question.category,
                             modifier = Modifier.padding(vertical = 5.dp, horizontal = 20.dp))
                     }
-
                     Box(
                         modifier = Modifier
-                            .padding(top = 100.dp)
+                            .padding(top = 80.dp)
                             .height(150.dp)
                             .width(300.dp)
                             .background(Color.White)
@@ -109,16 +100,26 @@ fun QuestionItem(
                     Text(text = question.text,
                         modifier = Modifier.padding(20.dp))
                     }
-                    LazyColumn(modifier = Modifier.padding(top = 280.dp)) {
-                        items(question.answers) { answer ->
+                    LazyColumn(modifier = Modifier.padding(top = 250.dp)) {
+                        itemsIndexed(question.answers) { index, answer ->
                             Box(modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .height(50.dp)
                                 .width(260.dp)
-                                .comicBorder(),
-                                contentAlignment = Alignment.Center
+                                .comicBorder()
+                                .clickable(onClick = {
+                                    viewModel.selectAnswer(answer)
+                                    // delay(2000)
+                                     }
+                                ),
+                                contentAlignment = Alignment.CenterStart
                             ) {
                                 Text(answer.text)
+                                if (viewModel.selectedAnswerId.value == answer.id ) {
+                                    Image(
+                                        painter = painterResource(R.drawable.q_arrow_right),
+                                        contentDescription = "")
+                                }
                             }
                         }
                     }
@@ -134,6 +135,7 @@ fun QuestionItem(
 @Composable
 fun QuestionItemPreview() {
     QuestionItem(
+        viewModel = viewModel(),
         question = Question(
         id = 0, text = "Test", answers = listOf(
             Answer(0, "test1", 1.2, FactorType.MULTIPLIER),
