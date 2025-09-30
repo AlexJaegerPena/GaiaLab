@@ -57,8 +57,8 @@ fun QuestionItem(
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(bgImage),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
             contentScale = ContentScale.Crop,
             alpha = 0.4f
         )

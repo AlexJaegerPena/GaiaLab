@@ -2,7 +2,7 @@ package de.syntax_institut.androidabschlussprojekt.data.remote
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import de.syntax_institut.androidabschlussprojekt.data.model.ApiResponse
+import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,7 +43,7 @@ interface ApiService {
     @POST("observation/identify")
     suspend fun identifySpecies(
         @Part image: MultipartBody.Part
-    ): Response<ApiResponse>
+    ): Response<SpeciesApiResponse>
 
 }
 

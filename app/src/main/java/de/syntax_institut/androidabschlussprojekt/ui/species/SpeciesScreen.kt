@@ -45,7 +45,7 @@ fun SpeciesScreen(
         Button(
             onClick = {
                 // Bild aus Assets laden
-                val inputStream = context.assets.open("frog.jpg")
+                val inputStream = context.assets.open("buteo2.jpg")
                 val bytes = inputStream.readBytes()
                 inputStream.close()
 

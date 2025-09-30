@@ -1,9 +1,11 @@
 package de.syntax_institut.androidabschlussprojekt
 
 import android.R.attr.label
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Backpack
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Map
@@ -64,10 +66,9 @@ enum class TabItem(
     val tabTitle: String,
     val tabIcon: ImageVector
 ) {
-    HOME(HomeRoute, "Home", Icons.Default.Backpack),
+    HOME(QuestionnaireRoute, "Quiz", Icons.Default.Backpack),
     WORLDMAP(ExploreRoute, "World", Icons.Default.Map),
-    EXPLORE(SpeciesRoute, "Explore", Icons.Default.Explore),
-
+    EXPLORE(SpeciesRoute, "Explore", Icons.Default.CameraAlt),
 }
 
 
@@ -77,6 +78,9 @@ fun AppStart(modifier: Modifier = Modifier) {
     var selectedTab by rememberSaveable { mutableStateOf(TabItem.HOME) }
 
     Scaffold(
+        containerColor = Color.Transparent,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        topBar = { /* ... */ }, // TODO: Top Bar?
         bottomBar = {
             NavigationBar(
                 containerColor = Color(0xFF243484),

@@ -3,7 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ApiResponse(
+data class SpeciesApiResponse(
     val predictions: List<Prediction>
 )
 
