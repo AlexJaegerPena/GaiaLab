@@ -1,15 +1,14 @@
-package de.syntax_institut.androidabschlussprojekt.ui.home
+package de.syntax_institut.androidabschlussprojekt.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,28 +16,26 @@ import de.syntax_institut.androidabschlussprojekt.R
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun FullScreenBox(
+    modifier: Modifier = Modifier,
+    bgImage: Int,
+    alpha: Float,
+    content: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.home_bg),
+            painter = painterResource(bgImage),
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
             contentScale = ContentScale.Crop,
-            alpha = 1f
+            alpha = alpha
         )
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Home Screen")
+            content()
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
 }

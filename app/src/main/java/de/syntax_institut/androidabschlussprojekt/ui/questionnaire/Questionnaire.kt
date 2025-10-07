@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,11 +39,14 @@ fun Questionnaire(
 
     Box(modifier = Modifier) {
         QuestionItem(viewModel = viewModel, question = question)
-        Row(modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 130.dp).padding(horizontal = 70.dp)) {
+        Row(modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 30.dp).padding(horizontal = 70.dp)) {
             Image(
                 painter = painterResource(R.drawable.q_arrow_left),
                 contentDescription = "previous",
-                modifier = Modifier.clickable(onClick = { viewModel.previousQuestion()}).align(Alignment.Bottom)
+                modifier = Modifier
+                    .clickable(onClick = { viewModel.previousQuestion()})
+                    .align(Alignment.Bottom)
+                    .alpha(if (question.id == 1) { 0f } else { 1f } )
 
             )
             Spacer(modifier = modifier.weight(1f))

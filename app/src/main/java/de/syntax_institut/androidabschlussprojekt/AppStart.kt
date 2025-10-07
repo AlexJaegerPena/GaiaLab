@@ -1,15 +1,12 @@
 package de.syntax_institut.androidabschlussprojekt
 
-import android.R.attr.label
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Backpack
 import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.Explore
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -29,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.syntax_institut.androidabschlussprojekt.HomeRoute
 import de.syntax_institut.androidabschlussprojekt.ui.explore.ExploreScreen
 import de.syntax_institut.androidabschlussprojekt.ui.home.HomeScreen
 import de.syntax_institut.androidabschlussprojekt.ui.milestone.MilestoneScreen
 import de.syntax_institut.androidabschlussprojekt.ui.profile.ProfileScreen
 import de.syntax_institut.androidabschlussprojekt.ui.questionnaire.Questionnaire
-import de.syntax_institut.androidabschlussprojekt.ui.species.SpeciesScreen
+import de.syntax_institut.androidabschlussprojekt.ui.species.IdentifySpecies
+import de.syntax_institut.androidabschlussprojekt.ui.species.SpeciesCollection
 import de.syntax_institut.androidabschlussprojekt.ui.tips.TipsScreen
 import kotlinx.serialization.Serializable
 
@@ -53,6 +50,9 @@ object ExploreRoute
 object SpeciesRoute
 
 @Serializable
+object SpeciesCollectionRoute
+
+@Serializable
 object TipsRoute
 
 @Serializable
@@ -66,9 +66,10 @@ enum class TabItem(
     val tabTitle: String,
     val tabIcon: ImageVector
 ) {
-    HOME(QuestionnaireRoute, "Quiz", Icons.Default.Backpack),
+    HOME(HomeRoute, "Home", Icons.Default.Backpack),
+    Quiz(QuestionnaireRoute, "Quiz", Icons.Default.Quiz),
     WORLDMAP(ExploreRoute, "World", Icons.Default.Map),
-    EXPLORE(SpeciesRoute, "Explore", Icons.Default.CameraAlt),
+    SPECIES(SpeciesRoute, "Species", Icons.Default.CameraAlt),
 }
 
 
@@ -77,14 +78,16 @@ fun AppStart(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(TabItem.HOME) }
 
+
     Scaffold(
         containerColor = Color.Transparent,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = { /* ... */ }, // TODO: Top Bar?
+
         bottomBar = {
             NavigationBar(
-                containerColor = Color(0xFF243484),
-                contentColor = Color.White,
+                containerColor = Color.Transparent,
+                contentColor = Color.Transparent,
                 tonalElevation = 5.dp
             ) {
                 TabItem.entries.forEach { tab ->
@@ -98,10 +101,10 @@ fun AppStart(modifier: Modifier = Modifier) {
                         },
                         label = { Text(tab.tabTitle) },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color(0xFF2BE4DC),
-                            unselectedIconColor = Color.White,
-                            selectedTextColor = Color(0xFF2BE4DC),
-                            unselectedTextColor = Color.White
+                            selectedIconColor = Color.Black,
+                            unselectedIconColor = Color.Black,
+                            selectedTextColor = Color.Black,
+                            unselectedTextColor = Color.Black
                         )
                     )
                 }
@@ -132,7 +135,13 @@ fun AppStart(modifier: Modifier = Modifier) {
                 MilestoneScreen()
             }
             composable<SpeciesRoute> {
-                SpeciesScreen()
+                IdentifySpecies(
+                    onNavigateToCollection = { navController.navigate(SpeciesCollection()) }
+                )
+            }
+
+            composable<SpeciesCollectionRoute> {
+                SpeciesCollection()
             }
         }
     }
