@@ -97,7 +97,7 @@ Die App liefert wertvolle Einblicke in ökologische Themen, macht Fortschritte s
     - Enthält positive Fakten & Trends
 - **Nature Identification API v2 (https://multi-source.identify.biodiversityanalysis.eu):**
     - Bestimmt Pflanzen & Tiere anhand von Bildern
-    - Rückgabe: Artname, Confidence, Zusatzinfos
+    - Rückgabe: Artname, Confidence
 
 ---
 
