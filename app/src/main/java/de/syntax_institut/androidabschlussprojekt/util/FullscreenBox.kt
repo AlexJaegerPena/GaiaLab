@@ -20,7 +20,7 @@ fun FullScreenBox(
     modifier: Modifier = Modifier,
     bgImage: Int,
     alpha: Float,
-    content: () -> Unit
+    content: @Composable () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(

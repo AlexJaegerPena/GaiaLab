@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "118033212907",
+    "project_id": "green-expedition-android",
+    "storage_bucket": "green-expedition-android.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118033212907:android:9741c1e0267f85ffece5ae",
+        "android_client_info": {
+          "package_name": "de.syntax_institut.androidabschlussprojekt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFqW6u9TOFzSEDK_YJG4e-EU4sqKw3qhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

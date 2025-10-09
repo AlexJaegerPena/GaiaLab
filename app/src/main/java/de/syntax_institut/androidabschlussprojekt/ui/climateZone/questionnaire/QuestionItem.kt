@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.questionnaire
+package de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -30,7 +30,6 @@ import de.syntax_institut.androidabschlussprojekt.data.model.FactorType
 import de.syntax_institut.androidabschlussprojekt.data.model.Question
 import de.syntax_institut.androidabschlussprojekt.data.model.QuestionCategory
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
-import kotlinx.coroutines.time.delay
 
 
 @SuppressLint("StateFlowValueCalledInComposition")

@@ -1,18 +1,13 @@
-package de.syntax_institut.androidabschlussprojekt.ui.questionnaire
+package de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.Answer
 import de.syntax_institut.androidabschlussprojekt.data.model.Question
 import de.syntax_institut.androidabschlussprojekt.data.repository.QuestionnaireRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 // application, da ich hier nicht auf context zugreifen kann aber application ist selbst ein context

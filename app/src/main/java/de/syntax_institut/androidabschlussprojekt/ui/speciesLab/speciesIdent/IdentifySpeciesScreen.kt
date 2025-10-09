@@ -1,6 +1,5 @@
-package de.syntax_institut.androidabschlussprojekt.ui.species
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent
 
-import android.R.attr.onClick
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
@@ -32,8 +31,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -43,9 +42,11 @@ import kotlin.math.ceil
 
 
 @Composable
-fun IdentifySpecies(
+fun IdentifySpeciesScreen(
     modifier: Modifier = Modifier,
-    onNavigateToCollection: @Composable () -> Unit,
+    onPopUpBackStack: () -> Unit,
+    onNavigateToCollection: () -> Unit,
+
     viewModel: SpeciesViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -67,6 +68,10 @@ fun IdentifySpecies(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Button(onClick = { onPopUpBackStack()} ) {
+                Text("Zurück")
+            }
             if (bitmap != null) {
                     Image(
                         painter = BitmapPainter(bitmap!!.asImageBitmap()),
@@ -154,5 +159,5 @@ fun IdentifySpecies(
 @Preview(showBackground = true)
 @Composable
 fun SpeciesScreenPreview() {
-    IdentifySpecies(onNavigateToCollection = {})
+    IdentifySpeciesScreen(onNavigateToCollection = {}, onPopUpBackStack = {})
 }

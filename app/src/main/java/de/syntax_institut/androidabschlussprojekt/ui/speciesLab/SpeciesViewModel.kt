@@ -1,13 +1,6 @@
-package de.syntax_institut.androidabschlussprojekt.ui.species
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab
 
-import android.R.attr.name
 import android.graphics.Bitmap
-import androidx.compose.material3.Text
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse

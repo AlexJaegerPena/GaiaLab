@@ -3,7 +3,6 @@ package de.syntax_institut.androidabschlussprojekt
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Backpack
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Quiz
@@ -26,57 +25,78 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.syntax_institut.androidabschlussprojekt.ui.explore.ExploreScreen
-import de.syntax_institut.androidabschlussprojekt.ui.home.HomeScreen
-import de.syntax_institut.androidabschlussprojekt.ui.milestone.MilestoneScreen
-import de.syntax_institut.androidabschlussprojekt.ui.profile.ProfileScreen
-import de.syntax_institut.androidabschlussprojekt.ui.questionnaire.Questionnaire
-import de.syntax_institut.androidabschlussprojekt.ui.species.IdentifySpecies
-import de.syntax_institut.androidabschlussprojekt.ui.species.SpeciesCollection
-import de.syntax_institut.androidabschlussprojekt.ui.tips.TipsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateZone.ClimateZoneScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateZone.climateFacts.ClimateFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireResultScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesLabScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.EcoHubScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoTips.EcoTipsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoFacts.EcoFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.SpeciesCollectionScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
 import kotlinx.serialization.Serializable
 
+// Species
+@Serializable
+object SpeciesLabRoute
 
 @Serializable
-object HomeRoute
+object SpeciesFactsRoute
+
+@Serializable
+object SpeciesIdentRoute
+
+@Serializable
+object SpeciesCollectionRoute
+
+// Climate
+@Serializable
+object ClimateZoneRoute
+
+@Serializable
+object ClimateFactsRoute
 
 @Serializable
 object QuestionnaireRoute
 
 @Serializable
-object ExploreRoute
+object QuestionnaireResultRoute
+
+// Eco
+@Serializable
+object EcoHubRoute
 
 @Serializable
-object SpeciesRoute
+object EcoFactsRoute
 
 @Serializable
-object SpeciesCollectionRoute
+object EcoTipsRoute
 
-@Serializable
-object TipsRoute
-
+/*
 @Serializable
 object ProfileRoute
 
 @Serializable
 object MilestoneRoute
+ */
 
 enum class TabItem(
     val route: Any,
     val tabTitle: String,
     val tabIcon: ImageVector
 ) {
-    HOME(HomeRoute, "Home", Icons.Default.Backpack),
-    Quiz(QuestionnaireRoute, "Quiz", Icons.Default.Quiz),
-    WORLDMAP(ExploreRoute, "World", Icons.Default.Map),
-    SPECIES(SpeciesRoute, "Species", Icons.Default.CameraAlt),
+    SPECIESLAB(SpeciesLabRoute, "Species Lab", Icons.Default.CameraAlt),
+    CLIMATEZONE(ClimateZoneRoute, "Climate Zone", Icons.Default.Quiz),
+    ECOHUB(EcoHubRoute, "Eco Hub", Icons.Default.Map),
 }
 
 
 @Composable
 fun AppStart(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    var selectedTab by rememberSaveable { mutableStateOf(TabItem.HOME) }
+    var selectedTab by rememberSaveable { mutableStateOf(TabItem.SPECIESLAB) }
 
 
     Scaffold(
@@ -116,37 +136,72 @@ fun AppStart(modifier: Modifier = Modifier) {
             startDestination = selectedTab.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<HomeRoute> {
-                HomeScreen()
-            }
-            composable<QuestionnaireRoute> {
-                Questionnaire()
-            }
-            composable<ExploreRoute> {
-                ExploreScreen()
-            }
-            composable<TipsRoute> {
-                TipsScreen()
-            }
-            composable<ProfileRoute> {
-                ProfileScreen()
-            }
-            composable<MilestoneRoute> {
-                MilestoneScreen()
-            }
-            composable<SpeciesRoute> {
-                IdentifySpecies(
-                    onNavigateToCollection = { navController.navigate(SpeciesCollection()) }
+            // Species
+            composable<SpeciesLabRoute> {
+                SpeciesLabScreen(
+                    onNavigateToFacts = { navController.navigate(SpeciesFactsRoute)},
+                    onNavigateToIdentSpecies = { navController.navigate(SpeciesIdentRoute)},
+                    onNavigateToSpeciesCollection = { navController.navigate(SpeciesCollectionRoute)}
                 )
             }
-
-            composable<SpeciesCollectionRoute> {
-                SpeciesCollection()
+            composable<SpeciesFactsRoute> {
+                SpeciesFactsScreen(onPopUpBackStack = { navController.popBackStack() })
             }
+            composable<SpeciesIdentRoute> {
+                IdentifySpeciesScreen(
+                    onNavigateToCollection = { navController.navigate(SpeciesCollectionRoute)},
+                    onPopUpBackStack = { navController.popBackStack() }
+                )
+            }
+            composable<SpeciesCollectionRoute> {
+                SpeciesCollectionScreen(onPopUpBackStack = { navController.popBackStack() })
+            }
+            // Climate
+            composable<ClimateZoneRoute> {
+                ClimateZoneScreen(
+                    onNavigateToFacts = { navController.navigate(ClimateFactsRoute)},
+                    onNavigateToQuestionnaire = { navController.navigate(QuestionnaireRoute)},
+                    onNavigateToQuestionnaireResult = { navController.navigate(QuestionnaireResultRoute)}
+                )
+            }
+            composable<ClimateFactsRoute> {
+                ClimateFactsScreen(onPopUpBackStack = { navController.popBackStack() })
+            }
+            composable<QuestionnaireRoute> {
+                QuestionnaireScreen(
+                    onNavigateToResult = { navController.navigate(QuestionnaireResultRoute)},
+                    onPopUpBackStack = { navController.popBackStack() })
+            }
+            composable<QuestionnaireResultRoute> {
+                QuestionnaireResultScreen(
+                    onNavigateToQuestionnaire = { navController.navigate(QuestionnaireRoute)},
+                    onPopUpBackStack = { navController.popBackStack() })
+            }
+
+            // Eco
+            composable<EcoHubRoute> {
+                EcoHubScreen(
+                    onNavigateToFacts = { navController.navigate(EcoFactsRoute)},
+                    onNavigateToTips = { navController.navigate(EcoTipsRoute)},
+                )
+            }
+            composable<EcoFactsRoute> {
+                EcoFactsScreen(onPopUpBackStack = { navController.popBackStack() })
+            }
+            composable<EcoTipsRoute> {
+                EcoTipsScreen(onPopUpBackStack = { navController.popBackStack() })
+            }
+
+            /*
+           composable<ProfileRoute> {
+               ProfileScreen()
+           }
+           composable<MilestoneRoute> {
+               MilestoneScreen()
+           }
+            */
         }
     }
-    // SpeciesScreen()
-    // Questionnaire()
 }
 
 

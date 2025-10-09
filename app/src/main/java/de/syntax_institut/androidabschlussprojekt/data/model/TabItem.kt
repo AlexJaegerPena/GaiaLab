@@ -8,7 +8,7 @@ data class TabItem(
 )
 
 val tabs: List<TabItem> = listOf(
-    TabItem("Explore", R.drawable.ic_launcher_foreground),
-    TabItem("Milestones", R.drawable.ic_launcher_foreground),
-    TabItem("Tips", R.drawable.ic_launcher_foreground),
+    TabItem("Species Lab", R.drawable.ic_launcher_foreground),
+    TabItem("Climate Zone", R.drawable.ic_launcher_foreground),
+    TabItem("Eco Hub", R.drawable.ic_launcher_foreground),
 )

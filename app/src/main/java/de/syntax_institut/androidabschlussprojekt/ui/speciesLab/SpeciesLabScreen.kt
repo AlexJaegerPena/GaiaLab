@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.home
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +18,12 @@ import de.syntax_institut.androidabschlussprojekt.R
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun SpeciesLabScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToFacts: () -> Unit,
+    onNavigateToIdentSpecies: () -> Unit,
+    onNavigateToSpeciesCollection: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(R.drawable.home_bg),
@@ -31,7 +37,16 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Home Screen")
+            Text("Species Lab Screen")
+            Button(onClick = {onNavigateToFacts()}) {
+                Text("Go to Species Facts")
+            }
+            Button(onClick = {onNavigateToIdentSpecies()}) {
+                Text("Go to Species Identification")
+            }
+            Button(onClick = {onNavigateToSpeciesCollection()}) {
+                Text("Go to Species Collection")
+            }
         }
     }
 }
@@ -39,6 +54,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
-    HomeScreen()
+fun SpeciesLabScreenPreview() {
+    SpeciesLabScreen(
+        onNavigateToFacts = { },
+        onNavigateToIdentSpecies = { },
+        onNavigateToSpeciesCollection = { }
+    )
 }
