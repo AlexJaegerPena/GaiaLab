@@ -21,7 +21,6 @@ Nutzer:innen können ihren CO₂-Fußabdruck berechnen, spannende Fakten über u
 - [Learnings & Motivation](#-learnings--motivation)
 - [Ausblick / Roadmap](#-ausblick--roadmap)
 - [Design / Screenshots](#-design--screenshots)
-- [Beitragen](#-beitragen)
 - [Lizenz & Kontakt](#-lizenz--kontakt)
 
 ---
