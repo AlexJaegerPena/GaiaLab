@@ -1,7 +1,7 @@
 # 🌍 GreenExpedition
 **Entdecke die Welt – und schütze sie.**
 
-GreenExpedition ist eine interaktive Android-App, die Neugierde und Entdeckergeist wecken soll – besonders bei jungen Nutzer:innen.  
+GreenExpedition ist eine interaktive Android-App, die Neugierde und Entdeckergeist wecken soll.  
 Die App verbindet Technik und Natur auf spielerische Weise und zeigt, wie man durch bewusstes Handeln wieder stärker in Verbindung mit der Umwelt treten kann.
 
 Nutzer:innen können ihren CO₂-Fußabdruck berechnen, spannende Fakten über unseren Planeten entdecken und eine persönliche Sammlung von entdeckten Tier- und Pflanzenarten anlegen.
@@ -21,14 +21,13 @@ Nutzer:innen können ihren CO₂-Fußabdruck berechnen, spannende Fakten über u
 - [Learnings & Motivation](#-learnings--motivation)
 - [Ausblick / Roadmap](#-ausblick--roadmap)
 - [Design / Screenshots](#-design--screenshots)
-- [Beitragen](#-beitragen)
 - [Lizenz & Kontakt](#-lizenz--kontakt)
 
 ---
 
 ## 🎯 Ziel der App
 
-GreenExpedition richtet sich an junge, neugierige Nutzer:innen, die auf interaktive und positive Weise mehr über Umwelt- und Naturschutz lernen möchten.  
+GreenExpedition richtet sich an neugierige Nutzer:innen, die auf interaktive und positive Weise mehr über Umwelt- und Naturschutz lernen möchten.  
 Die App liefert wertvolle Einblicke in ökologische Themen, macht Fortschritte sichtbar und motiviert zu eigenem, nachhaltigem Handeln.
 
 ---
@@ -97,7 +96,7 @@ Die App liefert wertvolle Einblicke in ökologische Themen, macht Fortschritte s
     - Enthält positive Fakten & Trends
 - **Nature Identification API v2 (https://multi-source.identify.biodiversityanalysis.eu):**
     - Bestimmt Pflanzen & Tiere anhand von Bildern
-    - Rückgabe: Artname, Confidence, Zusatzinfos
+    - Rückgabe: Artname, Confidence
 
 ---
 
