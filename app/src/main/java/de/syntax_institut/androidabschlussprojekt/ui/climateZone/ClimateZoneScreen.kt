@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 
 
 @Composable
@@ -17,22 +19,28 @@ fun ClimateZoneScreen(
     onNavigateToQuestionnaire: () -> Unit,
     onNavigateToQuestionnaireResult: () -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    FullScreenBox(
+        bgImage = R.drawable.bg_climatezone,
+        alpha = 1f,
     ) {
-        Text("Climate Zone Screen")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("Climate Zone Screen")
 
-        Button(onClick = { onNavigateToFacts()} ) {
-            Text("Navigate to facts")
-        }
-        Button(onClick = { onNavigateToQuestionnaire()} ) {
-            Text("Navigate to questionnaire")
-        }
-        Button(onClick = { onNavigateToQuestionnaireResult()} ) {
-            Text("Navigate to result")
+            Button(onClick = { onNavigateToFacts()} ) {
+                Text("Navigate to facts")
+            }
+            Button(onClick = { onNavigateToQuestionnaire()} ) {
+                Text("Navigate to questionnaire")
+            }
+            Button(onClick = { onNavigateToQuestionnaireResult()} ) {
+                Text("Navigate to result")
+            }
         }
     }
+
 }
 
 

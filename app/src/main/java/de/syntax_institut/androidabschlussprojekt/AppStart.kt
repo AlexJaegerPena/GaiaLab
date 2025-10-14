@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Quiz
+import androidx.compose.material.icons.filled.Recycling
+import androidx.compose.material.icons.filled.Science
+import androidx.compose.material.icons.filled.Thermostat
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import de.syntax_institut.androidabschlussprojekt.ui.HomeScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.ClimateZoneScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.climateFacts.ClimateFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireResultScreen
@@ -38,6 +43,8 @@ import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.Spe
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
 import kotlinx.serialization.Serializable
 
+@Serializable
+object HomeRoute
 // Species
 @Serializable
 object SpeciesLabRoute
@@ -87,9 +94,10 @@ enum class TabItem(
     val tabTitle: String,
     val tabIcon: ImageVector
 ) {
-    SPECIESLAB(SpeciesLabRoute, "Species Lab", Icons.Default.CameraAlt),
-    CLIMATEZONE(ClimateZoneRoute, "Climate Zone", Icons.Default.Quiz),
-    ECOHUB(EcoHubRoute, "Eco Hub", Icons.Default.Map),
+    HOME(HomeRoute, "Home", Icons.Default.Home),
+    SPECIESLAB(SpeciesLabRoute, "Species Lab", Icons.Default.Science),
+    CLIMATEZONE(ClimateZoneRoute, "Climate Zone", Icons.Default.Thermostat),
+    ECOHUB(EcoHubRoute, "Eco Hub", Icons.Default.Recycling),
 }
 
 
@@ -136,6 +144,13 @@ fun AppStart(modifier: Modifier = Modifier) {
             startDestination = selectedTab.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable<HomeRoute> {
+                HomeScreen(
+                    onNavigateToSpeciesLab = { navController.navigate(SpeciesLabRoute)},
+                    onNavigateToClimateZone = { navController.navigate(ClimateZoneRoute)},
+                    onNavigateToEcoHub = { navController.navigate(EcoHubRoute)}
+                )
+            }
             // Species
             composable<SpeciesLabRoute> {
                 SpeciesLabScreen(

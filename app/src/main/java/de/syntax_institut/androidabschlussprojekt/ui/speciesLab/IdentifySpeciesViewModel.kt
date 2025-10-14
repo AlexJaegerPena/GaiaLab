@@ -1,19 +1,20 @@
 package de.syntax_institut.androidabschlussprojekt.ui.speciesLab
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse
 import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesCollectionItem
-import de.syntax_institut.androidabschlussprojekt.data.repository.SpeciesRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.IdentifySpeciesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import kotlin.math.ceil
 
-class SpeciesViewModel(
-    private val repository: SpeciesRepository
+class IdentifySpeciesViewModel(
+    private val repository: IdentifySpeciesRepository
 ) : ViewModel() {
 
 
@@ -31,9 +32,13 @@ class SpeciesViewModel(
 
 
     fun identify(image: MultipartBody.Part) {
-        viewModelScope.launch {
+        viewModelScope.launch { try {
             val response = repository.identifySpecies(image)
             _result.value = response
+        } catch (e: Exception){
+            Log.e("Species ViewModel", "Error")
+        }
+
         }
     }
 

@@ -16,6 +16,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,11 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.data.model.Answer
-import de.syntax_institut.androidabschlussprojekt.data.model.FactorType
-import de.syntax_institut.androidabschlussprojekt.data.model.Question
-import de.syntax_institut.androidabschlussprojekt.data.model.QuestionCategory
+import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.Answer
+import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.FactorType
+import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.Question
+import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.QuestionCategory
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -49,8 +54,10 @@ fun QuestionItem(
     }
 
     val bgImage = categoryEnum.bgImg
+    val scope = rememberCoroutineScope()
 
-
+    val userResponses by viewModel.selectedAnswerId.collectAsState() // recomp
+    val selectedAnswerId = viewModel.userResponses[question.id]
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -107,14 +114,17 @@ fun QuestionItem(
                                 .width(260.dp)
                                 .comicBorder()
                                 .clickable(onClick = {
-                                    viewModel.selectAnswer(answer)
-                                    // delay(2000)
-                                     }
-                                ),
+                                        viewModel.saveQAPairs(questionId = question.id, answerId = answer.id)
+                                    scope.launch {
+                                        delay(500)
+                                        viewModel.nextQuestion()
+                                    }
+                                }),
                                 contentAlignment = Alignment.CenterStart
                             ) {
                                 Text(answer.text)
-                                if (viewModel.selectedAnswerId.value == answer.id ) {
+                                if (selectedAnswerId == answer.id ) {
+                                    // TODO: Image ändern
                                     Image(
                                         painter = painterResource(R.drawable.q_arrow_right),
                                         contentDescription = "")

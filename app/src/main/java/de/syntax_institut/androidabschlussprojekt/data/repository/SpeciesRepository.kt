@@ -1,14 +1,12 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository
 
-import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse
-import de.syntax_institut.androidabschlussprojekt.data.remote.ApiService
-import okhttp3.MultipartBody
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
+import de.syntax_institut.androidabschlussprojekt.data.remote.MYAPI
 
+class SpeciesRepository {
+    private val api: MYAPI = MYAPI
 
-class SpeciesRepository(private val api: ApiService) {
-
-        suspend fun identifySpecies(imagePart: MultipartBody.Part): SpeciesApiResponse? {
-            val response = api.identifySpecies(imagePart)
-            return if (response.isSuccessful) response.body() else null
-        }
+    suspend fun getSpeciesFacts(): List<Fact> {
+        return api.service.getSpeciesFacts().data
+    }
 }

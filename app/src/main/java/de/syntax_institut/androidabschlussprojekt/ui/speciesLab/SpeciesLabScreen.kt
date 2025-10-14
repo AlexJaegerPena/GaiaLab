@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 
 
 @Composable
@@ -24,31 +25,28 @@ fun SpeciesLabScreen(
     onNavigateToIdentSpecies: () -> Unit,
     onNavigateToSpeciesCollection: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(R.drawable.home_bg),
-            contentDescription = null,
-            modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.Crop,
-            alpha = 1f
-        )
+    FullScreenBox(
+        bgImage = R.drawable.bg_specieslab,
+        alpha = 1f,
+    ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Species Lab Screen")
-            Button(onClick = {onNavigateToFacts()}) {
-                Text("Go to Species Facts")
-            }
-            Button(onClick = {onNavigateToIdentSpecies()}) {
-                Text("Go to Species Identification")
-            }
-            Button(onClick = {onNavigateToSpeciesCollection()}) {
-                Text("Go to Species Collection")
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("Species Lab Screen")
+                Button(onClick = {onNavigateToFacts()}) {
+                    Text("Go to Species Facts")
+                }
+                Button(onClick = {onNavigateToIdentSpecies()}) {
+                    Text("Go to Species Identification")
+                }
+                Button(onClick = {onNavigateToSpeciesCollection()}) {
+                    Text("Go to Species Collection")
+                }
             }
         }
-    }
+
 }
 
 

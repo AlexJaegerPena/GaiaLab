@@ -2,18 +2,18 @@ package de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.data.model.Answer
-import de.syntax_institut.androidabschlussprojekt.data.model.Question
+import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.Question
 import de.syntax_institut.androidabschlussprojekt.data.repository.QuestionnaireRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 // application, da ich hier nicht auf context zugreifen kann aber application ist selbst ein context
-class QuestionnaireViewModel(application: Application) : AndroidViewModel(application) {
-
-    val repository = QuestionnaireRepository(context = application)
+class QuestionnaireViewModel(
+    private val repository: QuestionnaireRepository
+) : ViewModel() {
 
     private val _questions = MutableStateFlow<List<Question>>(emptyList())
     val questions = _questions.asStateFlow()
@@ -26,6 +26,9 @@ class QuestionnaireViewModel(application: Application) : AndroidViewModel(applic
 
     private val _userResponses = mutableMapOf<Int, Int>()
     val userResponses = _userResponses
+
+    private val _navigateToResult = MutableStateFlow(false)
+    val navigateToResult = _navigateToResult.asStateFlow()
 
     init {
         loadQuestions()
@@ -40,9 +43,12 @@ class QuestionnaireViewModel(application: Application) : AndroidViewModel(applic
 
     fun nextQuestion() {
         val currentIndex = _questions.value.indexOf(_actualQuestion.value)
-        if (currentIndex < _questions.value.size - 1) {
+        if (currentIndex < _questions.value.size - 1 && _selectedAnswerId != null) {
             _actualQuestion.value = _questions.value[currentIndex + 1]
+        } else {
+            showResult()
         }
+        _selectedAnswerId.value = null
     }
 
     fun previousQuestion() {
@@ -51,21 +57,27 @@ class QuestionnaireViewModel(application: Application) : AndroidViewModel(applic
             _actualQuestion.value = _questions.value[currentIndex - 1]
         }
     }
-    // TODO: Fragen und Antworten speichern
-    fun selectAnswer(answer: Answer) {
-        val newAnswer = answer
-        _selectedAnswerId.value = answer.id
-        //_userResponses.value = _userResponses.value.orEmpty() + newAnswer
-        nextQuestion()
+
+    fun saveQAPairs(questionId: Int, answerId: Int) {
+        _userResponses[questionId] = answerId
+        _selectedAnswerId.value = answerId
     }
 
-    fun saveUserResponse(questionId: Int, answerId: Int) {
-        _userResponses[questionId] = answerId
+    fun showResult() {
+        if (_selectedAnswerId.value != null) {
+            _navigateToResult.value = true
+        }
     }
+
+    fun onNavigatedToResult() {
+        _navigateToResult.value = false
+    }
+
 
     fun getUserResponses() {
 
     }
+
     // so auslesen
     // val savedAnswerId = _userResponses[questionId]
 }

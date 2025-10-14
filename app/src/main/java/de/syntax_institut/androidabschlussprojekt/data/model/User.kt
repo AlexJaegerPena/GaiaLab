@@ -3,7 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,

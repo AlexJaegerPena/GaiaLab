@@ -21,7 +21,7 @@ fun SpeciesCollectionScreen(
 
     // val speciesCollection
     FullScreenBox(
-        bgImage = R.drawable.species_bg,
+        bgImage = R.drawable.bg_speciescollection,
         alpha = 0.4f,
         content = {
             Column(

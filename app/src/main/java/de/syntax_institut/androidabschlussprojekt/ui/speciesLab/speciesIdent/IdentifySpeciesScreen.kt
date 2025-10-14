@@ -32,7 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.IdentifySpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -47,7 +48,7 @@ fun IdentifySpeciesScreen(
     onPopUpBackStack: () -> Unit,
     onNavigateToCollection: () -> Unit,
 
-    viewModel: SpeciesViewModel = koinViewModel()
+    viewModel: IdentifySpeciesViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
 
@@ -55,14 +56,11 @@ fun IdentifySpeciesScreen(
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(R.drawable.species_bg),
-            contentDescription = null,
-            modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.Crop,
-            alpha = 1f
-        )
+
+    FullScreenBox(
+        bgImage = R.drawable.bg_speciesscanner,
+        alpha = 1f
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -73,23 +71,23 @@ fun IdentifySpeciesScreen(
                 Text("Zurück")
             }
             if (bitmap != null) {
-                    Image(
-                        painter = BitmapPainter(bitmap!!.asImageBitmap()),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .rotate(-8f)
-                            .height(180.dp)
-                            .width(203.dp)
-                            .padding(end = 26.dp),
-                        contentScale = ContentScale.Crop
-                    )
+                Image(
+                    painter = BitmapPainter(bitmap!!.asImageBitmap()),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .rotate(-8f)
+                        .height(180.dp)
+                        .width(203.dp)
+                        .padding(end = 26.dp),
+                    contentScale = ContentScale.Crop
+                )
             } else {
                 Box(modifier = Modifier
                     .rotate(-8f)
                     .height(180.dp)
                     .width(203.dp)
                     .padding(end = 26.dp),
-                    ) {
+                ) {
                     Text("Species Identification")
                 }
             }
@@ -128,7 +126,7 @@ fun IdentifySpeciesScreen(
                     val multipartBody =
                         MultipartBody.Part.createFormData("image", "buteo2.jpg", requestBody)
 
-                    // Bitmap erstellen, um Bild anzuzeigen
+                    // Bitmap erstellen um Bild anzuzeigen
                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
                     viewModel.identify(multipartBody)

@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 
 
 @Composable
@@ -17,20 +19,26 @@ fun EcoHubScreen(
     onNavigateToFacts: () -> Unit,
     onNavigateToTips: () -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    FullScreenBox(
+        bgImage = R.drawable.bg_ecohub,
+        alpha = 1f,
     ) {
-        Text("Eco Hub")
-        Row(modifier = Modifier) {
-            Button(onClick = { onNavigateToFacts()} ) {
-                Text("Navigate to facts")
-            }
-            Button(onClick = { onNavigateToTips()} ) {
-                Text("Navigate to tips")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("Eco Hub")
+            Row(modifier = Modifier) {
+                Button(onClick = { onNavigateToFacts()} ) {
+                    Text("Navigate to facts")
+                }
+                Button(onClick = { onNavigateToTips()} ) {
+                    Text("Navigate to tips")
+                }
             }
         }
     }
+
 }
 
 

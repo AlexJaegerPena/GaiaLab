@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
@@ -31,12 +36,12 @@ fun QuestionnaireResultScreen(
     modifier: Modifier = Modifier,
     onNavigateToQuestionnaire: () -> Unit,
     onPopUpBackStack: () -> Unit,
-    viewModel: QuestionnaireViewModel = viewModel()
+    viewModel: QuestionnaireViewModel = koinViewModel()
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.q_consumption_bg),
+            painter = painterResource(R.drawable.bg_home),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
@@ -58,7 +63,7 @@ fun QuestionnaireResultScreen(
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
-                    painter = painterResource(R.drawable.q_consumption_bg),
+                    painter = painterResource(R.drawable.bg_home),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
@@ -83,17 +88,31 @@ fun QuestionnaireResultScreen(
                         .comicBorder(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("Your score: ...")
-                    Text("Your answers:")
+                    Column(modifier = Modifier) {
+                        Text("Your score: ...")
+                        Text("Your answers:")
+                        LazyColumn(modifier = Modifier) {
+                            items(viewModel.questions.value) { question ->
 
-                    Row(modifier = Modifier) {
-                        Button(onClick = { onPopUpBackStack() }) {
-                            Text("zurück")
+                                val selectedAnswersId = viewModel.userResponses[question.id]
+                                val selectedAnswerText = question.answers.find { it.id == selectedAnswersId }?.text ?: ""
+                                Log.d("QUEST RESULT", "${viewModel.userResponses}")
+                                Text(
+                                    text = "Question${question.text}\nAnswer: $selectedAnswerText",
+                                    modifier = Modifier.padding(vertical = 4.dp)
+                                )
+                            }
                         }
-                        Button(onClick = { onNavigateToQuestionnaire() }) {
-                            Text("Navigate to questionnaire")
+                        Row(modifier = Modifier) {
+                            Button(onClick = { onPopUpBackStack() }) {
+                                Text("zurück")
+                            }
+                            Button(onClick = { onNavigateToQuestionnaire() }) {
+                                Text("Navigate to questionnaire")
+                            }
                         }
                     }
+
                 }
             }
         }
