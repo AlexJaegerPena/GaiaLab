@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.IdentifySpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.util.comicBorder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

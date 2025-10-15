@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.speciesLab
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent
 
 import android.graphics.Bitmap
 import android.util.Log
@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import kotlin.collections.plus
 import kotlin.math.ceil
 
 class IdentifySpeciesViewModel(

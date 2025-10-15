@@ -3,10 +3,7 @@ package de.syntax_institut.androidabschlussprojekt
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.Recycling
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Thermostat
@@ -39,7 +36,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.EcoHubScreen
 import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoTips.EcoTipsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoFacts.EcoFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesScreen
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.SpeciesCollectionScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection.SpeciesCollectionScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
 import kotlinx.serialization.Serializable
 

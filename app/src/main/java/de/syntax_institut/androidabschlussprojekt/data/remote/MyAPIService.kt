@@ -13,18 +13,21 @@ import retrofit2.http.GET
 
 
 interface MyAPIService {
+
+    // ----- Species -----
     @GET("/api/species/facts")
     suspend fun getSpeciesFacts(): Response<List<Fact>>
 
     @GET("/api/species/facts/random")
-    suspend fun getRandomSpeciesFacts(): Response<Fact>
+    suspend fun getRandomSpeciesFact(): Response<Fact>
 
 
+    // ----- Climate -----
     @GET("/api/climate/facts")
     suspend fun getClimateFacts(): Response<List<Fact>>
 
     @GET("/api/climate/facts/random")
-    suspend fun getRandomClimateFacts(): Response<Fact>
+    suspend fun getRandomClimateFact(): Response<Fact>
 
     @GET("/api/climate/tips/")
     suspend fun getClimateTips(): Response<List<Tip>>
@@ -33,11 +36,12 @@ interface MyAPIService {
     suspend fun getClimateTip(): Response<Tip>
 
 
+    // ----- Eco -----
     @GET("/api/eco/facts")
     suspend fun getEcoFacts(): Response<List<Fact>>
 
     @GET("/api/eco/facts/random")
-    suspend fun getRandomEcoFacts(): Response<Fact>
+    suspend fun getRandomEcoFact(): Response<Fact>
 
     @GET("/api/eco/tips/")
     suspend fun getEcoTips(): Response<List<Tip>>
@@ -46,8 +50,9 @@ interface MyAPIService {
     suspend fun getRandomEcoTip(): Response<Tip>
 }
 
+
 object MYAPI {
-    private const val BASE_URL = "http://0.0.0.0:8080/"
+    private const val BASE_URL = "http://10.0.2.2:8080/"
 
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
@@ -59,7 +64,6 @@ object MYAPI {
         .addInterceptor(loggingInterceptor)
         .build()
 
-
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(okHttpClient)
@@ -68,4 +72,3 @@ object MYAPI {
 
     val service: MyAPIService by lazy { retrofit.create(MyAPIService::class.java)}
 }
-

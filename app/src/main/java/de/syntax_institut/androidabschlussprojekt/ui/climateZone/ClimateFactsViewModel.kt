@@ -1,3 +1,0 @@
-package de.syntax_institut.androidabschlussprojekt.ui.climateZone
-
-class ClimateFactsViewModel

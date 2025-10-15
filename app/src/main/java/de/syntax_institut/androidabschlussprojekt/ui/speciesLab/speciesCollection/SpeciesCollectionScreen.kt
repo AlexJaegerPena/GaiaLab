@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,14 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 
 
 @Composable
 fun SpeciesCollectionScreen(
     modifier: Modifier = Modifier,
-    onPopUpBackStack: () -> Unit
+    onPopUpBackStack: () -> Unit,
+    speciesFactsVM: SpeciesFactsViewModel = viewModel()
 ) {
 
     // val speciesCollection
