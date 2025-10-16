@@ -1,33 +1,40 @@
 package de.syntax_institut.androidabschlussprojekt.ui.common
 
-import android.R.attr.top
-import androidx.compose.foundation.background
+import android.R.attr.onClick
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
-import de.syntax_institut.androidabschlussprojekt.ui.theme.FactCardBg
 import de.syntax_institut.androidabschlussprojekt.ui.theme.FactCardText
-import de.syntax_institut.androidabschlussprojekt.ui.theme.factCardGradient
 import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.haze
 import kotlin.math.absoluteValue
 
 
@@ -38,8 +45,10 @@ fun FactItem(
     pagerState: PagerState,
     page: Int
 ) {
-    Card(modifier = Modifier
 
+    val hazeState = remember { HazeState() }
+
+    Card(modifier = Modifier
         .graphicsLayer {
             val pageOffset = (
                     (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
@@ -49,32 +58,51 @@ fun FactItem(
             scaleY = scale
             alpha = 1f - pageOffset * 0.2f
         }
-        .neonCyanBorder()
         .fillMaxWidth()
-        .height(500.dp)
-        .clip(RoundedCornerShape(12.dp))
-
-        .aspectRatio(0.5f),
-
+        .height(502.dp)
+        .clip(RoundedCornerShape(20.dp))
+        .neonCyanBorder(),
+        //.aspectRatio(0.5f),
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
-        Column(modifier = Modifier
-            .background(FactCardBg)
-            .fillMaxSize()
-            .padding(top = 100.dp)
-            .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+        Box(modifier = Modifier
+            //.background(color = Color.Black.copy(1f))
         ) {
-            FactImage(fact = fact)
-            Text(
-                text = fact.title,
-                fontWeight = FontWeight.Bold,
-                color = FactCardText
+            Image(
+                painterResource(R.drawable.bg_carditem),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Center)
+                    .clip(RoundedCornerShape(20.dp))
+                    .haze(
+                        state = hazeState,
+                        backgroundColor = MaterialTheme.colorScheme.background,
+                        tint = Color.Black.copy(alpha = 0.4f),
+                        blurRadius = 30.dp,
+                    ),
+                contentScale = ContentScale.Crop,
+                alpha = 1f
             )
-            Text(fact.text,
-                color = FactCardText)
-            Text(fact.category,
-                color = FactCardText)
+            Column(modifier = Modifier
+               // .background(FactCardBg)
+                .fillMaxSize()
+                .padding(top = 20.dp)
+                .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                FactImage(fact = fact)
+                Text(
+                    text = fact.title,
+                    fontWeight = FontWeight.Bold,
+                    color = FactCardText
+                )
+                Text(fact.text,
+                    color = FactCardText)
+                Text(fact.category,
+                    color = FactCardText)
+                CustomUrlButton(hazeState = hazeState, url = fact.infoUrl)
+            }
         }
     }
 }
@@ -86,10 +114,11 @@ fun FactItemPreview() {
     FactItem(
         fact = Fact(
             id = 1,
-            title = "test",
+            title = "Test Title",
             text = "testealsdkjnsfdkj sdlkfjl slkdfjlksjdflk lskdjflk sdfklölsdjkfösdjkdf lkdjfölsjdf sjdflösdjfl lkdjkf djfjl  dldjlfk",
             category = "animal",
-            imageUrl = painterResource(id = R.drawable.bg_home).toString()
+            imageUrl = painterResource(id = R.drawable.bg_home).toString(),
+            infoUrl = ""
         ),
        pagerState = {} as PagerState,
        page = 1

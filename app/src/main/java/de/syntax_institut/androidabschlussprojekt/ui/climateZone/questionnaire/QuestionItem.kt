@@ -32,7 +32,7 @@ import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.Answe
 import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.FactorType
 import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.Question
 import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.QuestionCategory
-import de.syntax_institut.androidabschlussprojekt.util.comicBorder
+import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -76,7 +76,7 @@ fun QuestionItem(
                 Box(modifier = modifier
                    .fillMaxWidth()
                    .padding(top = 10.dp)
-                   .comicBorder(),
+                   .neonCyanBorder(),
                   contentAlignment = Alignment.TopCenter
                 ) {
                     Image(
@@ -88,7 +88,7 @@ fun QuestionItem(
                     Box(
                         modifier = Modifier
                             .background(Color.White)
-                            .comicBorder()
+                            .neonCyanBorder()
                             .align(alignment = Alignment.TopStart)
                     ) {
                         Text(text = question.category,
@@ -100,7 +100,7 @@ fun QuestionItem(
                             .height(150.dp)
                             .width(300.dp)
                             .background(Color.White)
-                            .comicBorder(),
+                            .neonCyanBorder(),
                         contentAlignment = Alignment.Center
                     ) {
                     Text(text = question.text,
@@ -112,7 +112,7 @@ fun QuestionItem(
                                 .padding(vertical = 8.dp)
                                 .height(50.dp)
                                 .width(260.dp)
-                                .comicBorder()
+                                .neonCyanBorder()
                                 .clickable(onClick = {
                                         viewModel.saveQAPairs(questionId = question.id, answerId = answer.id)
                                     scope.launch {

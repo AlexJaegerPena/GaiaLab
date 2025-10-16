@@ -1,13 +1,23 @@
 package de.syntax_institut.androidabschlussprojekt
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Compost
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Recycling
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Thermostat
+import androidx.compose.material.icons.outlined.Compost
+import androidx.compose.material.icons.outlined.DeviceThermostat
+import androidx.compose.material.icons.outlined.Eco
+import androidx.compose.material.icons.outlined.EmojiNature
+import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -16,8 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,12 +44,15 @@ import de.syntax_institut.androidabschlussprojekt.ui.climateZone.climateFacts.Cl
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireResultScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesLabScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireScreen
+import de.syntax_institut.androidabschlussprojekt.ui.common.bottomBar.GlassmorphicBottomBar
 import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.EcoHubScreen
 import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoTips.EcoTipsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoFacts.EcoFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection.SpeciesCollectionScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.haze
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -91,10 +106,10 @@ enum class TabItem(
     val tabTitle: String,
     val tabIcon: ImageVector
 ) {
-    HOME(HomeRoute, "Home", Icons.Default.Home),
-    SPECIESLAB(SpeciesLabRoute, "Species Lab", Icons.Default.Science),
-    CLIMATEZONE(ClimateZoneRoute, "Climate Zone", Icons.Default.Thermostat),
-    ECOHUB(EcoHubRoute, "Eco Hub", Icons.Default.Recycling),
+    HOME(HomeRoute, "Home", Icons.Default.Public),
+    SPECIESLAB(SpeciesLabRoute, "Species", Icons.Outlined.EmojiNature),
+    CLIMATEZONE(ClimateZoneRoute, "Climate", Icons.Outlined.DeviceThermostat),
+    ECOHUB(EcoHubRoute, "Eco", Icons.Outlined.Eco),
 }
 
 
@@ -102,44 +117,20 @@ enum class TabItem(
 fun AppStart(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(TabItem.SPECIESLAB) }
+    val hazeState = remember { HazeState() }
 
-
-    Scaffold(
-        containerColor = Color.Transparent,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        topBar = { /* ... */ }, // TODO: Top Bar?
-
-        bottomBar = {
-            NavigationBar(
-                containerColor = Color.Transparent,
-                contentColor = Color.Transparent,
-                tonalElevation = 5.dp
-            ) {
-                TabItem.entries.forEach { tab ->
-                    NavigationBarItem(
-                        selected = selectedTab == tab,
-                        onClick = { selectedTab = tab },
-                        icon = { Icon(
-                            imageVector = tab.tabIcon,
-                            contentDescription = "TabItem"
-                        )
-                        },
-                        label = { Text(tab.tabTitle) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.Black,
-                            unselectedIconColor = Color.Black,
-                            selectedTextColor = Color.Black,
-                            unselectedTextColor = Color.Black
-                        )
-                    )
-                }
-            }
-        }
-    ) { innerPadding ->
+    Box(modifier = Modifier.fillMaxSize()) {
         NavHost(
             navController = navController,
             startDestination = selectedTab.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .fillMaxSize()
+                .haze(
+                    state = hazeState,
+                    backgroundColor = MaterialTheme.colorScheme.background,
+                    tint = Color.Black.copy(alpha = 0.3f),
+                    blurRadius = 30.dp,
+                )
         ) {
             composable<HomeRoute> {
                 HomeScreen(
@@ -203,15 +194,27 @@ fun AppStart(modifier: Modifier = Modifier) {
             composable<EcoTipsRoute> {
                 EcoTipsScreen(onPopUpBackStack = { navController.popBackStack() })
             }
+        }
 
-            /*
-           composable<ProfileRoute> {
-               ProfileScreen()
-           }
-           composable<MilestoneRoute> {
-               MilestoneScreen()
-           }
-            */
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            GlassmorphicBottomBar(
+                hazeState = hazeState,
+                selectedTab = selectedTab,
+                onTabSelected = { tab ->
+                    selectedTab = tab
+                    navController.navigate(tab.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
         }
     }
 }

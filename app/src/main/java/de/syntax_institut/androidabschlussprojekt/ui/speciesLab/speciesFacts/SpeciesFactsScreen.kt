@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
@@ -30,22 +31,21 @@ fun SpeciesFactsScreen(
     val pagerState = rememberPagerState(pageCount = { facts.count() })
 
     FullScreenBox(
-        bgImage = R.drawable.bg_specieslab,
-        alpha = 0.5f,
+        bgImage = R.drawable.bg_speciesfactsscreen,
+        alpha = 1f
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             Button(onClick = { onPopUpBackStack()} ) {
                 Text("Zurück")
             }
-            Text("Species Facts")
 
             HorizontalPager(
                 state = pagerState,
-                contentPadding = PaddingValues(48.dp),
+                contentPadding = PaddingValues(49.dp),
                 pageSpacing = 16.dp
             ) { page ->
                 FactItem(

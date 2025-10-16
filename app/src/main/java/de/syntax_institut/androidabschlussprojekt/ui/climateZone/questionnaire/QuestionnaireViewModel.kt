@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.questionnaire.Question
-import de.syntax_institut.androidabschlussprojekt.data.repository.QuestionnaireRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.local.QuestionnaireRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

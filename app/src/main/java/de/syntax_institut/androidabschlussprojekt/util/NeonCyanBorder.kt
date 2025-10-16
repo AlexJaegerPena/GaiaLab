@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 fun Modifier.neonCyanBorder(
-    cornerRadius: Dp = 12.dp,
+    cornerRadius: Dp = 20.dp,
     borderWidth: Dp = 10.dp,
     glowColor: Color = Color(0xFF71CBD4)
 ): Modifier {

@@ -1,8 +1,7 @@
-package de.syntax_institut.androidabschlussprojekt.data.repository
+package de.syntax_institut.androidabschlussprojekt.data.repository.api
 
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Tip
-import de.syntax_institut.androidabschlussprojekt.data.remote.MYAPI
 import de.syntax_institut.androidabschlussprojekt.data.remote.MyAPIService
 
 class MyAPIRepository(private val api: MyAPIService) {

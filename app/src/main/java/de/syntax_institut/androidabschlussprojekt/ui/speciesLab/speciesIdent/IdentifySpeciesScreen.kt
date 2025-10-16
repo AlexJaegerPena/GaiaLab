@@ -27,14 +27,12 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
-import de.syntax_institut.androidabschlussprojekt.util.comicBorder
+import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -108,7 +106,7 @@ fun IdentifySpeciesScreen(
             }
 
             Button(
-                modifier = Modifier.comicBorder(),
+                modifier = Modifier.neonCyanBorder(),
                 colors = ButtonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black,
@@ -135,7 +133,7 @@ fun IdentifySpeciesScreen(
                 Text("Identify species")
             }
             Button(
-                modifier = Modifier.comicBorder(),
+                modifier = Modifier.neonCyanBorder(),
                 colors = ButtonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black,

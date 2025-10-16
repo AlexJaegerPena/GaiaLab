@@ -6,5 +6,6 @@ data class Fact(
     val title: String,
     val text: String,
     val category: String,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val infoUrl: String
 )

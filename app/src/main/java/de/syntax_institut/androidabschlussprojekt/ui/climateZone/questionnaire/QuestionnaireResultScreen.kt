@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.util.comicBorder
+import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -59,7 +59,7 @@ fun QuestionnaireResultScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
-                    .comicBorder(),
+                    .neonCyanBorder(),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
@@ -71,7 +71,7 @@ fun QuestionnaireResultScreen(
                 Box(
                     modifier = Modifier
                         .background(Color.White)
-                        .comicBorder()
+                        .neonCyanBorder()
                         .align(alignment = Alignment.TopStart)
                 ) {
                     Text(
@@ -85,7 +85,7 @@ fun QuestionnaireResultScreen(
                         .height(150.dp)
                         .width(300.dp)
                         .background(Color.White)
-                        .comicBorder(),
+                        .neonCyanBorder(),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(modifier = Modifier) {

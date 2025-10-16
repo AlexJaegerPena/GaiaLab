@@ -2,9 +2,15 @@ package de.syntax_institut.androidabschlussprojekt.di
 
 import de.syntax_institut.androidabschlussprojekt.data.remote.MYAPI
 import de.syntax_institut.androidabschlussprojekt.data.remote.SPECIESAPI
-import de.syntax_institut.androidabschlussprojekt.data.repository.QuestionnaireRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.IdentifySpeciesRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.MyAPIRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.local.QuestionnaireRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.api.IdentifySpeciesRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.api.MyAPIRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CollectedSpeciesRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavFactRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavTipRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.QuestionnaireResultRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
+import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.climateFacts.ClimateFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoFacts.EcoFactsViewModel
@@ -39,5 +45,16 @@ val appModule = module {
     viewModelOf(:: ClimateFactsViewModel)
     viewModelOf(:: EcoFactsViewModel)
     viewModelOf(:: EcoTipsViewModel)
+
+
+    // ----- Firebase -----
+    single { UserRepository() }
+    single { CollectedSpeciesRepository() }
+    single { FavFactRepository() }
+    single { FavTipRepository() }
+    single { QuestionnaireResultRepository() }
+
+   viewModelOf(:: AuthViewModel)
+
 
 }

@@ -5,8 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse
-import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesCollectionItem
-import de.syntax_institut.androidabschlussprojekt.data.repository.IdentifySpeciesRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.api.IdentifySpeciesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -25,11 +24,11 @@ class IdentifySpeciesViewModel(
     private val _uploadedBitmap = MutableStateFlow<Bitmap?>(null)
     var uploadedBitmap = _uploadedBitmap.asStateFlow()
 
-    private val _newSpeciesItem = MutableStateFlow<SpeciesCollectionItem?>(null)
-    val newSpeciesItem = _newSpeciesItem.asStateFlow()
+    // private val _newSpeciesItem = MutableStateFlow<SpeciesCollectionItem?>(null)
+    // val newSpeciesItem = _newSpeciesItem.asStateFlow()
 
-    private val _speciesCollection = MutableStateFlow<List<SpeciesCollectionItem>>(emptyList())
-    val speciesCollection = _speciesCollection.asStateFlow()
+    // private val _speciesCollection = MutableStateFlow<List<SpeciesCollectionItem>>(emptyList())
+    // val speciesCollection = _speciesCollection.asStateFlow()
 
 
     fun identify(image: MultipartBody.Part) {
@@ -42,7 +41,7 @@ class IdentifySpeciesViewModel(
 
         }
     }
-
+/*
     fun saveSpecies(result: SpeciesApiResponse, uploadedBitmap: Bitmap) {
         val list = result.predictions.firstOrNull()?.taxa?.items
         val firstTwo = list?.take(2)
@@ -56,4 +55,5 @@ class IdentifySpeciesViewModel(
             image = uploadedBitmap
         )
     }
+ */
 }

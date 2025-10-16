@@ -22,7 +22,7 @@ fun SpeciesLabScreen(
 ) {
     FullScreenBox(
         bgImage = R.drawable.bg_specieslab,
-        alpha = 1f,
+        alpha = 1f
     ) {
         Column(
                 modifier = Modifier.fillMaxWidth(),

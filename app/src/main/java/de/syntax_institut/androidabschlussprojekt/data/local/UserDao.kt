@@ -7,9 +7,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Update
-import de.syntax_institut.androidabschlussprojekt.data.model.User
+import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
 import kotlinx.coroutines.flow.Flow
 
+/*
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -25,3 +26,5 @@ interface UserDao {
    suspend fun update(user: User)
 
 }
+
+ */

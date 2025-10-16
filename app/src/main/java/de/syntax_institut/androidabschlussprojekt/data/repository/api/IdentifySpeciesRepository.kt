@@ -1,10 +1,8 @@
-package de.syntax_institut.androidabschlussprojekt.data.repository
+package de.syntax_institut.androidabschlussprojekt.data.repository.api
 
 import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse
-import de.syntax_institut.androidabschlussprojekt.data.remote.SPECIESAPI
 import de.syntax_institut.androidabschlussprojekt.data.remote.SpeciesAPIService
 import okhttp3.MultipartBody
-
 
 class IdentifySpeciesRepository(private val api: SpeciesAPIService) {
 
