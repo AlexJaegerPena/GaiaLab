@@ -16,8 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.common.FactItem
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.common.CardItem
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
 import org.koin.androidx.compose.koinViewModel
 
@@ -33,7 +32,7 @@ fun EcoFactsScreen(
     val pagerState = rememberPagerState(pageCount = { facts.count() })
 
     FullScreenBox(
-        bgImage = R.drawable.bg_speciesfactsscreen,
+        bgImage = R.drawable.bg_ecofactsscreen,
         alpha = 1f
     ) {
         Column(
@@ -50,8 +49,8 @@ fun EcoFactsScreen(
                 contentPadding = PaddingValues(49.dp),
                 pageSpacing = 16.dp
             ) { page ->
-                FactItem(
-                    fact = facts[page],
+                CardItem(
+                    data = facts[page],
                     pagerState = pagerState,
                     page = page
                 )

@@ -1,18 +1,17 @@
 package de.syntax_institut.androidabschlussprojekt.ui.common
 
-import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.CardContent
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.ui.theme.FactCardText
 import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
@@ -39,9 +39,9 @@ import kotlin.math.absoluteValue
 
 
 @Composable
-fun FactItem(
+fun CardItem(
     modifier: Modifier = Modifier,
-    fact: Fact,
+    data: CardContent,
     pagerState: PagerState,
     page: Int
 ) {
@@ -53,16 +53,18 @@ fun FactItem(
             val pageOffset = (
                     (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
                     ).absoluteValue
-            val scale = 1f - pageOffset * 0.1f
+            val scale = 1f - pageOffset * 0.05f
             scaleX = scale
             scaleY = scale
             alpha = 1f - pageOffset * 0.2f
         }
+        .padding(horizontal = 12.dp)
         .fillMaxWidth()
-        .height(502.dp)
-        .clip(RoundedCornerShape(20.dp))
-        .neonCyanBorder(),
-        //.aspectRatio(0.5f),
+        // .height(480.dp)
+        .clip(RoundedCornerShape(20.dp)),
+        //.padding(horizontal = 20.dp),
+        //.neonCyanBorder(),
+        // .aspectRatio(0.6f),
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Box(modifier = Modifier
@@ -85,23 +87,22 @@ fun FactItem(
                 alpha = 1f
             )
             Column(modifier = Modifier
-               // .background(FactCardBg)
-                .fillMaxSize()
+                .matchParentSize()
                 .padding(top = 20.dp)
                 .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                FactImage(fact = fact)
+                CardImage(data = data)
                 Text(
-                    text = fact.title,
+                    text = data.title,
                     fontWeight = FontWeight.Bold,
                     color = FactCardText
                 )
-                Text(fact.text,
+                Text(data.text,
                     color = FactCardText)
-                Text(fact.category,
+                Text(data.category,
                     color = FactCardText)
-                CustomUrlButton(hazeState = hazeState, url = fact.infoUrl)
+                CustomUrlButton(hazeState = hazeState, url = data.infoUrl)
             }
         }
     }
@@ -111,8 +112,8 @@ fun FactItem(
 @Preview(showBackground = true)
 @Composable
 fun FactItemPreview() {
-    FactItem(
-        fact = Fact(
+    CardItem(
+        data = Fact(
             id = 1,
             title = "Test Title",
             text = "testealsdkjnsfdkj sdlkfjl slkdfjlksjdflk lskdjflk sdfklölsdjkfösdjkdf lkdjfölsjdf sjdflösdjfl lkdjkf djfjl  dldjlfk",
