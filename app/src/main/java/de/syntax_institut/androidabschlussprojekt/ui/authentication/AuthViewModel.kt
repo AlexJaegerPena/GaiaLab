@@ -1,15 +1,19 @@
 package de.syntax_institut.androidabschlussprojekt.ui.authentication
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import de.syntax_institut.androidabschlussprojekt.service.FirebaseAuthService
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseUser
+import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class AuthViewModel(
-    val authService: FirebaseAuthService
-): ViewModel() {
+class AuthViewModel(val authService: AuthService) : ViewModel() {
 
-    val fireUser = authService.authState
+    val currentUser: StateFlow<FirebaseUser?> = authService.authState
 
     private val _email = MutableStateFlow("")
     val email = _email.asStateFlow()
@@ -17,12 +21,36 @@ class AuthViewModel(
     private val _password = MutableStateFlow("")
     val password = _password.asStateFlow()
 
+    private val _error = MutableStateFlow("")
+    val error =_error.asStateFlow()
+
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
+
     fun register() {
-        authService.registerUserWithEmail(email.value, password.value)
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                authService.registerUserWithEmail(email.value, password.value)
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Unbekannter Fehler"
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
-    fun login() {
-        authService.loginUserWithEmail(email.value, password.value)
+    suspend fun login() {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                authService.loginUserWithEmail(email.value, password.value)
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Unbekannter Fehler"
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
     fun logout() {
@@ -36,5 +64,4 @@ class AuthViewModel(
     fun onPasswordInput(newPassword: String) {
         _password.value = newPassword
     }
-
 }

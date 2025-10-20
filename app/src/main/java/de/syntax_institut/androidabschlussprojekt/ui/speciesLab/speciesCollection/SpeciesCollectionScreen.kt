@@ -13,13 +13,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun SpeciesCollectionScreen(
     modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
-    speciesFactsVM: SpeciesFactsViewModel = viewModel()
+    speciesFactsVM: SpeciesFactsViewModel = koinViewModel()
 ) {
 
     // val speciesCollection

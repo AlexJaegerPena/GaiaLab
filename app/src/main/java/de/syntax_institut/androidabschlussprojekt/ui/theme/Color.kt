@@ -20,16 +20,15 @@ val ForestGreen40 = Color(0xFF2E7D32)
 val NeonBlue40 = Color(0xFF0288D1)
 val EcoYellow40 = Color(0xFFFBC02D)
 
-val FactCardBackground = Color(0xCC1C2B22)
-val FactCardTextPrimary = Color(0xFFFAFAFA)
 
+// -----------
+val CardText = Color(0xFF9ED7CA)
+val CardCategoryText = Color(0xFFCCEFE3)
+val CardCategoryBg = Color(0xFF62ADA4)
 
-val FactCardBg = Color(0xFF052B28)
-val FactCardText = Color(0xFF71C8B8)
-
-val factCardGradient = Brush.verticalGradient(
+val CardImageBorderGradient = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF0C5F6D),
-        Color(0xFF66C6BA)
+        Color(0xFF66B5AB),
+        Color(0xFF61B19D)
     )
 )

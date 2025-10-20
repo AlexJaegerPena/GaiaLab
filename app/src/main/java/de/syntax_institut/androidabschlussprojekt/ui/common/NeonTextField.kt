@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardText
 import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
 
 
@@ -29,13 +30,13 @@ fun NeonTextField(
         onValueChange = onValueChange,
         leadingIcon = {
             leadingIcon?.let {
-                Icon(imageVector = it, contentDescription = null)
+                Icon(imageVector = it, contentDescription = null, tint = CardText)
             }
         },
         trailingIcon = {
             trailingIcon?.let {
                 IconButton(onClick = { onTrailingIconClick?.invoke() }) {
-                    Icon(imageVector = it, contentDescription = null)
+                    Icon(imageVector = it, contentDescription = null, tint = CardText)
                 }
             }
         },

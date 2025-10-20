@@ -31,7 +31,7 @@ import dev.chrisbanes.haze.HazeState
 fun FullScreenBox(
     modifier: Modifier = Modifier,
     bgImage: Int,
-    alpha: Float,
+    alpha: Float = 1f,
     content: @Composable (() -> Unit)
 ) {
     Box(modifier = Modifier.fillMaxSize()) {

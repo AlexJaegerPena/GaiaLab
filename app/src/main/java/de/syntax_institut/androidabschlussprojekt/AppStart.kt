@@ -1,28 +1,13 @@
 package de.syntax_institut.androidabschlussprojekt
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Compost
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.Recycling
-import androidx.compose.material.icons.filled.Science
-import androidx.compose.material.icons.filled.Thermostat
-import androidx.compose.material.icons.outlined.Compost
 import androidx.compose.material.icons.outlined.DeviceThermostat
 import androidx.compose.material.icons.outlined.Eco
 import androidx.compose.material.icons.outlined.EmojiNature
-import androidx.compose.material.icons.outlined.Public
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,15 +24,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.ui.HomeScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateZone.ClimateZoneScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateZone.climateFacts.ClimateFactsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireResultScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.ClimateLabScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.ClimateFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizResultScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesLabScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateZone.questionnaire.QuestionnaireScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.QuestionnaireScreen
 import de.syntax_institut.androidabschlussprojekt.ui.common.bottomBar.GlassmorphicBottomBar
-import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.EcoHubScreen
-import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoTips.EcoTipsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.ecoHub.ecoFacts.EcoFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.EcoLabScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection.SpeciesCollectionScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
@@ -72,20 +57,20 @@ object SpeciesCollectionRoute
 
 // Climate
 @Serializable
-object ClimateZoneRoute
+object ClimateLabRoute
 
 @Serializable
 object ClimateFactsRoute
 
 @Serializable
-object QuestionnaireRoute
+object CO2QuizRoute
 
 @Serializable
-object QuestionnaireResultRoute
+object CO2QuizResultRoute
 
 // Eco
 @Serializable
-object EcoHubRoute
+object EcoLabRoute
 
 @Serializable
 object EcoFactsRoute
@@ -93,10 +78,11 @@ object EcoFactsRoute
 @Serializable
 object EcoTipsRoute
 
-/*
+
 @Serializable
 object ProfileRoute
 
+/*
 @Serializable
 object MilestoneRoute
  */
@@ -108,8 +94,8 @@ enum class TabItem(
 ) {
     HOME(HomeRoute, "Home", Icons.Default.Public),
     SPECIESLAB(SpeciesLabRoute, "Species", Icons.Outlined.EmojiNature),
-    CLIMATEZONE(ClimateZoneRoute, "Climate", Icons.Outlined.DeviceThermostat),
-    ECOHUB(EcoHubRoute, "Eco", Icons.Outlined.Eco),
+    CLIMATEZONE(ClimateLabRoute, "Climate", Icons.Outlined.DeviceThermostat),
+    ECOHUB(EcoLabRoute, "Eco", Icons.Outlined.Eco),
 }
 
 
@@ -135,9 +121,12 @@ fun AppStart(modifier: Modifier = Modifier) {
             composable<HomeRoute> {
                 HomeScreen(
                     onNavigateToSpeciesLab = { navController.navigate(SpeciesLabRoute)},
-                    onNavigateToClimateZone = { navController.navigate(ClimateZoneRoute)},
-                    onNavigateToEcoHub = { navController.navigate(EcoHubRoute)}
+                    onNavigateToClimateZone = { navController.navigate(ClimateLabRoute)},
+                    onNavigateToEcoHub = { navController.navigate(EcoLabRoute)}
                 )
+            }
+            composable<ProfileRoute> {
+
             }
             // Species
             composable<SpeciesLabRoute> {
@@ -160,30 +149,30 @@ fun AppStart(modifier: Modifier = Modifier) {
                 SpeciesCollectionScreen(onPopUpBackStack = { navController.popBackStack() })
             }
             // Climate
-            composable<ClimateZoneRoute> {
-                ClimateZoneScreen(
+            composable<ClimateLabRoute> {
+                ClimateLabScreen(
                     onNavigateToFacts = { navController.navigate(ClimateFactsRoute)},
-                    onNavigateToQuestionnaire = { navController.navigate(QuestionnaireRoute)},
-                    onNavigateToQuestionnaireResult = { navController.navigate(QuestionnaireResultRoute)}
+                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizRoute)},
+                    onNavigateToCO2QuizResult = { navController.navigate(CO2QuizResultRoute)}
                 )
             }
             composable<ClimateFactsRoute> {
                 ClimateFactsScreen(onPopUpBackStack = { navController.popBackStack() })
             }
-            composable<QuestionnaireRoute> {
+            composable<CO2QuizRoute> {
                 QuestionnaireScreen(
-                    onNavigateToResult = { navController.navigate(QuestionnaireResultRoute)},
+                    onNavigateToResult = { navController.navigate(CO2QuizResultRoute)},
                     onPopUpBackStack = { navController.popBackStack() })
             }
-            composable<QuestionnaireResultRoute> {
-                QuestionnaireResultScreen(
-                    onNavigateToQuestionnaire = { navController.navigate(QuestionnaireRoute)},
+            composable<CO2QuizResultRoute> {
+                CO2QuizResultScreen(
+                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizRoute)},
                     onPopUpBackStack = { navController.popBackStack() })
             }
 
             // Eco
-            composable<EcoHubRoute> {
-                EcoHubScreen(
+            composable<EcoLabRoute> {
+                EcoLabScreen(
                     onNavigateToFacts = { navController.navigate(EcoFactsRoute)},
                     onNavigateToTips = { navController.navigate(EcoTipsRoute)},
                 )

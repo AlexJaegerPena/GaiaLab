@@ -73,7 +73,6 @@ fun IdentifySpeciesScreen(
                     painter = BitmapPainter(bitmap!!.asImageBitmap()),
                     contentDescription = "",
                     modifier = Modifier
-                        .rotate(-8f)
                         .height(180.dp)
                         .width(203.dp)
                         .padding(end = 26.dp),
@@ -81,7 +80,6 @@ fun IdentifySpeciesScreen(
                 )
             } else {
                 Box(modifier = Modifier
-                    .rotate(-8f)
                     .height(180.dp)
                     .width(203.dp)
                     .padding(end = 26.dp),
@@ -90,7 +88,6 @@ fun IdentifySpeciesScreen(
                 }
             }
             Column(modifier = Modifier
-                .rotate(-7f)
                 .padding(top = 20.dp, start = 10.dp )
                 .height(100.dp)
             ) {

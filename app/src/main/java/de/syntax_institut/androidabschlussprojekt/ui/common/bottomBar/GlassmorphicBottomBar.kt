@@ -8,6 +8,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.TabItem
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 
@@ -35,21 +37,23 @@ fun GlassmorphicBottomBar(
     val tabs = TabItem.entries
     val selectedTabIndex = tabs.indexOf(selectedTab)
 
+    val shape = RoundedCornerShape(18.dp)
+
     Box(
         modifier = modifier
             .padding(vertical = 24.dp, horizontal = 40.dp)
             .fillMaxWidth()
             .height(64.dp)
-            .hazeChild(state = hazeState, shape = CircleShape)
+            .hazeChild(state = hazeState, shape = shape)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color.White.copy(alpha = .8f),
-                        Color.White.copy(alpha = .2f),
+                        CardCategoryText.copy(alpha = .8f),
+                        CardCategoryText.copy(alpha = .2f),
                     ),
                 ),
-                shape = CircleShape
+                shape = shape
             )
     ) {
         BottomBarTabs(
@@ -79,7 +83,7 @@ fun GlassmorphicBottomBar(
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(CircleShape)
+                .clip(shape)
                 .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
         ) {
             val tabWidth = size.width / tabs.size
@@ -97,10 +101,11 @@ fun GlassmorphicBottomBar(
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(CircleShape)
+                .clip(shape)
         ) {
+            val corner = 18.dp.toPx()
             val path = Path().apply {
-                addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
+                addRoundRect(RoundRect(size.toRect(), CornerRadius(corner, corner)))
             }
             val length = PathMeasure().apply { setPath(path, false) }.length
 

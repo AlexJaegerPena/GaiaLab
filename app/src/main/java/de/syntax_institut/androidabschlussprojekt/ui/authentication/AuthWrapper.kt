@@ -13,7 +13,7 @@ fun AuthWrapper(
     modifier: Modifier = Modifier,
     viewModel: AuthViewModel = koinViewModel()
 ) {
-    val fireUser = viewModel.fireUser.collectAsState().value
+    val fireUser = viewModel.currentUser.collectAsState().value
 
     if (fireUser != null) {
         AppStart(modifier)
