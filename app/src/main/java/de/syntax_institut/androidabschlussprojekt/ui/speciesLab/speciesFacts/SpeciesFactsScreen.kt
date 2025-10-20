@@ -23,6 +23,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardButtonBar
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardItem
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import dev.chrisbanes.haze.HazeDefaults.blurRadius
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import org.koin.androidx.compose.koinViewModel
@@ -75,8 +76,7 @@ fun SpeciesFactsScreen(
             CardButtonBar(
                 modifier = Modifier
                     .padding(top = 4.dp)
-                    .align(Alignment.CenterHorizontally),
-                    /*
+                    .align(Alignment.CenterHorizontally)
                     .haze(
                         state = hazeState,
                         backgroundColor = MaterialTheme.colorScheme.background,
@@ -84,7 +84,7 @@ fun SpeciesFactsScreen(
                         blurRadius = 3.dp,
                     ),
 
-                     */
+
                 hazeState = hazeState,
                 onNavigateBack = {},
                 onFavClick = {},
