@@ -3,6 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.authentication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Cancel
@@ -18,12 +19,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
-import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.card.CustomButton
 import de.syntax_institut.androidabschlussprojekt.ui.common.NeonTextField
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
@@ -53,7 +52,7 @@ fun AuthScreen(
         modifier = Modifier,
         bgImage = R.drawable.bg_home
     ) {
-        Column(modifier = Modifier, verticalArrangement = Arrangement.Center) {
+        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
             NeonTextField(
                 modifier = modifier,
                 value = email,

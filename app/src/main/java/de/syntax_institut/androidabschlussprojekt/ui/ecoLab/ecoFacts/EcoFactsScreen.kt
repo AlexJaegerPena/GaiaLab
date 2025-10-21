@@ -28,12 +28,13 @@ fun EcoFactsScreen(
     ecoFactsVM: EcoFactsViewModel = koinViewModel()
 
 ) {
-    val facts = ecoFactsVM.facts.collectAsState().value
+    val facts = ecoFactsVM.facts.collectAsState().value.shuffled()
     val pagerState = rememberPagerState(pageCount = { facts.count() })
 
     FullScreenBox(
         bgImage = R.drawable.bg_ecofacts,
-        alpha = 1f
+        alpha = 1f,
+        onClick = { onPopUpBackStack() }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
@@ -52,7 +53,8 @@ fun EcoFactsScreen(
                 CardItem(
                     data = facts[page],
                     pagerState = pagerState,
-                    page = page
+                    page = page,
+                    isFavorite = false // TODO
                 )
             }
         }

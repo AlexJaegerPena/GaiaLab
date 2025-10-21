@@ -10,7 +10,7 @@ class CO2QuizResultRepository(
     private val db: FirebaseFirestore,
 ) {
 
-    private val collectionPath = "questionnaire"
+    private val collectionPath = "co2QuizResult"
 
     private val _co2Results = MutableStateFlow(listOf<CO2Result>())
     val co2Results = _co2Results.asStateFlow()

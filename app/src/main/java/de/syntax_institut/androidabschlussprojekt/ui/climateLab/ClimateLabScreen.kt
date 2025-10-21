@@ -22,6 +22,7 @@ fun ClimateLabScreen(
     FullScreenBox(
         bgImage = R.drawable.bg_climatelab,
         alpha = 1f,
+        showButton = false
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

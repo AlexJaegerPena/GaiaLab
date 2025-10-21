@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips
 
+import android.R.attr.onClick
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,22 +28,19 @@ fun EcoTipsScreen(
     onPopUpBackStack: () -> Unit,
     ecoTipsVM: EcoTipsViewModel = koinViewModel()
 ) {
-    val tips = ecoTipsVM.tips.collectAsState().value
+    val tips = ecoTipsVM.tips.collectAsState().value.shuffled()
     val pagerState = rememberPagerState(pageCount = { tips.count() })
 
     FullScreenBox(
         bgImage = R.drawable.bg_ecotips,
-        alpha = 1f
+        alpha = 1f,
+        onClick = { onPopUpBackStack() }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Button(onClick = { onPopUpBackStack()} ) {
-                Text("Zurück")
-            }
-
             HorizontalPager(
                 state = pagerState,
                 contentPadding = PaddingValues(49.dp),
@@ -51,7 +49,8 @@ fun EcoTipsScreen(
                 CardItem(
                     data = tips[page],
                     pagerState = pagerState,
-                    page = page
+                    page = page,
+                    isFavorite = false // TODO
                 )
             }
         }

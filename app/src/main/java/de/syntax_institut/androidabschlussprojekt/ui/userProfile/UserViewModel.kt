@@ -5,20 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
-import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
+import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import kotlinx.coroutines.launch
 
 class UserViewModel(
     private val repo: UserRepository,
-    private val authVM: AuthViewModel
+    private val authService: AuthService
 ): ViewModel() {
+
+    val currentUser = repo.currentUser
 
     private var userId: String? = null
 
     init {
         viewModelScope.launch {
-            authVM.currentUser.collect { user ->
-                userId = user?.uid
+            authService.authState.collect { firebaseUser ->
+                userId = firebaseUser?.uid
                 if (userId != null) {
                     repo.listenToCurrentUser(userId!!)
                 } else {

@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class FavTipViewModel(
     private val repo: FavTipRepository,
-    private val authVM: AuthViewModel
-    ): ViewModel() {
+    private val userVM: UserViewModel
+): ViewModel() {
 
     private var userId: String? = null
 
@@ -21,8 +21,8 @@ class FavTipViewModel(
 
     init {
         viewModelScope.launch {
-            authVM.currentUser.collect { user ->
-                userId = user?.uid
+            userVM.currentUser.collect { user ->
+                userId = user?.userId
                 if (userId != null) {
                     repo.listenToFavorites(userId!!)
                 } else {

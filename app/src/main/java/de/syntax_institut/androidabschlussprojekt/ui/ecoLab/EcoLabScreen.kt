@@ -22,6 +22,7 @@ fun EcoLabScreen(
     FullScreenBox(
         bgImage = R.drawable.bg_ecolab,
         alpha = 1f,
+        showButton = false
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

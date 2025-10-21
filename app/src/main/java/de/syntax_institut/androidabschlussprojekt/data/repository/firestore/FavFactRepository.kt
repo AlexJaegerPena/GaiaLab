@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.FavoriteFact
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
@@ -12,33 +13,40 @@ class FavFactRepository(
     private val db: FirebaseFirestore
 ) {
 
-    private val collectionPath = "favoriteFacts"
+    private val collectionPath = "favoriteFactIds"
 
     private val _favFacts = MutableStateFlow(listOf<FavoriteFact>())
     val favFacts = _favFacts.asStateFlow()
 
-    suspend fun addFavoriteFact(userId: String, fact: Fact) {
+    suspend fun addFavoriteFact(userId: String, factId: Int) {
         val userRef = db
             .collection("users")
             .document(userId)
 
-        val newFav = FavoriteFact(fact.id)
-        userRef
-            .collection(collectionPath)
-            .document(fact.id.toString())
-            .set(newFav)
-            .await()
+        val newFav = FavoriteFact(factId)
+        try {
+            userRef
+                .collection(collectionPath)
+                .document(factId.toString())
+                .set(newFav)
+                .await()
+            Log.d("FavFactRepository", "addFavorite erfolgreich, userId=$userId, factId=$factId")
+
+        } catch (e: Exception) {
+            Log.e("FavFactRepository", "Fehler beim Speichern: ${e.message}")
+
+        }
     }
 
 
-    fun removeFavoriteFact(userId: String, fact: Fact) {
+    fun removeFavoriteFact(userId: String, factId: Int) {
         val userRef = db
             .collection("users")
             .document(userId)
 
         userRef
             .collection(collectionPath)
-            .document(fact.id.toString())
+            .document(factId.toString())
             .delete()
     }
 

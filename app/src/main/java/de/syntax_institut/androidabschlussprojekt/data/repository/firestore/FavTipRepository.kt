@@ -11,7 +11,7 @@ class FavTipRepository(
     private val db: FirebaseFirestore,
 ) {
 
-    private val collectionPath = "favoriteTips"
+    private val collectionPath = "favoriteTipIds"
 
     private val _favTips = MutableStateFlow(listOf<FavoriteTip>())
     val favTips = _favTips.asStateFlow()

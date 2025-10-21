@@ -36,6 +36,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsScr
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection.SpeciesCollectionScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ProfileScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import kotlinx.serialization.Serializable
@@ -122,11 +123,12 @@ fun AppStart(modifier: Modifier = Modifier) {
                 HomeScreen(
                     onNavigateToSpeciesLab = { navController.navigate(SpeciesLabRoute)},
                     onNavigateToClimateZone = { navController.navigate(ClimateLabRoute)},
-                    onNavigateToEcoHub = { navController.navigate(EcoLabRoute)}
+                    onNavigateToEcoHub = { navController.navigate(EcoLabRoute)},
+                    onNavigateToProfile = { navController.navigate(ProfileRoute)}
                 )
             }
             composable<ProfileRoute> {
-
+                ProfileScreen(onPopUpBackStack = { navController.popBackStack() })
             }
             // Species
             composable<SpeciesLabRoute> {

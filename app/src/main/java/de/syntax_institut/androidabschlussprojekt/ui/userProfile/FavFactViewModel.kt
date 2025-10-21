@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class FavFactViewModel(
     private val repo: FavFactRepository,
-    private val authVM: AuthViewModel
+    private val userVM: UserViewModel
 ): ViewModel() {
 
     private var userId: String? = null
@@ -21,8 +21,8 @@ class FavFactViewModel(
 
     init {
         viewModelScope.launch {
-            authVM.currentUser.collect { user ->
-                userId = user?.uid
+            userVM.currentUser.collect { user ->
+                userId = user?.userId
                 if (userId != null) {
                     repo.listenToFavorites(userId!!)
                 } else {
@@ -32,7 +32,7 @@ class FavFactViewModel(
         }
     }
 
-    fun addFavoriteFact(fact: Fact) {
+    fun addFavoriteFact(factId: Int) {
         val uid = userId
         if (uid == null) {
             Log.e("FavFactViewModel", "Kein User angemeldet. FavFact kann nicht gespeichert werden.")
@@ -40,19 +40,19 @@ class FavFactViewModel(
         }
         viewModelScope.launch {
             try {
-                repo.addFavoriteFact(uid, fact)
+                repo.addFavoriteFact(uid, factId)
             } catch (e: Exception) {
                 Log.e("FavFactViewModel", "Fehler beim Hinzufügen des FavFacts: ${e.toString()}")
             }
         }
     }
 
-    fun removeFavoriteFact(fact: Fact) {
+    fun removeFavoriteFact(factId: Int) {
         val uid = userId
         if (uid == null) {
             Log.e("FavFactViewModel", "Kein User angemeldet. FavFact kann nicht gelöscht werden.")
             return
         }
-        repo.removeFavoriteFact(uid, fact)
+        repo.removeFavoriteFact(uid, factId)
     }
 }

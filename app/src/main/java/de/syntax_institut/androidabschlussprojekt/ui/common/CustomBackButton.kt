@@ -1,9 +1,5 @@
-package de.syntax_institut.androidabschlussprojekt.ui.common.card
+package de.syntax_institut.androidabschlussprojekt.ui.common
 
-import android.R.attr.onClick
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -13,12 +9,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.EmojiNature
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,29 +40,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathMeasure
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import de.syntax_institut.androidabschlussprojekt.ui.theme.CardText
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun CustomUrlButton(
+fun CustomBackButton(
     modifier: Modifier = Modifier,
-   // hazeState: HazeState,
-    buttonIcon: ImageVector = Icons.Outlined.Info,
-    buttonText: String = "more info",
-    url: String
+    hazeState: HazeState,
+    shape: Shape = RoundedCornerShape(18.dp),
+    glowColor: Color = Color(0xFF6FD2C6),
+    onClick: () -> Unit,
 ) {
-
-    val context = LocalContext.current
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 
     var isClicked by remember { mutableStateOf(false) }
 
@@ -79,52 +75,91 @@ fun CustomUrlButton(
     LaunchedEffect(isClicked) {
         if (isClicked) {
             delay(120)
-            context.startActivity(intent)
             isClicked = false
+            onClick()
         }
-
     }
 
     Box(
         modifier = modifier
-            .wrapContentWidth()
             .scale(scale)
+            .hazeChild(state = hazeState, shape = shape)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color.White.copy(alpha = .8f),
-                        Color.White.copy(alpha = .2f),
+                        CardCategoryText.copy(alpha = .8f),
+                        CardCategoryText.copy(alpha = .2f),
                     ),
                 ),
-                shape = CircleShape
+                shape = shape
             )
+
             .clickable(onClick = { isClicked = true }),
         contentAlignment = Alignment.Center
     ) {
-        Row(modifier = Modifier.padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+
+        // Glowing background
+        Canvas(
+            modifier = Modifier
+                .matchParentSize()
+                .clip(shape)
+                .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
         ) {
-            buttonIcon?.let {
-                Icon(imageVector = it,
-                    contentDescription = null,
-                    tint = CardText,
-                    modifier = Modifier
-                )
-            }
+            drawCircle(
+                color = glowColor.copy(alpha = 0.3f),
+                radius = size.height / 2,
+                center = Offset(size.width / 2, size.height / 2)
+            )
         }
+
+        // Border glow
+        Canvas(
+            modifier = Modifier
+                .matchParentSize()
+                .clip(shape)
+        ) {
+            val corner = 18.dp.toPx()
+            val path = Path().apply {
+                addRoundRect(RoundRect(size.toRect(), CornerRadius(corner, corner)))
+            }
+            val length = PathMeasure().apply { setPath(path, false) }.length
+
+            drawPath(
+                path,
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        glowColor.copy(alpha = 0f),
+                        glowColor.copy(alpha = 0.8f),
+                        glowColor.copy(alpha = 1f),
+                        glowColor.copy(alpha = 0f),
+                    ),
+                    startX = 0f,
+                    endX = size.width + 1,
+                ),
+                style = Stroke(
+                    width = 4f,
+                    pathEffect = PathEffect.dashPathEffect(
+                        intervals = floatArrayOf(length / 2, length)
+                    )
+                )
+            )
+        }
+        Icon(
+            modifier = Modifier.padding(5.dp),
+            imageVector = Icons.Default.ArrowBackIosNew,
+            contentDescription = null,
+            tint = CardCategoryText
+        )
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun CustomUrlButtonPreview() {
-    CustomUrlButton(
-       // hazeState = HazeState(),
-        buttonIcon = Icons.Default.EmojiNature,
-        buttonText = "Testbutton",
-        url = "https://www.google.com/"
+fun CustomBackButtonPreview() {
+    CustomBackButton(
+        hazeState = HazeState(),
+        onClick = {}
     )
 }

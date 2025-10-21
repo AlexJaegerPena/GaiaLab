@@ -76,6 +76,8 @@ val appModule = module {
     viewModelOf(:: AuthViewModel)
     viewModelOf(::UserViewModel)
     viewModelOf(::CollectedSpeciesViewModel)
+
+    // viewModel { FavFactViewModel(get(), get()) }
     viewModelOf(::FavFactViewModel)
     viewModelOf(::CO2QuizViewModel)
 

@@ -26,21 +26,19 @@ fun ClimateFactsScreen(
     onPopUpBackStack: () -> Unit,
     climateFactsVM: ClimateFactsViewModel = koinViewModel()
 ) {
-    val facts = climateFactsVM.facts.collectAsState().value
+    val facts = climateFactsVM.facts.collectAsState().value.shuffled()
     val pagerState = rememberPagerState(pageCount = { facts.count() })
 
     FullScreenBox(
         bgImage = R.drawable.bg_climatefacts,
-        alpha = 1f
+        alpha = 1f,
+        onClick = { onPopUpBackStack() }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Button(onClick = { onPopUpBackStack()} ) {
-                Text("Zurück")
-            }
             HorizontalPager(
                 state = pagerState,
                 contentPadding = PaddingValues(49.dp),
@@ -49,7 +47,8 @@ fun ClimateFactsScreen(
                 CardItem(
                     data = facts[page],
                     pagerState = pagerState,
-                    page = page
+                    page = page,
+                    isFavorite = false // TODO
                 )
             }
         }

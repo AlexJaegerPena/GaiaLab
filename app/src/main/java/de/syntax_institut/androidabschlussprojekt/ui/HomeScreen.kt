@@ -19,10 +19,12 @@ fun HomeScreen(
     onNavigateToSpeciesLab: () -> Unit,
     onNavigateToClimateZone: () -> Unit,
     onNavigateToEcoHub: () -> Unit,
+    onNavigateToProfile: () -> Unit
 ) {
     FullScreenBox(
         bgImage = R.drawable.bg_home,
         alpha = 1f,
+        showButton = false
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -39,6 +41,9 @@ fun HomeScreen(
             Button(onClick = {onNavigateToEcoHub()}) {
                 Text("Go to Eco Hub")
             }
+            Button(onClick = {onNavigateToProfile()}) {
+                Text("Go to Profile")
+            }
         }
     }
 }
@@ -50,6 +55,7 @@ fun HomeScreenPreview() {
     HomeScreen(
         onNavigateToSpeciesLab = {},
         onNavigateToClimateZone = {},
-        onNavigateToEcoHub = {}
+        onNavigateToEcoHub = {},
+        onNavigateToProfile = {}
     )
 }

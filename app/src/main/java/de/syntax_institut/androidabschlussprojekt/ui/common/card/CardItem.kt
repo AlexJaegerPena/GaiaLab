@@ -1,7 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.common.card
 
-import android.R.attr.onClick
-import android.R.attr.top
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,22 +10,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +34,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.room.util.TableInfo
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.CardContent
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
@@ -56,11 +49,9 @@ fun CardItem(
     modifier: Modifier = Modifier,
     data: CardContent,
     pagerState: PagerState,
-    page: Int
+    page: Int,
+    isFavorite: Boolean
 ) {
-
-    val hazeState = remember { HazeState() }
-    val isFavorite = remember { mutableStateOf(false) }
 
     Card(modifier = Modifier
         .graphicsLayer {
@@ -84,13 +75,7 @@ fun CardItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.Center)
-                    .clip(RoundedCornerShape(30.dp))
-                    .haze(
-                        state = hazeState,
-                        backgroundColor = MaterialTheme.colorScheme.background,
-                        tint = Color.Black.copy(alpha = 0.3f),
-                        blurRadius = 30.dp,
-                    ),
+                    .clip(RoundedCornerShape(30.dp)),
                 contentScale = ContentScale.Crop,
                 alpha = 1f
             )
@@ -150,19 +135,14 @@ fun CardItem(
                         .padding(horizontal = 10.dp, vertical = 4.dp)
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(
-                    modifier = Modifier.padding(top = 14.dp, end = 19.dp),
-                    onClick = {}
-                ) {
-                    Icon(
-                        imageVector = if (isFavorite.value) { Icons.Default.Bookmark } else { Icons.Default.BookmarkBorder },
-                        contentDescription = "bookmark",
-                        tint = Color.Black.copy(alpha = 0.7f),
-                    )
-                }
+                Icon(
+                    modifier = Modifier.padding(top = 26.dp, end = 30.dp),
+                    imageVector = if (isFavorite) { Icons.Default.Bookmark } else { Icons.Default.BookmarkBorder },
+                    contentDescription = "bookmark",
+                    tint = Color.Black.copy(alpha = 0.7f)
+                )
             }
             CustomUrlButton(
-                hazeState = hazeState,
                 url = data.infoUrl,
                 modifier = modifier
                     .align(Alignment.BottomEnd)
@@ -186,6 +166,7 @@ fun FactItemPreview() {
             infoUrl = ""
         ),
        pagerState = {} as PagerState,
-       page = 1
+       page = 1,
+        isFavorite = true
     )
 }
