@@ -1,12 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.tasks.await
 
 class UserRepository(
     private val db: FirebaseFirestore
@@ -17,20 +15,18 @@ class UserRepository(
     private val _currentUser = MutableStateFlow<User?>(null)
     val currentUser = _currentUser.asStateFlow()
 
-    fun createUser(userId: String, email: String, username: String) {
-        val newUser = User(
-            userId = userId,
-            email = email,
-            username = username
-        )
+    suspend fun createUser(user: User) {
         userRef
-            .document(userId).set(newUser)
-            .addOnSuccessListener {
-                Log.d("UserRepository", "User created successfully")
-            }
-            .addOnFailureListener { e ->
-                Log.e("UserRepository", "Error creating user", e)
-            }
+            .document(user.userId)
+            .set(user)
+            .await()
+    }
+
+    suspend fun deleteUser(user: User) {
+        userRef
+            .document(user.userId)
+            .delete()
+            .await()
     }
 
     fun listenToCurrentUser(userId: String) {

@@ -21,7 +21,6 @@ fun NeonTextField(
     trailingIcon: ImageVector? = null,
     onTrailingIconClick: (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
-    visualTransformation: PasswordVisualTransformation
 ) {
     OutlinedTextField(
         modifier = modifier.neonCyanBorder(),

@@ -28,14 +28,14 @@ class CO2QuizResultRepository(
             .addOnFailureListener { e -> Log.e("CO2QuizResultRepository", "Fehler beim Hinzufügen", e)}
     }
 
-    fun removeCO2Result(userId: String, id: String) {
+    fun removeCO2Result(userId: String, resultId: String) {
         val userRef = db
             .collection("users")
             .document(userId)
 
         userRef
             .collection(collectionPath)
-            .document(id)
+            .document(resultId)
             .delete()
     }
 

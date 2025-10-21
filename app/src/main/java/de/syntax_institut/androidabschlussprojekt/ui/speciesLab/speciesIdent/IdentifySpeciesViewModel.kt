@@ -14,7 +14,7 @@ import kotlin.collections.plus
 import kotlin.math.ceil
 
 class IdentifySpeciesViewModel(
-    private val repository: IdentifySpeciesRepository
+    private val repo: IdentifySpeciesRepository
 ) : ViewModel() {
 
 
@@ -33,7 +33,7 @@ class IdentifySpeciesViewModel(
 
     fun identify(image: MultipartBody.Part) {
         viewModelScope.launch { try {
-            val response = repository.identifySpecies(image)
+            val response = repo.identifySpecies(image)
             _result.value = response
         } catch (e: Exception){
             Log.e("Species ViewModel", "Error")

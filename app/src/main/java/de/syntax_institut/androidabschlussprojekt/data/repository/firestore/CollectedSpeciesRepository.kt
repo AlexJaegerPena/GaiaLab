@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
-import android.graphics.Bitmap
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.CollectedSpecies
@@ -16,7 +15,7 @@ class CollectedSpeciesRepository(
     private val _collectedSpecies = MutableStateFlow(listOf<CollectedSpecies>())
     val collectedSpecies = _collectedSpecies.asStateFlow()
 
-    fun addSpeciesToCollection(userId: String, image: Bitmap, name: String) {
+    fun addSpeciesToCollection(userId: String, image: Int, name: String) {
         val userRef = db
             .collection("users")
             .document(userId)
@@ -29,14 +28,14 @@ class CollectedSpeciesRepository(
             .addOnFailureListener { e -> Log.e("CollectedSpeciesCollection", "Fehler beim Hinzufügen", e)}
     }
 
-    fun removeCollectedSpecies(userId: String, id: String) {
+    fun removeCollectedSpecies(userId: String, speciesId: String) {
         val userRef = db
             .collection("users")
             .document(userId)
 
         userRef
             .collection(collectionPath)
-            .document(id)
+            .document(speciesId)
             .delete()
     }
 

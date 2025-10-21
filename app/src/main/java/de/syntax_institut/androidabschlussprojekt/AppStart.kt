@@ -102,7 +102,7 @@ enum class TabItem(
 @Composable
 fun AppStart(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    var selectedTab by rememberSaveable { mutableStateOf(TabItem.SPECIESLAB) }
+    var selectedTab by rememberSaveable { mutableStateOf(TabItem.HOME) }
     val hazeState = remember { HazeState() }
 
     Box(modifier = Modifier.fillMaxSize()) {

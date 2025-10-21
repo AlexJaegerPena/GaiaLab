@@ -7,13 +7,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.AppStart
 import org.koin.androidx.compose.koinViewModel
 
-
 @Composable
 fun AuthWrapper(
     modifier: Modifier = Modifier,
-    viewModel: AuthViewModel = koinViewModel()
+    authVM: AuthViewModel = koinViewModel()
 ) {
-    val fireUser = viewModel.currentUser.collectAsState().value
+    val fireUser = authVM.currentUser.collectAsState().value
 
     if (fireUser != null) {
         AppStart(modifier)

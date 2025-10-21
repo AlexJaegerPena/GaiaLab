@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.service
 
-import android.R.attr.password
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,12 +20,16 @@ class AuthService {
     }
 
     suspend fun registerUserWithEmail(email: String, password: String): FirebaseUser? {
-        val result = auth.createUserWithEmailAndPassword(email, password).await()
+        val result = auth
+            .createUserWithEmailAndPassword(email, password)
+            .await()
         return result.user
     }
 
     suspend fun loginUserWithEmail(email: String, password: String): FirebaseUser? {
-        val result = auth.createUserWithEmailAndPassword(email, password).await()
+        val result = auth
+            .createUserWithEmailAndPassword(email, password)
+            .await()
         return result.user
     }
 

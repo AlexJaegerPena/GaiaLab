@@ -20,7 +20,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsViewM
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CollectedSpeciesViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -45,7 +45,7 @@ val appModule = module {
     // ----- My API -----
     single { MyAPIRepository(MYAPI.service) }
 
-    //viewModelOf(:: SpeciesFactsViewModel)
+    // viewModelOf(:: SpeciesFactsViewModel)
     viewModel {
         SpeciesFactsViewModel(get())
     }
@@ -76,7 +76,7 @@ val appModule = module {
     viewModelOf(:: AuthViewModel)
     viewModelOf(::UserViewModel)
     viewModelOf(::CollectedSpeciesViewModel)
-    viewModelOf(::FavFactsViewModel)
+    viewModelOf(::FavFactViewModel)
     viewModelOf(::CO2QuizViewModel)
 
 

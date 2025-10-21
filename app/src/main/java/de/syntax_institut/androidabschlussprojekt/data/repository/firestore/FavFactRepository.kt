@@ -1,11 +1,11 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.FavoriteFact
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.tasks.await
 import kotlin.jvm.java
 
 class FavFactRepository(
@@ -17,7 +17,7 @@ class FavFactRepository(
     private val _favFacts = MutableStateFlow(listOf<FavoriteFact>())
     val favFacts = _favFacts.asStateFlow()
 
-    fun addFavoriteFact(userId: String, fact: Fact) {
+    suspend fun addFavoriteFact(userId: String, fact: Fact) {
         val userRef = db
             .collection("users")
             .document(userId)
@@ -27,8 +27,9 @@ class FavFactRepository(
             .collection(collectionPath)
             .document(fact.id.toString())
             .set(newFav)
-            .addOnFailureListener { e -> Log.e("FavFactRepo", "Fehler beim Hinzufügen", e) }
+            .await()
     }
+
 
     fun removeFavoriteFact(userId: String, fact: Fact) {
         val userRef = db

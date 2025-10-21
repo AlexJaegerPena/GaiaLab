@@ -5,10 +5,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
+fun ProfileScreen(
+    modifier: Modifier = Modifier,
+    userVM: UserViewModel = koinViewModel()
+) {
     FullScreenBox(bgImage = R.drawable.bg_climatetips) {
 
     }
