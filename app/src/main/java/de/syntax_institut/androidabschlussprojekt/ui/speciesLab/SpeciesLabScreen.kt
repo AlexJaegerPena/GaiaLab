@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 
 
 @Composable
@@ -18,7 +18,6 @@ fun SpeciesLabScreen(
     modifier: Modifier = Modifier,
     onNavigateToFacts: () -> Unit,
     onNavigateToIdentSpecies: () -> Unit,
-    onNavigateToSpeciesCollection: () -> Unit
 ) {
     FullScreenBox(
         bgImage = R.drawable.bg_specieslab,
@@ -38,9 +37,6 @@ fun SpeciesLabScreen(
                 Button(onClick = {onNavigateToIdentSpecies()}) {
                     Text("Go to Species Identification")
                 }
-                Button(onClick = {onNavigateToSpeciesCollection()}) {
-                    Text("Go to Species Collection")
-                }
             }
         }
 
@@ -52,7 +48,6 @@ fun SpeciesLabScreen(
 fun SpeciesLabScreenPreview() {
     SpeciesLabScreen(
         onNavigateToFacts = { },
-        onNavigateToIdentSpecies = { },
-        onNavigateToSpeciesCollection = { }
+        onNavigateToIdentSpecies = { }
     )
 }

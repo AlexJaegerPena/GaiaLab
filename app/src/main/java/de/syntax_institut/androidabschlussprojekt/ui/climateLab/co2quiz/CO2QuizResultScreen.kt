@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
+import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -58,7 +58,7 @@ fun CO2QuizResultScreen(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
-                    .neonCyanBorder(),
+                    .cardImageBorder(),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
@@ -70,7 +70,7 @@ fun CO2QuizResultScreen(
                 Box(
                     modifier = Modifier
                         .background(Color.White)
-                        .neonCyanBorder()
+                        .cardImageBorder()
                         .align(alignment = Alignment.TopStart)
                 ) {
                     Text(
@@ -84,7 +84,7 @@ fun CO2QuizResultScreen(
                         .height(150.dp)
                         .width(300.dp)
                         .background(Color.White)
-                        .neonCyanBorder(),
+                        .cardImageBorder(),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(modifier = Modifier) {

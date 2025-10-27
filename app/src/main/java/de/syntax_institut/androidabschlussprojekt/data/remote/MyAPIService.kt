@@ -29,7 +29,7 @@ interface MyAPIService {
     @GET("/api/climate/facts/random")
     suspend fun getRandomClimateFact(): Response<Fact>
 
-    @GET("/api/climate/tips/")
+    @GET("/api/climate/tips")
     suspend fun getClimateTips(): Response<List<Tip>>
 
     @GET("/api/climate/tips/random")
@@ -43,7 +43,7 @@ interface MyAPIService {
     @GET("/api/eco/facts/random")
     suspend fun getRandomEcoFact(): Response<Fact>
 
-    @GET("/api/eco/tips/")
+    @GET("/api/eco/tips")
     suspend fun getEcoTips(): Response<List<Tip>>
 
     @GET("/api/eco/tips/random")

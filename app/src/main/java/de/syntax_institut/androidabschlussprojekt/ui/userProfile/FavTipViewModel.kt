@@ -3,11 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Tip
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavTipRepository
-import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FavTipViewModel(
@@ -32,7 +28,7 @@ class FavTipViewModel(
         }
     }
 
-    fun addFavoriteTip(tip: Tip) {
+    fun addFavoriteTip(tipId: Int) {
         val uid = userId
         if (uid == null) {
             Log.e("FavTipViewModel", "Kein User angemeldet")
@@ -40,19 +36,19 @@ class FavTipViewModel(
         }
         viewModelScope.launch {
             try {
-                repo.addFavoriteTip(uid, tip)
+                repo.addFavoriteTip(uid, tipId)
             } catch (e: Exception) {
                 Log.e("FavTipViewModel", "Fehler beim Hinzufügen des FavTips: ${e.toString()}")
             }
         }
     }
 
-    fun removeFavoriteTip(tip: Tip) {
+    fun removeFavoriteTip(tipId: Int) {
         val uid = userId
         if (uid == null) {
             Log.e("FavTipViewModel", "Kein User angemeldet. FavTip kann nicht gelöscht werden.")
             return
         }
-        repo.removeFavoriteTip(uid, tip)
+        repo.removeFavoriteTip(uid, tipId)
     }
 }

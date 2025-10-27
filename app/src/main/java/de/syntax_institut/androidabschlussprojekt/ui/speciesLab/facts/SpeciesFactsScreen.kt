@@ -1,7 +1,5 @@
-package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts
 
-import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,8 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,10 +22,10 @@ import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardButtonBar
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardItem
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
-import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,8 +35,9 @@ fun SpeciesFactsScreen(
     modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
     speciesFactsVM: SpeciesFactsViewModel = koinViewModel(),
-    favSpeciesVM: FavFactViewModel = koinViewModel()
+    favFactVM: FavFactViewModel = koinViewModel()
 ) {
+
     val facts = speciesFactsVM.facts.collectAsState().value
 
     val hazeState = remember { HazeState() }
@@ -48,16 +46,22 @@ fun SpeciesFactsScreen(
 
     val currentFact = facts.getOrNull(pagerState.currentPage)
 
-    val favIds = favSpeciesVM.favFacts.collectAsState().value.map { it.id } // alle ids holen
+    val favIds = favFactVM.favFacts.collectAsState().value.map { it.id } // alle ids holen
     val isFavorite = currentFact?.id in favIds
 
 
     if (facts.isEmpty()) {
-        FullScreenBox(bgImage = R.drawable.bg_speciesfacts, alpha = 1f, onClick = { onPopUpBackStack() }) {
+        FullScreenBox(
+            bgImage = R.drawable.bg_speciesfacts,
+            alpha = 1f,
+            onClick = { onPopUpBackStack() }
+        ) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text("Lade Daten ...", color = Color.White)
+                CircularProgressIndicator(color = CardContent)
             }
         }
         return
@@ -69,9 +73,7 @@ fun SpeciesFactsScreen(
         onClick = { onPopUpBackStack() }
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 100.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 140.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -101,8 +103,8 @@ fun SpeciesFactsScreen(
                     pagerState.canScrollBackward },
                 onFavClick = {
                     currentFact?.let { fact ->
-                        if (isFavorite) favSpeciesVM.removeFavoriteFact(currentFact.id)
-                        else  favSpeciesVM.addFavoriteFact(currentFact.id)
+                        if (isFavorite) favFactVM.removeFavoriteFact(currentFact.id)
+                        else  favFactVM.addFavoriteFact(currentFact.id)
                     }
                 },
                 onNavigateForward = {

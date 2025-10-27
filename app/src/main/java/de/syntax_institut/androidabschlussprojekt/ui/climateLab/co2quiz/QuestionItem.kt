@@ -32,7 +32,7 @@ import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Answer
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.FactorType
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Question
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.QuestionCategory
-import de.syntax_institut.androidabschlussprojekt.util.neonCyanBorder
+import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,15 +45,7 @@ fun QuestionItem(
     question: Question
 ) {
 
-    val categoryEnum = when(question.category) {
-        "mobility" -> QuestionCategory.MOBILITY
-        "housing" -> QuestionCategory.HOUSING
-        "nutrition" -> QuestionCategory.NUTRITION
-        "consumption" -> QuestionCategory.CONSUMPTION
-        else -> QuestionCategory.MOBILITY
-    }
 
-    val bgImage = categoryEnum.bgImg
     val scope = rememberCoroutineScope()
 
     val userResponses by viewModel.selectedAnswerId.collectAsState() // recomp
@@ -62,7 +54,7 @@ fun QuestionItem(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(bgImage),
+            painter = painterResource(R.drawable.bg_home),
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
             contentScale = ContentScale.Crop,
@@ -76,11 +68,11 @@ fun QuestionItem(
                 Box(modifier = modifier
                    .fillMaxWidth()
                    .padding(top = 10.dp)
-                   .neonCyanBorder(),
+                   .cardImageBorder(),
                   contentAlignment = Alignment.TopCenter
                 ) {
                     Image(
-                        painter = painterResource(bgImage),
+                        painter = painterResource(R.drawable.bg_home),
                         contentDescription = "",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
@@ -88,7 +80,7 @@ fun QuestionItem(
                     Box(
                         modifier = Modifier
                             .background(Color.White)
-                            .neonCyanBorder()
+                            .cardImageBorder()
                             .align(alignment = Alignment.TopStart)
                     ) {
                         Text(text = question.category,
@@ -100,7 +92,7 @@ fun QuestionItem(
                             .height(150.dp)
                             .width(300.dp)
                             .background(Color.White)
-                            .neonCyanBorder(),
+                            .cardImageBorder(),
                         contentAlignment = Alignment.Center
                     ) {
                     Text(text = question.text,
@@ -112,7 +104,7 @@ fun QuestionItem(
                                 .padding(vertical = 8.dp)
                                 .height(50.dp)
                                 .width(260.dp)
-                                .neonCyanBorder()
+                                .cardImageBorder()
                                 .clickable(onClick = {
                                         viewModel.saveQAPairs(questionId = question.id, answerId = answer.id)
                                     scope.launch {

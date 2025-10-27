@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.userProfile
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CollectedSpeciesRepository
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import kotlinx.coroutines.launch
-
 
 class CollectedSpeciesViewModel(
     private val repo: CollectedSpeciesRepository,
@@ -30,7 +29,7 @@ class CollectedSpeciesViewModel(
         }
     }
 
-    fun addSpeciesToCollection(image: Int, name: String) {
+    fun addSpeciesToCollection(imageUrl: String, name: String) {
         val uid = userId
         if (uid == null) {
             Log.e("CollectedSpeciesViewModel", "Kein User angemeldet.")
@@ -38,7 +37,7 @@ class CollectedSpeciesViewModel(
         } else {
             viewModelScope.launch {
                 try {
-                    repo.addSpeciesToCollection(uid, image, name)
+                    repo.addSpeciesToCollection(uid, imageUrl, name)
                 } catch (e: Exception) {
                     Log.e("CollectedSpeciesViewModel", "Fehler beim Hinzufügen der CollectedSpecies: ${e.toString()}")
 
@@ -46,7 +45,6 @@ class CollectedSpeciesViewModel(
             }
         }
     }
-
 
     fun removeCollectedSpecies(speciesId: String) {
         val uid = userId
@@ -57,6 +55,4 @@ class CollectedSpeciesViewModel(
             repo.removeCollectedSpecies(uid, speciesId)
         }
     }
-
-
 }

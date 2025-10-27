@@ -1,10 +1,13 @@
 package de.syntax_institut.androidabschlussprojekt.di
 
 import com.google.firebase.firestore.FirebaseFirestore
+import de.syntax_institut.androidabschlussprojekt.data.remote.IMGBBAPI
+import de.syntax_institut.androidabschlussprojekt.data.remote.ImgBBApiService
 import de.syntax_institut.androidabschlussprojekt.data.remote.MYAPI
 import de.syntax_institut.androidabschlussprojekt.data.remote.SPECIESAPI
 import de.syntax_institut.androidabschlussprojekt.data.repository.local.CO2QuizRepository
 import de.syntax_institut.androidabschlussprojekt.data.repository.api.IdentifySpeciesRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.api.ImgBBAPIRespository
 import de.syntax_institut.androidabschlussprojekt.data.repository.api.MyAPIRepository
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CollectedSpeciesRepository
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CO2QuizResultRepository
@@ -17,20 +20,21 @@ import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.Cli
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CollectedSpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.IdentifySpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection.CollectedSpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavTipViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ImgBBViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 
 val appModule = module {
 
-    // ----- Species -----
+    // ----- Species API -----
     single { IdentifySpeciesRepository(SPECIESAPI.service) }
 
     viewModelOf(:: IdentifySpeciesViewModel)
@@ -45,25 +49,11 @@ val appModule = module {
     // ----- My API -----
     single { MyAPIRepository(MYAPI.service) }
 
-    // viewModelOf(:: SpeciesFactsViewModel)
-    viewModel {
-        SpeciesFactsViewModel(get())
-    }
+    viewModelOf(:: SpeciesFactsViewModel)
+    viewModelOf(:: ClimateFactsViewModel)
+    viewModelOf(:: EcoFactsViewModel)
+    viewModelOf(:: EcoTipsViewModel)
 
-    // viewModelOf(:: ClimateFactsViewModel)
-    viewModel {
-        ClimateFactsViewModel(get())
-    }
-
-    // viewModelOf(:: EcoFactsViewModel)
-    viewModel {
-        EcoFactsViewModel(get())
-    }
-
-    // viewModelOf(:: EcoTipsViewModel)
-    viewModel {
-        EcoTipsViewModel(get())
-    }
 
     // ----- Firebase -----
     single { AuthService() }
@@ -76,10 +66,16 @@ val appModule = module {
     viewModelOf(:: AuthViewModel)
     viewModelOf(::UserViewModel)
     viewModelOf(::CollectedSpeciesViewModel)
-
-    // viewModel { FavFactViewModel(get(), get()) }
     viewModelOf(::FavFactViewModel)
+    viewModelOf(::FavTipViewModel)
     viewModelOf(::CO2QuizViewModel)
 
 
+    // ----- ImgBB API -----
+    single<ImgBBApiService> { IMGBBAPI.service }
+    single { ImgBBAPIRespository(get(), androidContext()) }
+
+    // single { ImgBBAPIRespository(IMGBBAPI.service, androidContext()) }
+
+    viewModelOf(::ImgBBViewModel)
 }

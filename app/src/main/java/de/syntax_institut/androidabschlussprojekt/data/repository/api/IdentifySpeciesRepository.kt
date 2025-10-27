@@ -9,6 +9,5 @@ class IdentifySpeciesRepository(private val api: SpeciesAPIService) {
 
         suspend fun identifySpecies(imagePart: MultipartBody.Part): SpeciesApiResponse? {
             val response = api.identifySpecies(imagePart)
-            return if (response.isSuccessful) response.body() else null
-        }
+            return if (response.isSuccessful) { response.body() } else { null }        }
 }

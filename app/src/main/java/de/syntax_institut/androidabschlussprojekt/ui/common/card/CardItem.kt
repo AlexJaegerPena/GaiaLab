@@ -19,10 +19,8 @@ import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,17 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.CardContent
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryBg
-import de.syntax_institut.androidabschlussprojekt.ui.theme.CardText
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
+import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import kotlin.math.absoluteValue
 
 
@@ -87,15 +82,15 @@ fun CardItem(
             ) {
                 CardImage(data = data)
                 Text(data.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    color = CardText,
+                    style = MyTypography.titleMedium,
+                    color = CardContent,
                     modifier = modifier
                         .padding(horizontal = 12.dp)
                         .padding(top = 4.dp)
                 )
                 Text(data.text,
-                    color = CardText,
+                    style = MyTypography.bodyMedium,
+                    color = CardContent,
                     modifier = modifier.padding(horizontal = 12.dp)
                 )
             }
@@ -119,8 +114,7 @@ fun CardItem(
             ) {
                 Text(data.category.replaceFirstChar { it.uppercase() },
                     color = Color.Black.copy(alpha = 0.7f),
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 12.sp,
+                    style = MyTypography.bodySmall,
                     modifier = Modifier
                         .padding(top = 24.dp, start = 17.dp)
                         .background(

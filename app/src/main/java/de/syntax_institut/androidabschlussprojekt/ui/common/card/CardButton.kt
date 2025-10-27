@@ -1,4 +1,5 @@
-package de.syntax_institut.androidabschlussprojekt.ui.common
+package de.syntax_institut.androidabschlussprojekt.ui.common.card
+
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -9,16 +10,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.EmojiNature
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -53,11 +51,11 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun CustomBackButton(
+fun CardButton(
     modifier: Modifier = Modifier,
-    hazeState: HazeState,
+    buttonIcon: ImageVector?,
     shape: Shape = RoundedCornerShape(18.dp),
-    glowColor: Color = Color(0xFF6FD2C6),
+    glowColor: Color = Color(0xFF3AB189),
     onClick: () -> Unit,
 ) {
 
@@ -83,7 +81,7 @@ fun CustomBackButton(
     Box(
         modifier = modifier
             .scale(scale)
-            .hazeChild(state = hazeState, shape = shape)
+            .clip(shape)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
@@ -94,7 +92,6 @@ fun CustomBackButton(
                 ),
                 shape = shape
             )
-
             .clickable(onClick = { isClicked = true }),
         contentAlignment = Alignment.Center
     ) {
@@ -107,7 +104,7 @@ fun CustomBackButton(
                 .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
         ) {
             drawCircle(
-                color = glowColor.copy(alpha = 0.7f),
+                color = glowColor.copy(alpha = 0.6f),
                 radius = size.height / 2,
                 center = Offset(size.width / 2, size.height / 2)
             )
@@ -145,21 +142,31 @@ fun CustomBackButton(
                 )
             )
         }
-        Icon(
-            modifier = Modifier.padding(5.dp),
-            imageVector = Icons.Default.ArrowBackIosNew,
-            contentDescription = null,
-            tint = CardCategoryText
-        )
+
+        Row(modifier = Modifier,
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            buttonIcon?.let {
+                Icon(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    imageVector = it,
+                    contentDescription = null,
+                    tint = CardCategoryText
+                )
+            }
+
+        }
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun CustomBackButtonPreview() {
-    CustomBackButton(
-        hazeState = HazeState(),
-        onClick = {}
+fun CardButtonPreview() {
+    CardButton(
+        // hazeState = HazeState(),
+        onClick = {},
+        buttonIcon = Icons.Default.EmojiNature,
     )
 }

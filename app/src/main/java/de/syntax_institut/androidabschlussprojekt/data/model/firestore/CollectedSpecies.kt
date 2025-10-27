@@ -4,7 +4,7 @@ import java.util.UUID
 
 data class CollectedSpecies (
     val speciesId: String = UUID.randomUUID().toString(),
-    val image: Int? = null,
+    val imageUrl: String = "",
     val name: String = "",
     val savedAt: Long = System.currentTimeMillis()
 )

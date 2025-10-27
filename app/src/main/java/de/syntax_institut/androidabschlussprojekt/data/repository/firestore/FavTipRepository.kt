@@ -17,27 +17,27 @@ class FavTipRepository(
     val favTips = _favTips.asStateFlow()
 
 
-    fun addFavoriteTip(userId: String, tip: Tip) {
+    fun addFavoriteTip(userId: String, tipId: Int) {
         val userRef = db
             .collection("users")
             .document(userId)
 
-        val newTip = FavoriteTip(tip.id)
+        val newTip = FavoriteTip(tipId)
         userRef
             .collection(collectionPath)
-            .document(tip.id.toString())
+            .document(tipId.toString())
             .set(newTip)
             .addOnFailureListener { e -> Log.e("FavTipRepo", "Fehler beim Hinzufügen", e) }
     }
 
-    fun removeFavoriteTip(userId: String, tip: Tip) {
+    fun removeFavoriteTip(userId: String, tipId: Int) {
         val userRef = db
             .collection("users")
             .document(userId)
 
         userRef
             .collection(collectionPath)
-            .document(tip.id.toString())
+            .document(tipId.toString())
             .delete()
     }
 

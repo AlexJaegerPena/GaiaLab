@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
-import de.syntax_institut.androidabschlussprojekt.ui.common.card.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
 import de.syntax_institut.androidabschlussprojekt.ui.common.NeonTextField
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
-import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import dev.chrisbanes.haze.HazeState
 import org.koin.androidx.compose.koinViewModel
 

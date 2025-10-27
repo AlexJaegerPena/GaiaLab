@@ -1,13 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.ui.common.card
 
-import android.R.attr.onClick
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,28 +25,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.RoundRect
-import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.PathMeasure
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import de.syntax_institut.androidabschlussprojekt.ui.theme.CardText
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import kotlinx.coroutines.delay
 
 
@@ -109,7 +93,7 @@ fun CustomUrlButton(
             buttonIcon?.let {
                 Icon(imageVector = it,
                     contentDescription = null,
-                    tint = CardText,
+                    tint = CardContent,
                     modifier = Modifier
                 )
             }

@@ -33,9 +33,8 @@ import de.syntax_institut.androidabschlussprojekt.ui.common.bottomBar.Glassmorph
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.EcoLabScreen
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesIdent.IdentifySpeciesScreen
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection.SpeciesCollectionScreen
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.CollectionIdentifyScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ProfileScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
@@ -52,9 +51,6 @@ object SpeciesFactsRoute
 
 @Serializable
 object SpeciesIdentRoute
-
-@Serializable
-object SpeciesCollectionRoute
 
 // Climate
 @Serializable
@@ -130,27 +126,24 @@ fun AppStart(modifier: Modifier = Modifier) {
             composable<ProfileRoute> {
                 ProfileScreen(onPopUpBackStack = { navController.popBackStack() })
             }
-            // Species
+
+            // ----- Species -----
             composable<SpeciesLabRoute> {
                 SpeciesLabScreen(
                     onNavigateToFacts = { navController.navigate(SpeciesFactsRoute)},
                     onNavigateToIdentSpecies = { navController.navigate(SpeciesIdentRoute)},
-                    onNavigateToSpeciesCollection = { navController.navigate(SpeciesCollectionRoute)}
                 )
             }
             composable<SpeciesFactsRoute> {
                 SpeciesFactsScreen(onPopUpBackStack = { navController.popBackStack() })
             }
             composable<SpeciesIdentRoute> {
-                IdentifySpeciesScreen(
-                    onNavigateToCollection = { navController.navigate(SpeciesCollectionRoute)},
+                CollectionIdentifyScreen(
                     onPopUpBackStack = { navController.popBackStack() }
                 )
             }
-            composable<SpeciesCollectionRoute> {
-                SpeciesCollectionScreen(onPopUpBackStack = { navController.popBackStack() })
-            }
-            // Climate
+
+            // ----- Climate -----
             composable<ClimateLabRoute> {
                 ClimateLabScreen(
                     onNavigateToFacts = { navController.navigate(ClimateFactsRoute)},
@@ -172,7 +165,7 @@ fun AppStart(modifier: Modifier = Modifier) {
                     onPopUpBackStack = { navController.popBackStack() })
             }
 
-            // Eco
+            // ----- Eco -----
             composable<EcoLabRoute> {
                 EcoLabScreen(
                     onNavigateToFacts = { navController.navigate(EcoFactsRoute)},

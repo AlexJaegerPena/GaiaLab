@@ -15,12 +15,12 @@ class CollectedSpeciesRepository(
     private val _collectedSpecies = MutableStateFlow(listOf<CollectedSpecies>())
     val collectedSpecies = _collectedSpecies.asStateFlow()
 
-    fun addSpeciesToCollection(userId: String, image: Int, name: String) {
+    fun addSpeciesToCollection(userId: String, imageUrl: String, name: String) {
         val userRef = db
             .collection("users")
             .document(userId)
 
-        val newSpecies = CollectedSpecies(image = image, name = name)
+        val newSpecies = CollectedSpecies(imageUrl = imageUrl, name = name)
         userRef
             .collection(collectionPath)
             .document(newSpecies.speciesId)

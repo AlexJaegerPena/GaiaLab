@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesCollection
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,16 +10,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts.SpeciesFactsViewModel
-import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection.CollectedSpeciesViewModel
 import org.koin.androidx.compose.koinViewModel
 
-
+/*
 @Composable
 fun SpeciesCollectionScreen(
     modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
-    speciesFactsVM: SpeciesFactsViewModel = koinViewModel()
+    // speciesFactsVM: SpeciesFactsViewModel = koinViewModel()
+    collectedSpeciesVM: CollectedSpeciesViewModel = koinViewModel()
 ) {
 
     // val speciesCollection
@@ -46,3 +48,5 @@ fun SpeciesCollectionScreen(
 fun SpeciesCollectionPreview() {
     SpeciesCollectionScreen(onPopUpBackStack = {})
 }
+
+ */

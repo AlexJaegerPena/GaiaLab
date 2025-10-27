@@ -22,13 +22,6 @@ val EcoYellow40 = Color(0xFFFBC02D)
 
 
 // -----------
-val CardText = Color(0xFF9ED7CA)
+val CardContent = Color(0xFF63AEA5)
 val CardCategoryText = Color(0xFFCCEFE3)
 val CardCategoryBg = Color(0xFF62ADA4)
-
-val CardImageBorderGradient = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFF66B5AB),
-        Color(0xFF61B19D)
-    )
-)

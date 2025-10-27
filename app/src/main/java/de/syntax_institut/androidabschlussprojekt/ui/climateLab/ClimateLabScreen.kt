@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 
 
 @Composable

@@ -13,7 +13,7 @@ data class Question(
 
 
 enum class QuestionCategory(val bgImg: Int) {
-    MOBILITY(R.drawable.bg_home), //TODO: Images einfügen
+    MOBILITY(R.drawable.bg_home),
     HOUSING(R.drawable.bg_home),
     NUTRITION(R.drawable.bg_home),
     CONSUMPTION(R.drawable.bg_home),

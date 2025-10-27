@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.util.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 
 
 @Composable
@@ -36,10 +36,10 @@ fun HomeScreen(
                 Text("Go to Species Lab")
             }
             Button(onClick = {onNavigateToClimateZone()}) {
-                Text("Go to Climate Zone")
+                Text("Go to Climate Lab")
             }
             Button(onClick = {onNavigateToEcoHub()}) {
-                Text("Go to Eco Hub")
+                Text("Go to Eco Lab")
             }
             Button(onClick = {onNavigateToProfile()}) {
                 Text("Go to Profile")

@@ -1,7 +1,6 @@
-package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.speciesFacts
+package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts
 
 import android.util.Log
-import android.util.Log.e
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
