@@ -50,7 +50,10 @@ fun EcoTipsScreen(
     val isFavorite = currentTip?.id in favIds
 
     if (tips.isEmpty()) {
-        FullScreenBox(bgImage = R.drawable.bg_ecotips, alpha = 1f, onClick = { onPopUpBackStack() }) {
+        FullScreenBox(bgImage = R.drawable.bg_ecotips,
+            alpha = 1f,
+            onClick = { onPopUpBackStack() }
+        ) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {

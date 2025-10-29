@@ -50,7 +50,10 @@ fun EcoFactsScreen(
     val isFavorite = currentFact?.id in favIds
 
     if (facts.isEmpty()) {
-        FullScreenBox(bgImage = R.drawable.bg_ecofacts, alpha = 1f, onClick = { onPopUpBackStack() }) {
+        FullScreenBox(bgImage = R.drawable.bg_ecofacts,
+            alpha = 1f,
+            onClick = { onPopUpBackStack() }
+        ) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {

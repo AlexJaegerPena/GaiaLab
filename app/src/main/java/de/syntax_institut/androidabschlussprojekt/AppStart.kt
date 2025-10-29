@@ -20,16 +20,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.ui.HomeScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.ClimateLabScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.ClimateFactsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizResultScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips.ClimateTipsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizWrapper
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesLabScreen
 import de.syntax_institut.androidabschlussprojekt.ui.common.bottomBar.GlassmorphicBottomBar
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.EcoLabScreen
@@ -37,15 +35,17 @@ import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsScree
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.CollectionIdentifyScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ProfileScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import kotlinx.serialization.Serializable
-import org.koin.androidx.compose.koinViewModel
 
 @Serializable
 object HomeRoute
+
+@Serializable
+object ProfileRoute
+
 // Species
 @Serializable
 object SpeciesLabRoute
@@ -67,6 +67,9 @@ object ClimateFactsRoute
 object ClimateTipsRoute
 
 @Serializable
+object CO2QuizWrapperRoute
+
+@Serializable
 object CO2QuizRoute
 
 @Serializable
@@ -81,10 +84,6 @@ object EcoFactsRoute
 
 @Serializable
 object EcoTipsRoute
-
-
-@Serializable
-object ProfileRoute
 
 /*
 @Serializable
@@ -152,41 +151,21 @@ fun AppStart(modifier: Modifier = Modifier) {
             composable<ClimateLabRoute> {
                 ClimateLabScreen(
                     onNavigateToFacts = { navController.navigate(ClimateFactsRoute)},
-                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizRoute)},
-                    onNavigateToCO2QuizResult = { navController.navigate(CO2QuizResultRoute)}
+                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizWrapperRoute)},
+                    onNavigateToTips = { navController.navigate(ClimateTipsRoute)},
+                    // onNavigateToCO2QuizResult = { navController.navigate(CO2QuizResultRoute)}
                 )
             }
             composable<ClimateFactsRoute> {
                 ClimateFactsScreen(onPopUpBackStack = { navController.popBackStack() })
             }
-            composable<CO2QuizRoute> { backStackEntry ->
-                // Shared ViewModel über den gesamten NavGraph
-                val navGraphEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(navController.graph.id)
-                }
-                val quizVM: CO2QuizViewModel = koinViewModel(viewModelStoreOwner = navGraphEntry)
-
-                CO2QuizScreen(
-                    onNavigateToResult = { navController.navigate(CO2QuizResultRoute) },
-                    onNavigateToTips = { navController.navigate(ClimateTipsRoute) },
-                    onPopUpBackStack = { navController.popBackStack() },
-                    viewModel = quizVM
-                )
+            composable<ClimateTipsRoute> {
+                ClimateTipsScreen(onPopUpBackStack = { navController.popBackStack() })
             }
-
-            composable<CO2QuizResultRoute> { backStackEntry ->
-                // GLEICHES ViewModel wie oben!
-                val navGraphEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(navController.graph.id)
-                }
-                val quizVM: CO2QuizViewModel = koinViewModel(viewModelStoreOwner = navGraphEntry)
-                val resultVM: CO2QuizResultViewModel = koinViewModel()
-
-                CO2QuizResultScreen(
-                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizRoute) },
-                    onNavigateToClimateLab = { navController.navigate(ClimateLabRoute) },
-                    quizVM = quizVM,
-                    resultVM = resultVM
+            composable<CO2QuizWrapperRoute> {
+                CO2QuizWrapper(
+                    onNavigateToTips = { navController.navigate(ClimateTipsRoute)},
+                    onPopUpBackStack = { navController.popBackStack()}
                 )
             }
             /*
@@ -203,7 +182,6 @@ fun AppStart(modifier: Modifier = Modifier) {
                     onNavigateToClimateLab = { navController.navigate(ClimateLabRoute)},
                 )
             }
-
              */
 
             // ----- Eco -----

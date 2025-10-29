@@ -17,7 +17,8 @@ fun ClimateLabScreen(
     modifier: Modifier = Modifier,
     onNavigateToFacts: () -> Unit,
     onNavigateToCO2Quiz: () -> Unit,
-    onNavigateToCO2QuizResult: () -> Unit
+    onNavigateToTips: () -> Unit,
+   // onNavigateToCO2QuizResult: () -> Unit
 ) {
     FullScreenBox(
         bgImage = R.drawable.bg_climatelab2,
@@ -35,7 +36,7 @@ fun ClimateLabScreen(
             Button(onClick = { onNavigateToCO2Quiz()} ) {
                 Text("Navigate to questionnaire")
             }
-            Button(onClick = { onNavigateToCO2QuizResult()} ) {
+            Button(onClick = { onNavigateToTips()} ) {
                 Text("Navigate to result")
             }
         }
@@ -50,6 +51,6 @@ fun ClimateLabScreenPreview() {
     ClimateLabScreen(
         onNavigateToFacts = { },
         onNavigateToCO2Quiz = { },
-        onNavigateToCO2QuizResult = { }
+        onNavigateToTips = { }
     )
 }

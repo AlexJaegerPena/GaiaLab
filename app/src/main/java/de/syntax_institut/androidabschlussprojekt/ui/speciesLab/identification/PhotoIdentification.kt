@@ -80,7 +80,7 @@ fun PhotoIdentification(
             selectedImage = selectedImage
         )
     }
-    Box() {
+
         CustomButton(
             modifier = Modifier
                 .height(70.dp)
@@ -92,7 +92,7 @@ fun PhotoIdentification(
             textStyle = MyTypography.titleLarge,
             onClick = { launchPhotoPicker() }
         )
-    }
+
 
 }
 

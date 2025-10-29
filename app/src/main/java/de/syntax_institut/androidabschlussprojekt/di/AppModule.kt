@@ -17,6 +17,7 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.User
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.ClimateFactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips.ClimateTipsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsViewModel
@@ -45,7 +46,8 @@ val appModule = module {
     // ----- Questionnaire -----
     single { CO2QuizRepository(androidContext()) }
 
-    viewModel { CO2QuizViewModel(get()) }
+    viewModelOf(::CO2QuizViewModel)
+    //viewModel { CO2QuizViewModel(get()) }
 
 
 
@@ -54,6 +56,7 @@ val appModule = module {
 
     viewModelOf(:: SpeciesFactsViewModel)
     viewModelOf(:: ClimateFactsViewModel)
+    viewModelOf(:: ClimateTipsViewModel)
     viewModelOf(:: EcoFactsViewModel)
     viewModelOf(:: EcoTipsViewModel)
 

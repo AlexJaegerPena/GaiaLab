@@ -51,7 +51,7 @@ fun ClimateTipsScreen(
 
     if (tips.isEmpty()) {
         FullScreenBox(
-            bgImage = R.drawable.bg_climatefacts,
+            bgImage = R.drawable.bg_climatetips,
             alpha = 1f,
             onClick = { onPopUpBackStack() }
         ) {
@@ -66,7 +66,7 @@ fun ClimateTipsScreen(
     }
 
     FullScreenBox(
-        bgImage = R.drawable.bg_climatefacts,
+        bgImage = R.drawable.bg_climatetips,
         alpha = 1f,
         onClick = { onPopUpBackStack() }
     ) {

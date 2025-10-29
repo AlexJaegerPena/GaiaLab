@@ -2,6 +2,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
 import android.R.attr.onClick
 import android.R.attr.textStyle
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,9 +28,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
 import dev.chrisbanes.haze.HazeState
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,19 +41,17 @@ import org.koin.androidx.compose.koinViewModel
 fun CO2QuizScreen(
     modifier: Modifier = Modifier,
     onNavigateToResult: () -> Unit,
-    onNavigateToTips: () -> Unit,
-    onPopUpBackStack: () -> Unit,
-    viewModel: CO2QuizViewModel = koinViewModel()
+   // onPopUpBackStack: () -> Unit,
+    quizVM: CO2QuizViewModel,
+    hazeState: HazeState
 ) {
 
-    val hazeState = remember { HazeState() }
-
-    val actualQuestion by viewModel.actualQuestion.collectAsState()
+    val actualQuestion by quizVM.actualQuestion.collectAsState()
 
     val question = actualQuestion
     if (question == null) return
 
-
+/*
     FullScreenBox(
         bgImage = R.drawable.bg_co2quiz,
         buttonTopPadding = 40.dp,
@@ -59,12 +60,14 @@ fun CO2QuizScreen(
         onSecondButtonClick = { onNavigateToResult() },
         secondButtonIcon = Icons.Default.Leaderboard
     ) {
+
+ */
         Column( modifier = Modifier
             .fillMaxWidth()
             .height(600.dp),
             verticalArrangement = Arrangement.Top
         ) {
-            QuestionItem(viewModel = viewModel, question = question)
+            QuestionItem(viewModel = quizVM, question = question)
             Spacer(modifier = modifier.weight(1f))
             Row(
                 modifier = Modifier.padding(horizontal = 70.dp),
@@ -85,7 +88,7 @@ fun CO2QuizScreen(
                     hazeState = hazeState,
                     buttonIcon = Icons.Default.ArrowBackIosNew,
                     buttonText = null,
-                    onClick = { viewModel.previousQuestion() }
+                    onClick = { quizVM.previousQuestion() }
                 )
                 Spacer(modifier = modifier.weight(1f))
 
@@ -106,7 +109,7 @@ fun CO2QuizScreen(
             }
         }
     }
-}
+// }
 
 
 @Preview(showBackground = true)
@@ -114,8 +117,8 @@ fun CO2QuizScreen(
 fun CO2QuizScreenPreview() {
     CO2QuizScreen(
         onNavigateToResult = {},
-        onNavigateToTips = {},
-        onPopUpBackStack = {},
-        viewModel = viewModel()
+       // onPopUpBackStack = {},
+        quizVM = viewModel(),
+        hazeState = HazeState()
     )
 }

@@ -28,15 +28,17 @@ import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
+import dev.chrisbanes.haze.HazeState
 
 
 @Composable
 fun CO2QuizResultScreen(
     modifier: Modifier = Modifier,
-    onNavigateToCO2Quiz: () -> Unit,
-    onNavigateToClimateLab: () -> Unit,
+    // onNavigateToCO2Quiz: () -> Unit,
+    // onNavigateToClimateLab: () -> Unit,
     quizVM: CO2QuizViewModel,
-    resultVM: CO2QuizResultViewModel
+    resultVM: CO2QuizResultViewModel,
+    hazeState: HazeState
 ) {
 
     val score by quizVM.score.collectAsState()
@@ -52,8 +54,7 @@ fun CO2QuizResultScreen(
             resultVM.addCO2QuizResult(userResponses, score)
         }
     }
-
-
+    /*
     FullScreenBox(
         bgImage = R.drawable.bg_co2quiz,
         buttonTopPadding = 40.dp,
@@ -62,6 +63,8 @@ fun CO2QuizResultScreen(
         onSecondButtonClick = { onNavigateToCO2Quiz() },
         secondButtonIcon = Icons.Outlined.Quiz
     ) {
+
+     */
         Column(
             modifier = Modifier
                 .height(600.dp)
@@ -111,7 +114,7 @@ fun CO2QuizResultScreen(
             }
         }
     }
-}
+// }
 
 
 @Preview(showBackground = true)
@@ -120,7 +123,8 @@ fun CO2ResultScreenPreview() {
     CO2QuizResultScreen(
         quizVM = viewModel(),
         resultVM = viewModel(),
-        onNavigateToCO2Quiz = { },
-        onNavigateToClimateLab = { }
+        hazeState = HazeState()
+        // onNavigateToCO2Quiz = { },
+        // onNavigateToClimateLab = { }
     )
 }
