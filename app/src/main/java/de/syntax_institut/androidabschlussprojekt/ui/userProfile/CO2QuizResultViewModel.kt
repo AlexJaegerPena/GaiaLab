@@ -4,21 +4,21 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CO2QuizResultRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
+import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import kotlinx.coroutines.launch
 
 class CO2QuizResultViewModel(
     private val repo: CO2QuizResultRepository,
-    private val authVM: AuthViewModel
+    private val authService: AuthService
 ): ViewModel() {
 
     private var userId: String? = null
 
-    val co2Results = repo.co2Results
-
     init {
         viewModelScope.launch {
-            authVM.currentUser.collect { user ->
+            authService.authState.collect { user ->
                 userId = user?.uid
                 if (userId != null) {
                     repo.listenToCO2Results(userId!!)
@@ -29,7 +29,7 @@ class CO2QuizResultViewModel(
         }
     }
 
-    fun addCO2QuizResult(qaPair: Map<String, String>, co2Score: Double) {
+    fun addCO2QuizResult(qaPair: Map<Int, Int>, co2Score: Double) {
         val uid = userId
         if (uid == null) {
             Log.e("CO2QuizResultViewModel", "Kein User angemeldet.")

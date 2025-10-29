@@ -45,7 +45,7 @@ fun CollectionGrid(
             horizontalArrangement = Arrangement.spacedBy(35.dp),
             verticalArrangement = Arrangement.spacedBy(35.dp),
             modifier = Modifier
-                .height(446.dp)
+                .height(511.dp)
         ) {
             item {
                 Spacer(modifier = Modifier.height(0.dp))

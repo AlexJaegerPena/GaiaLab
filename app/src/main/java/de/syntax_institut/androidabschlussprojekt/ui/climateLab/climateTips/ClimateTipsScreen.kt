@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts
+package de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,30 +25,31 @@ import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardItem
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavTipViewModel
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun ClimateFactsScreen(
+fun ClimateTipsScreen(
     modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
-    climateFactsVM: ClimateFactsViewModel = koinViewModel(),
-    favFactVM: FavFactViewModel = koinViewModel()
+    climateTipsVM: ClimateTipsViewModel = koinViewModel(),
+    favTipVM: FavTipViewModel = koinViewModel()
 ) {
-    val facts = climateFactsVM.facts.collectAsState().value
+    val tips = climateTipsVM.tips.collectAsState().value
 
     val hazeState = remember { HazeState() }
-    val pagerState = rememberPagerState(pageCount = { facts.size })
+    val pagerState = rememberPagerState(pageCount = { tips.size })
     val animationScope = rememberCoroutineScope()
 
-    val currentFact = facts.getOrNull(pagerState.currentPage)
+    val currentTip = tips.getOrNull(pagerState.currentPage)
 
-    val favIds = favFactVM.favFacts.collectAsState().value.map { it.id } // alle ids holen
-    val isFavorite = currentFact?.id in favIds
-    
-    if (facts.isEmpty()) {
+    val favIds = favTipVM.favTips.collectAsState().value.map { it.id } // alle ids holen
+    val isFavorite = currentTip?.id in favIds
+
+    if (tips.isEmpty()) {
         FullScreenBox(
             bgImage = R.drawable.bg_climatefacts,
             alpha = 1f,
@@ -80,7 +81,7 @@ fun ClimateFactsScreen(
                 pageSpacing = 12.dp
             ) { page ->
                 CardItem(
-                    data = facts[page],
+                    data = tips[page],
                     pagerState = pagerState,
                     page = page,
                     isFavorite = isFavorite
@@ -99,8 +100,8 @@ fun ClimateFactsScreen(
                     }
                     pagerState.canScrollBackward },
                 onFavClick = {
-                    currentFact?.let {
-                       favFactVM.toggleFavorite(isFavorite = isFavorite, fact = currentFact)
+                    currentTip?.let {
+                        favTipVM.toggleFavorite(isFavorite = isFavorite, tip = currentTip)
                     }
                 },
                 onNavigateForward = {
@@ -120,5 +121,5 @@ fun ClimateFactsScreen(
 @Preview(showBackground = true)
 @Composable
 fun ClimateFactsScreenPreview() {
-    ClimateFactsScreen(onPopUpBackStack = {})
+    ClimateTipsScreen(onPopUpBackStack = {})
 }

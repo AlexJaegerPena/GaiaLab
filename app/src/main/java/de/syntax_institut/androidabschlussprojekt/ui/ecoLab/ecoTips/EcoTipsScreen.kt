@@ -96,9 +96,8 @@ fun EcoTipsScreen(
                     }
                     pagerState.canScrollBackward },
                 onFavClick = {
-                    currentTip?.let { fact ->
-                        if (isFavorite) favTipVM.removeFavoriteTip(currentTip.id)
-                        else  favTipVM.addFavoriteTip(currentTip.id)
+                    currentTip?.let {
+                        favTipVM.toggleFavorite(isFavorite = isFavorite, tip = currentTip)
                     }
                 },
                 onNavigateForward = {

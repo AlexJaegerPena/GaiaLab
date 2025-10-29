@@ -96,9 +96,8 @@ fun EcoFactsScreen(
                     }
                     pagerState.canScrollBackward },
                 onFavClick = {
-                    currentFact?.let { fact ->
-                        if (isFavorite) favFactVM.removeFavoriteFact(currentFact.id)
-                        else  favFactVM.addFavoriteFact(currentFact.id)
+                    currentFact?.let {
+                       favFactVM.toggleFavorite(isFavorite = isFavorite, fact = currentFact)
                     }
                 },
                 onNavigateForward = {

@@ -10,7 +10,7 @@ class CO2QuizRepository(private val context: Context) { // context um auf assets
 
     fun loadCO2Quiz(): List<Question> {
         val jsonString = context.assets
-            .open("questionnaire.json")
+            .open("co2quiz.json")
             .bufferedReader()
             .use { it.readText() }
 

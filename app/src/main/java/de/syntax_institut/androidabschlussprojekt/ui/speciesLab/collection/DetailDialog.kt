@@ -1,5 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection
 
+import android.R.attr.onClick
+import android.graphics.Color.red
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,8 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode.Companion.Color
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -82,7 +87,9 @@ fun DetailDialog(
                     ) {
                         Text(species.name.uppercase(),
                             style = MyTypography.titleLarge,
-                            color = CardContent
+                            color = CardContent,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
                         )
                         HorizontalDivider(modifier.padding(start = 28.dp, end = 28.dp, bottom = 20.dp),thickness = 3.dp, color = CardContent)
 
@@ -99,10 +106,10 @@ fun DetailDialog(
 
                         Text(
                             "Collected: ${formattedDate}",
-                            style = MyTypography.titleMedium,
+                            style = MyTypography.bodyMedium,
                             color = CardContent
                         )
-                        Spacer(modifier = Modifier.height(30.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                             CustomButton(
@@ -110,6 +117,8 @@ fun DetailDialog(
                                 hazeState = hazeState,
                                 buttonIcon = Icons.Default.Delete,
                                 buttonText = "Delete",
+                                glowColor = Color(0xFFFF5E5E),
+                                bgAlpha = 0.2f,
                                 onClick = {
                                     collectedSpeciesVM.removeCollectedSpecies(speciesId = species.speciesId)
                                     onDismiss()
@@ -120,6 +129,8 @@ fun DetailDialog(
                                 hazeState = hazeState,
                                 buttonIcon = Icons.Default.Check,
                                 buttonText = "OK",
+                                glowColor = Color(0xFF0AFFCE),
+                                bgAlpha = 0.3f,
                                 onClick = { onDismiss() }
                             )
                         }

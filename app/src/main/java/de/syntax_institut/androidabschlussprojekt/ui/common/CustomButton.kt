@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiNature
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,6 +44,7 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -58,9 +60,11 @@ fun CustomButton(
     hazeState: HazeState,
     buttonIcon: ImageVector?,
     buttonText: String?,
+    textStyle: TextStyle = MyTypography.titleMedium,
     shape: Shape = RoundedCornerShape(18.dp),
     glowColor: Color = Color(0xFF6FD2C6),
-    bgAlpha: Float = 0.4f,
+    bgColor: Color = Color.Black,
+    bgAlpha: Float = 0.0f,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -86,7 +90,7 @@ fun CustomButton(
 
     Box(
         modifier = modifier
-            .background(color = Color.Black.copy(alpha = bgAlpha), shape = shape)
+            .background(color = bgColor.copy(alpha = bgAlpha), shape = shape)
             .scale(scale)
             .hazeChild(state = hazeState, shape = shape)
             .border(
@@ -171,7 +175,7 @@ fun CustomButton(
                 Text(
                     modifier = Modifier.padding(horizontal = 5.dp),
                     text = buttonText,
-                    style = MyTypography.titleMedium,
+                    style = textStyle,
                     color = CardCategoryText.copy(alpha = if (enabled) 1f else 0.5f)
                 )
             }

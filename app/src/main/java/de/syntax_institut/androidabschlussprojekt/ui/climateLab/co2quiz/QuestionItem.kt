@@ -1,12 +1,16 @@
 package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
+import android.R.attr.contentDescription
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,9 +41,13 @@ import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Answer
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.FactorType
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Question
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.QuestionCategory
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryBg
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
+import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.io.encoding.Base64
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -45,90 +58,73 @@ fun QuestionItem(
     question: Question
 ) {
 
-
     val scope = rememberCoroutineScope()
+    val userResponses by viewModel.userResponses.collectAsState()
+    val selectedAnswerId = userResponses[question.id]
 
-    val userResponses by viewModel.selectedAnswerId.collectAsState() // recomp
-    val selectedAnswerId = viewModel.userResponses[question.id]
+    Column(
+        modifier = Modifier
+            .padding(top = 115.dp)
+            .padding(horizontal = 44.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
 
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(R.drawable.bg_home),
-            contentDescription = null,
-            modifier = Modifier.matchParentSize(),
-            contentScale = ContentScale.Crop,
-            alpha = 0.4f
+    ) {
+        Text(
+            text = question.category.replaceFirstChar { it.uppercase() },
+            color = Color.Black.copy(alpha = 0.7f),
+            style = MyTypography.bodyMedium,
+            modifier = Modifier
+                .background(
+                    color = Color(0xFFA4CCC5),
+                    shape = RoundedCornerShape(20.dp, 0.dp, 20.dp, 0.dp)
+                )
+                .align(Alignment.Start)
+                .padding(vertical = 6.dp, horizontal = 12.dp)
         )
         Column(
-            modifier = Modifier.height(800.dp).padding(horizontal = 40.dp).padding(top = 80.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Box(modifier = modifier
-                   .fillMaxWidth()
-                   .padding(top = 10.dp)
-                   .cardImageBorder(),
-                  contentAlignment = Alignment.TopCenter
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.bg_home),
-                        contentDescription = "",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop,
-                    )
-                    Box(
-                        modifier = Modifier
-                            .background(Color.White)
-                            .cardImageBorder()
-                            .align(alignment = Alignment.TopStart)
-                    ) {
-                        Text(text = question.category,
-                            modifier = Modifier.padding(vertical = 5.dp, horizontal = 20.dp))
-                    }
-                    Box(
-                        modifier = Modifier
-                            .padding(top = 80.dp)
-                            .height(150.dp)
-                            .width(300.dp)
-                            .background(Color.White)
-                            .cardImageBorder(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                    Text(text = question.text,
-                        modifier = Modifier.padding(20.dp))
-                    }
-                    LazyColumn(modifier = Modifier.padding(top = 250.dp)) {
-                        itemsIndexed(question.answers) { index, answer ->
-                            Box(modifier = Modifier
-                                .padding(vertical = 8.dp)
-                                .height(50.dp)
-                                .width(260.dp)
-                                .cardImageBorder()
-                                .clickable(onClick = {
-                                        viewModel.saveQAPairs(questionId = question.id, answerId = answer.id)
-                                    scope.launch {
-                                        delay(500)
-                                        viewModel.nextQuestion()
-                                    }
-                                }),
-                                contentAlignment = Alignment.CenterStart
-                            ) {
-                                Text(answer.text)
-                                if (selectedAnswerId == answer.id ) {
-                                    // TODO: Image ändern
-                                    Image(
-                                        painter = painterResource(R.drawable.q_arrow_right),
-                                        contentDescription = "")
-                                }
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = question.text,
+                modifier = Modifier.padding(top = 20.dp),
+                color = CardContent,
+                style = MyTypography.headlineSmall
+            )
+
+            LazyColumn(modifier = Modifier.padding(top = 20.dp, bottom = 20.dp)) {
+                itemsIndexed(question.answers) { index, answer ->
+                    Row(modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .clickable(onClick = {
+                            viewModel.saveQAPairs(questionId = question.id, answerId = answer.id)
+                            scope.launch {
+                                delay(1000)
+                                viewModel.nextQuestion()
                             }
-                        }
+                        }),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Icon(imageVector =
+                            if (selectedAnswerId == answer.id) {
+                                Icons.Default.RadioButtonChecked
+                            } else {
+                                Icons.Default.RadioButtonUnchecked
+                            },
+                            contentDescription = null,
+                            tint = CardContent
+                        )
+
+                        Text(answer.text,
+                            color = CardContent,
+                            style = MyTypography.bodyLarge
+                        )
                     }
                 }
             }
         }
     }
-
+}
 
 
 

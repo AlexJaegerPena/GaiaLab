@@ -1,89 +1,109 @@
 package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import android.R.attr.onClick
+import android.R.attr.textStyle
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Leaderboard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
+import dev.chrisbanes.haze.HazeState
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun QuestionnaireScreen(
+fun CO2QuizScreen(
     modifier: Modifier = Modifier,
     onNavigateToResult: () -> Unit,
+    onNavigateToTips: () -> Unit,
     onPopUpBackStack: () -> Unit,
     viewModel: CO2QuizViewModel = koinViewModel()
 ) {
 
+    val hazeState = remember { HazeState() }
+
     val actualQuestion by viewModel.actualQuestion.collectAsState()
-    val navigateToResult by viewModel.navigateToResult.collectAsState()
 
     val question = actualQuestion
     if (question == null) return
 
-    LaunchedEffect(navigateToResult) {
-        if (navigateToResult) {
-            onNavigateToResult()
-            viewModel.onNavigatedToResult()
-        }
-    }
 
-
-    Box(modifier = Modifier) {
-        Row(modifier = Modifier) {
-            Button(onClick = { onPopUpBackStack()} ) {
-                Text("zurück")
-            }
-            Button(onClick = { onNavigateToResult()} ) {
-                Text("Navigate to result")
-            }
-        }
-        QuestionItem(viewModel = viewModel, question = question)
-        Row(modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .padding(bottom = 30.dp)
-            .padding(horizontal = 70.dp)) {
-            Image(
-                painter = painterResource(R.drawable.q_arrow_left),
-                contentDescription = "previous",
-                modifier = Modifier
-                    .clickable(onClick = { viewModel.previousQuestion() })
-                    .align(Alignment.Bottom)
-                    .alpha(
-                        if (question.id == 1) {
-                            0f
-                        } else {
-                            1f
-                        }
-                    )
-
-            )
+    FullScreenBox(
+        bgImage = R.drawable.bg_co2quiz,
+        buttonTopPadding = 40.dp,
+        onClick = { onPopUpBackStack() },
+        showSecondButton = true,
+        onSecondButtonClick = { onNavigateToResult() },
+        secondButtonIcon = Icons.Default.Leaderboard
+    ) {
+        Column( modifier = Modifier
+            .fillMaxWidth()
+            .height(600.dp),
+            verticalArrangement = Arrangement.Top
+        ) {
+            QuestionItem(viewModel = viewModel, question = question)
             Spacer(modifier = modifier.weight(1f))
-            if (question.id == 12) {
-                Image(
-                    painter = painterResource(R.drawable.q_arrow_result),
-                    contentDescription = "next",
+            Row(
+                modifier = Modifier.padding(horizontal = 70.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                CustomButton(
                     modifier = Modifier
-                        .clickable(onClick = { onNavigateToResult() } )
-                        .align(Alignment.Bottom)
+                        .height(25.dp)
+                        .width(54.dp)
+                        .alpha(
+                            if (question.id == 1) {
+                                0f
+                            } else {
+                                1f
+                            }
+                        ),
+                    hazeState = hazeState,
+                    buttonIcon = Icons.Default.ArrowBackIosNew,
+                    buttonText = null,
+                    onClick = { viewModel.previousQuestion() }
                 )
-            }
+                Spacer(modifier = modifier.weight(1f))
 
+                if (question.id == 12) {
+                    CustomButton(
+                        modifier = Modifier
+                            .height(40.dp),
+                        hazeState = hazeState,
+                        buttonIcon = null,
+                        buttonText = "See result",
+                        textStyle = MyTypography.bodyMedium,
+                        glowColor = Color(0xFF58DCB8),
+                        bgColor = Color(0xFF6AE7DB),
+                        bgAlpha = 0.2f,
+                        onClick = { onNavigateToResult() }
+                    )
+                }
+            }
         }
     }
 }
@@ -91,9 +111,11 @@ fun QuestionnaireScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun QuestionnaireScreenPreview() {
-    QuestionnaireScreen(
-        onNavigateToResult = { },
-        onPopUpBackStack = { }
+fun CO2QuizScreenPreview() {
+    CO2QuizScreen(
+        onNavigateToResult = {},
+        onNavigateToTips = {},
+        onPopUpBackStack = {},
+        viewModel = viewModel()
     )
 }

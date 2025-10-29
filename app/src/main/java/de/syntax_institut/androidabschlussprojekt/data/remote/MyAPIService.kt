@@ -33,7 +33,7 @@ interface MyAPIService {
     suspend fun getClimateTips(): Response<List<Tip>>
 
     @GET("/api/climate/tips/random")
-    suspend fun getClimateTip(): Response<Tip>
+    suspend fun getRandomClimateTip(): Response<Tip>
 
 
     // ----- Eco -----

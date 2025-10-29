@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts
+package de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -10,39 +10,37 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class EcoFactsViewModel(
+class ClimateTipsViewModel(
     private val repo: MyAPIRepository
 ): ViewModel() {
 
-    private val _facts = MutableStateFlow<List<Fact>>(emptyList())
-    val facts = _facts.asStateFlow()
+    private val _tips = MutableStateFlow<List<Tip>>(emptyList())
+    val tips = _tips.asStateFlow()
 
-    private val _randomFact = MutableStateFlow<Fact?>(null)
-    val randomFact = _randomFact.asStateFlow()
+    private val _randomTip = MutableStateFlow<Tip?>(null)
+    val randomTip = _randomTip.asStateFlow()
 
     init {
-        getAllFacts()
+        getAllTips()
     }
 
-    fun getAllFacts() {
+    fun getAllTips() {
         viewModelScope.launch {
             try {
-                _facts.value = repo.getEcoFacts()
+                _tips.value = repo.getClimateTips()
             } catch (e: Exception) {
-                Log.e("EcoFactsViewModel", e.toString())
+                Log.e("ClimateTipsViewModel", e.toString())
             }
         }
     }
 
-
-    fun getRandomFact() {
+    fun getRandomTip() {
         viewModelScope.launch {
             try {
-                _randomFact.value = repo.getRandomEcoFact()
+                _randomTip.value = repo.getRandomClimateTip()
             } catch (e: Exception) {
-                Log.e("EcoFactsViewModel", e.toString())
+                Log.e("ClimateTipsViewModel", e.toString())
             }
         }
     }
-
 }

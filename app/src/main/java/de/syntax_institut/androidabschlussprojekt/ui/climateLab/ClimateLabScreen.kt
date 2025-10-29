@@ -20,8 +20,7 @@ fun ClimateLabScreen(
     onNavigateToCO2QuizResult: () -> Unit
 ) {
     FullScreenBox(
-        bgImage = R.drawable.bg_climatelab,
-        alpha = 1f,
+        bgImage = R.drawable.bg_climatelab2,
         showButton = false
     ) {
         Column(

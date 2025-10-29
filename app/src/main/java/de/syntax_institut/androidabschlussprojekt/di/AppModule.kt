@@ -23,11 +23,13 @@ import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsViewM
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.IdentifySpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection.CollectedSpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavTipViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ImgBBViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -43,7 +45,8 @@ val appModule = module {
     // ----- Questionnaire -----
     single { CO2QuizRepository(androidContext()) }
 
-    viewModelOf(::CO2QuizViewModel)
+    viewModel { CO2QuizViewModel(get()) }
+
 
 
     // ----- My API -----
@@ -63,12 +66,12 @@ val appModule = module {
     single { FavTipRepository(FirebaseFirestore.getInstance()) }
     single { CO2QuizResultRepository(FirebaseFirestore.getInstance()) }
 
-    viewModelOf(:: AuthViewModel)
+    viewModelOf(::AuthViewModel)
     viewModelOf(::UserViewModel)
     viewModelOf(::CollectedSpeciesViewModel)
     viewModelOf(::FavFactViewModel)
     viewModelOf(::FavTipViewModel)
-    viewModelOf(::CO2QuizViewModel)
+    viewModelOf(::CO2QuizResultViewModel)
 
 
     // ----- ImgBB API -----

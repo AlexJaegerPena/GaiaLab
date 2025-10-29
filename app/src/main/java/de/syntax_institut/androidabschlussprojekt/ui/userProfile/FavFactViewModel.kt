@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavFactRepository
-import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import kotlinx.coroutines.launch
 
 class FavFactViewModel(
     private val repo: FavFactRepository,
-    private val userVM: UserViewModel
+    private val authService: AuthService
 ): ViewModel() {
 
     private var userId: String? = null
@@ -21,14 +19,22 @@ class FavFactViewModel(
 
     init {
         viewModelScope.launch {
-            userVM.currentUser.collect { user ->
-                userId = user?.userId
+            authService.authState.collect { user ->
+                userId = user?.uid
                 if (userId != null) {
                     repo.listenToFavorites(userId!!)
                 } else {
                     Log.e("FavFactViewModel", "Kein User angemeldet")
                 }
             }
+        }
+    }
+
+    fun toggleFavorite(isFavorite: Boolean, fact: Fact) {
+        if (isFavorite) {
+            removeFavoriteFact(fact.id)
+        } else {
+            addFavoriteFact(fact.id)
         }
     }
 
@@ -41,6 +47,8 @@ class FavFactViewModel(
         viewModelScope.launch {
             try {
                 repo.addFavoriteFact(uid, factId)
+                Log.d("FavFactViewModel", "addFavorite erfolgreich, userId=$userId, factId=$factId")
+
             } catch (e: Exception) {
                 Log.e("FavFactViewModel", "Fehler beim Hinzufügen des FavFacts: ${e.toString()}")
             }

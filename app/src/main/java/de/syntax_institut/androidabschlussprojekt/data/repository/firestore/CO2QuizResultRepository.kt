@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
 import android.util.Log
+import androidx.compose.runtime.State
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.CO2Result
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,12 +16,15 @@ class CO2QuizResultRepository(
     private val _co2Results = MutableStateFlow(listOf<CO2Result>())
     val co2Results = _co2Results.asStateFlow()
 
-    fun addCO2Result(userId: String, qaPair: Map<String, String>, co2Score: Double) {
+    fun addCO2Result(userId: String, qaPair: Map<Int, Int>, co2Score: Double) {
         val userRef = db
             .collection("users")
             .document(userId)
 
-        val newResult = CO2Result(qaPair = qaPair, co2Score = co2Score)
+        val newResult = CO2Result(
+            qaPair = qaPair.mapKeys { it.key.toString() },  // wegen Firebase - String statt Int als Key benötigt
+            co2Score = co2Score
+        )
         userRef
             .collection(collectionPath)
             .document(newResult.quizId)

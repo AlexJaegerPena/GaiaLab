@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification
 
+import android.R.attr.onClick
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +34,7 @@ fun CollectionIdentifyScreen(
 
     FullScreenBox(
         bgImage = R.drawable.bg_speciescollection,
-        alpha = 1f,
+        buttonTopPadding = 40.dp,
         onClick = { onPopUpBackStack() }
     ) {
 
@@ -42,12 +43,12 @@ fun CollectionIdentifyScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(160.dp))
+            Spacer(modifier = Modifier.height(100.dp))
             CollectionGrid(
                 modifier = Modifier,
                 hazeState = hazeState
             )
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(43.dp))
 
             PhotoIdentification(hazeState = hazeState )
         }

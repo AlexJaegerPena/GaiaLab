@@ -28,7 +28,7 @@ class AuthService {
 
     suspend fun loginUserWithEmail(email: String, password: String): FirebaseUser? {
         val result = auth
-            .createUserWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email, password)
             .await()
         return result.user
     }

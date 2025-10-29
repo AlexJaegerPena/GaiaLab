@@ -17,6 +17,7 @@ class MyAPIRepository(private val api: MyAPIService) {
         return api.getRandomSpeciesFact().data
     }
 
+
     // ----- Climate -----
     suspend fun getClimateFacts(): List<Fact> {
         return api.getClimateFacts().data
@@ -26,15 +27,14 @@ class MyAPIRepository(private val api: MyAPIService) {
         return api.getRandomClimateFact().data
     }
 
-    /*
     suspend fun getClimateTips(): List<Tip> {
-
+        return api.getClimateTips().data
     }
 
     suspend fun getRandomClimateTip(): Tip {
-
+        return api.getRandomClimateTip().data
     }
-     */
+
 
 
     // ----- Eco -----

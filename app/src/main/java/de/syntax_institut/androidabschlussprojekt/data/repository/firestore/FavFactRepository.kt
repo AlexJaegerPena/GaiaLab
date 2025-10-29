@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
 import android.util.Log
+import android.util.Log.e
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.FavoriteFact
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
@@ -18,6 +19,7 @@ class FavFactRepository(
     private val _favFacts = MutableStateFlow(listOf<FavoriteFact>())
     val favFacts = _favFacts.asStateFlow()
 
+
     suspend fun addFavoriteFact(userId: String, factId: Int) {
         val userRef = db
             .collection("users")
@@ -34,20 +36,18 @@ class FavFactRepository(
 
         } catch (e: Exception) {
             Log.e("FavFactRepository", "Fehler beim Speichern: ${e.message}")
-
         }
     }
-
 
     fun removeFavoriteFact(userId: String, factId: Int) {
         val userRef = db
             .collection("users")
             .document(userId)
 
-        userRef
-            .collection(collectionPath)
-            .document(factId.toString())
-            .delete()
+            userRef
+                .collection(collectionPath)
+                .document(factId.toString())
+                .delete()
     }
 
     fun listenToFavorites(userId: String) {

@@ -24,4 +24,4 @@ val EcoYellow40 = Color(0xFFFBC02D)
 // -----------
 val CardContent = Color(0xFF63AEA5)
 val CardCategoryText = Color(0xFFCCEFE3)
-val CardCategoryBg = Color(0xFF62ADA4)
+val CardCategoryBg = Color(0xFFA1D0C9)

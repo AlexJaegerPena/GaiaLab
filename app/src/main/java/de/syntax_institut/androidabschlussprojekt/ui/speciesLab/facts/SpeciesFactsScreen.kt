@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardButtonBar
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardItem
@@ -102,9 +103,8 @@ fun SpeciesFactsScreen(
                     }
                     pagerState.canScrollBackward },
                 onFavClick = {
-                    currentFact?.let { fact ->
-                        if (isFavorite) favFactVM.removeFavoriteFact(currentFact.id)
-                        else  favFactVM.addFavoriteFact(currentFact.id)
+                    currentFact?.let {
+                        favFactVM.toggleFavorite(isFavorite = isFavorite, fact = currentFact)
                     }
                 },
                 onNavigateForward = {

@@ -3,12 +3,17 @@ package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Tip
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavTipRepository
+import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
+import de.syntax_institut.androidabschlussprojekt.service.AuthService
+import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import kotlinx.coroutines.launch
 
 class FavTipViewModel(
     private val repo: FavTipRepository,
-    private val userVM: UserViewModel
+    private val authService: AuthService
 ): ViewModel() {
 
     private var userId: String? = null
@@ -17,14 +22,22 @@ class FavTipViewModel(
 
     init {
         viewModelScope.launch {
-            userVM.currentUser.collect { user ->
-                userId = user?.userId
+            authService.authState.collect { user ->
+                userId = user?.uid
                 if (userId != null) {
                     repo.listenToFavorites(userId!!)
                 } else {
                     Log.e("FavTipViewModel", "Kein User angemeldet.")
                 }
             }
+        }
+    }
+
+    fun toggleFavorite(isFavorite: Boolean, tip: Tip) {
+        if (isFavorite) {
+            removeFavoriteTip(tip.id)
+        } else {
+            addFavoriteTip(tip.id)
         }
     }
 
