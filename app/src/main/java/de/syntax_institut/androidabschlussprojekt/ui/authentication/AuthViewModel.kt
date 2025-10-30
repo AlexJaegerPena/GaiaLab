@@ -21,15 +21,17 @@ class AuthViewModel(val authService: AuthService) : ViewModel() {
     private val _password = MutableStateFlow("")
     val password = _password.asStateFlow()
 
-    private val _error = MutableStateFlow("")
+    private val _error = MutableStateFlow<String?>(null)
     val error =_error.asStateFlow()
 
     private val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()
 
+
     fun registerAndSaveUser(userVM: UserViewModel) {
         viewModelScope.launch {
             _loading.value = true
+            _error.value = null
             try {
                 authService.registerUserWithEmail(email.value, password.value)
                 val firebaseUser = currentUser.value
@@ -52,6 +54,7 @@ class AuthViewModel(val authService: AuthService) : ViewModel() {
     fun login() {
         viewModelScope.launch {
             _loading.value = true
+            _error.value = null
             try {
                 authService.loginUserWithEmail(email.value, password.value)
             } catch (e: Exception) {
@@ -66,11 +69,17 @@ class AuthViewModel(val authService: AuthService) : ViewModel() {
         authService.logoutUser()
     }
 
-    fun onEmailInput(newEmail: String) {
+    fun updateEmail(newEmail: String) {
         _email.value = newEmail
+        clearError()
     }
 
-    fun onPasswordInput(newPassword: String) {
+    fun updatePassword(newPassword: String) {
         _password.value = newPassword
+        clearError()
+    }
+
+    fun clearError() {
+        _error.value = null
     }
 }

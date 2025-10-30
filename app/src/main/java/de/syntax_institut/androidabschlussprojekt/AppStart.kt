@@ -20,10 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.ui.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.ClimateLabScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.ClimateFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips.ClimateTipsScreen
@@ -36,6 +38,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsScr
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.CollectionIdentifyScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ProfileScreen
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import kotlinx.serialization.Serializable
@@ -72,8 +75,6 @@ object CO2QuizWrapperRoute
 @Serializable
 object CO2QuizRoute
 
-@Serializable
-object CO2QuizResultRoute
 
 // Eco
 @Serializable
@@ -103,7 +104,11 @@ enum class TabItem(
 
 
 @Composable
-fun AppStart(modifier: Modifier = Modifier) {
+fun AppStart(
+    modifier: Modifier = Modifier,
+    authVM: AuthViewModel,
+    userVM: UserViewModel
+) {
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(TabItem.HOME) }
     val hazeState = remember { HazeState() }
@@ -130,7 +135,11 @@ fun AppStart(modifier: Modifier = Modifier) {
                 )
             }
             composable<ProfileRoute> {
-                ProfileScreen(onPopUpBackStack = { navController.popBackStack() })
+                ProfileScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    authVM = authVM,
+                    userVM = userVM
+                )
             }
 
             // ----- Species -----
@@ -170,6 +179,7 @@ fun AppStart(modifier: Modifier = Modifier) {
             }
             /*
             composable<CO2QuizRoute> {
+
                 CO2QuizScreen(
                     onNavigateToResult = { navController.navigate(CO2QuizResultRoute)},
                     onNavigateToTips = { navController.navigate(ClimateTipsRoute)},
@@ -226,5 +236,8 @@ fun AppStart(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun AppStartPreview() {
-    AppStart()
+    AppStart(
+        authVM = viewModel(),
+        userVM = viewModel()
+    )
 }

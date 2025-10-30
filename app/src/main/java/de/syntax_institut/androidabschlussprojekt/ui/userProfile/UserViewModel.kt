@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -13,9 +15,11 @@ class UserViewModel(
     private val authService: AuthService
 ): ViewModel() {
 
-    val currentUser = repo.currentUser
 
     private var userId: String? = null
+
+    private val _userName = MutableStateFlow("")
+    val userName = _userName.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -30,7 +34,6 @@ class UserViewModel(
         }
     }
 
-
     fun saveUser(newUser: User) {
         viewModelScope.launch {
             try {
@@ -39,6 +42,10 @@ class UserViewModel(
                 Log.e("UserViewModel", "Fehler beim Speichern des neuen Users: ${e.toString()}")
             }
         }
+    }
+
+    fun updateUsername(newName: String) {
+        _userName.value = newName
     }
 
     fun deleteUser(user: User) {

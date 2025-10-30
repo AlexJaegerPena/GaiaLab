@@ -14,6 +14,7 @@ import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 fun NeonTextField(
     modifier: Modifier = Modifier,
     value: String,
+    readOnly: Boolean = false,
     onValueChange: (String) -> Unit,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
@@ -23,6 +24,7 @@ fun NeonTextField(
     OutlinedTextField(
         modifier = modifier.cardImageBorder(),
         // colors =
+        readOnly = readOnly,
         value = value,
         onValueChange = onValueChange,
         leadingIcon = {

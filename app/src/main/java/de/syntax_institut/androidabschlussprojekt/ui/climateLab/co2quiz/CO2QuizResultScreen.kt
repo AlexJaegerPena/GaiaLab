@@ -1,30 +1,41 @@
 package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
-import android.R.attr.onClick
 import android.util.Log
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Quiz
-import androidx.compose.material3.Button
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material.icons.automirrored.filled.TrendingDown
+import androidx.compose.material.icons.automirrored.outlined.TrendingUp
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.NaturePeople
+import androidx.compose.material.icons.outlined.Public
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.CO2InfoData
+import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.ScoreDisplay
+import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.ScoreEvaluation
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
@@ -34,87 +45,140 @@ import dev.chrisbanes.haze.HazeState
 @Composable
 fun CO2QuizResultScreen(
     modifier: Modifier = Modifier,
-    // onNavigateToCO2Quiz: () -> Unit,
-    // onNavigateToClimateLab: () -> Unit,
     quizVM: CO2QuizViewModel,
     resultVM: CO2QuizResultViewModel,
     hazeState: HazeState
 ) {
 
-    val score by quizVM.score.collectAsState()
     val questions by quizVM.questions.collectAsState()
-    val userResponses by quizVM.userResponses.collectAsState()
+    val lastResult by resultVM.lastResult.collectAsState()
+    var previousResultId by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(questions, userResponses) {
-        quizVM.updateScore()
-    }
+    val infoRowContent: List<CO2InfoData> = listOf(
+        CO2InfoData(Icons.Outlined.Public, "The average global CO₂ footprint per person is approximately 6.4 tons per year."),
+        CO2InfoData(Icons.Outlined.LocationOn, "In Germany, the average CO₂ footprint per person is around 10.4 tons per year."),
+        CO2InfoData(Icons.AutoMirrored.Outlined.TrendingUp, "Qatar has the highest per capita CO₂ footprint worldwide, reaching up to 38.8 tons per year."),
+        CO2InfoData(Icons.AutoMirrored.Filled.TrendingDown, "Countries like Somalia and the Democratic Republic of Congo have the lowest CO₂ footprints, close to 0 tons per person per year."),
+        CO2InfoData(Icons.Outlined.Info, "A person's CO₂ footprint includes:\n" +
+                "• Direct emissions: heating, driving, electricity use\n" +
+                "• Indirect emissions: production of goods, infrastructure, public transport, energy generation\n" +
+                "• Imported emissions: CO₂ from goods produced abroad and consumed locally")
+    )
 
-    LaunchedEffect(score, userResponses) {
-        if (userResponses.isNotEmpty() && score > 0.0) {
-            resultVM.addCO2QuizResult(userResponses, score)
+    LaunchedEffect(lastResult?.quizId) {
+        if (lastResult != null && lastResult!!.quizId != previousResultId) {
+            previousResultId = lastResult!!.quizId
+            Log.d("QuizresultScreen","Neues Result erkannt: ${lastResult!!.co2Score}")
         }
     }
-    /*
-    FullScreenBox(
-        bgImage = R.drawable.bg_co2quiz,
-        buttonTopPadding = 40.dp,
-        onClick = { onNavigateToClimateLab() },
-        showSecondButton = true,
-        onSecondButtonClick = { onNavigateToCO2Quiz() },
-        secondButtonIcon = Icons.Outlined.Quiz
-    ) {
 
-     */
-        Column(
-            modifier = Modifier
-                .height(600.dp)
-                .padding(horizontal = 40.dp)
-                .padding(top = 30.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Result".uppercase(),
-                color = CardContent,
+    Column(
+        modifier = Modifier
+            .height(600.dp)
+            .padding(horizontal = 50.dp)
+            .padding(top = 145.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Your footprint result".uppercase(),
+            color = CardContent,
+            style = MyTypography.titleMedium
+        )
+        if (lastResult != null) {
+            Column(modifier = Modifier.padding(vertical = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(10.dp)) {
+
+                val scoreInTons = lastResult!!.co2Score / 1000
+                val scoreFormatted = String.format("%.2f", scoreInTons)
+                val evaluation = getScoreEvaluation(scoreInTons)
+                val displayScore = ScoreDisplay(scoreInTons, evaluation)
+
+                Row(
+                    modifier = Modifier
+                        .border(width = 2.dp, color = displayScore.evaluation.color, shape = RoundedCornerShape(20.dp))
+                        .padding(20.dp),
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    Text(
+                        (scoreFormatted),
+                        color = displayScore.evaluation.color,
+                        style = MyTypography.titleLarge
+                    )
+                    Text(("/tons CO₂ per year"),
+                        color = displayScore.evaluation.color,
+                        style = MyTypography.bodyMedium
+                    )
+                }
+                Row(modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                    Icon(displayScore.evaluation.icon, contentDescription = null, tint = displayScore.evaluation.color )
+                    Text(displayScore.evaluation.text, color = displayScore.evaluation.color)
+                }
+            }
+        } else {
+            Icon(
+                imageVector = Icons.Outlined.NaturePeople,
+                contentDescription = null,
+                modifier = Modifier.size(60.dp),
+                tint = Color(0xFFEC9F48)
+            )
+            Text("No quiz results yet. Take the quiz to see your footprint.",
+                color = Color(0xFFEC9F48),
                 style = MyTypography.titleLarge,
-                modifier = Modifier.padding(vertical = 5.dp, horizontal = 20.dp)
+                modifier = modifier.padding(start = 16.dp, bottom = 20.dp)
+            )
+        }
+        Text("Did you know?",
+            color = CardContent,
+            style = MyTypography.titleSmall,
+            modifier = Modifier.padding(top = 10.dp, start = 8.dp).align(Alignment.Start)
+        )
+            LazyColumn(
+                modifier = Modifier.height(400.dp)
+            ) {
+                items(items = infoRowContent) { item ->
+                    CO2InfoRow(icon = item.icon, text = item.text)
+                }
+            }
+
+        // TODO: auslagern in Dialog
+            Text(
+                "Your answers:",
+                color = CardContent,
+                style = MyTypography.bodyLarge
             )
 
-            Column(modifier = Modifier
-            ) {
-                Row(modifier = Modifier) {
-                    Text("Your CO² footprint score:")
-                    if (score == 0.0 ) {
-                        LinearProgressIndicator()
-                    } else {
-                        Text(score.toString())
-                    }
-                }
+            val mappedPairs = lastResult?.qaPair?.mapNotNull { (questionId, answerId) ->
+                val question =
+                    questions.find { it.id.toString() == questionId } ?: return@mapNotNull null
+                val answer = question.answers.find { it.id == answerId } ?: return@mapNotNull null
 
-                Text("Your answers:")
-                LazyColumn(modifier = Modifier.height(300.dp)) {
-                    items(questions) { question ->
+                question.text to answer.text
+            } ?: emptyList()
 
-                        val selectedAnswerId = userResponses[question.id]
 
-                        val selectedAnswerText = question.answers
-                            .find { it.id == selectedAnswerId }
-                            ?.text ?: ""
-                        Log.d("QUEST RESULT", "${quizVM.userResponses}")
+            LazyColumn(modifier = Modifier.height(350.dp)) {
 
-                        Text(
-                            text = "Question${question.text}\nAnswer: $selectedAnswerText",
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
-                    }
+                items(items = mappedPairs) { (questionText, answerText) ->
+                    Text(questionText, color = CardContent, style = MyTypography.titleSmall)
+                    Text(answerText, color = CardContent, style = MyTypography.bodyMedium, modifier = modifier.padding(bottom = 10.dp))
                 }
             }
-            Button(onClick = {  resultVM.addCO2QuizResult(userResponses, score)}) {
-                Text("Add result")
-            }
-        }
     }
-// }
+}
+
+private fun getScoreEvaluation(score: Double): ScoreEvaluation {
+    return when {
+        score <= 2.0 -> ScoreEvaluation.EXCELLENT
+        score <= 6.0 -> ScoreEvaluation.GOOD
+        score <= 10.0 -> ScoreEvaluation.FAIR
+        else -> ScoreEvaluation.POOR
+    }
+}
+
 
 
 @Preview(showBackground = true)
@@ -124,7 +188,5 @@ fun CO2ResultScreenPreview() {
         quizVM = viewModel(),
         resultVM = viewModel(),
         hazeState = HazeState()
-        // onNavigateToCO2Quiz = { },
-        // onNavigateToClimateLab = { }
     )
 }

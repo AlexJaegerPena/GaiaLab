@@ -16,6 +16,10 @@ class CO2QuizResultRepository(
     private val _co2Results = MutableStateFlow(listOf<CO2Result>())
     val co2Results = _co2Results.asStateFlow()
 
+    val lastResult: CO2Result?
+        get() = co2Results.value.lastOrNull()
+
+
     fun addCO2Result(userId: String, qaPair: Map<Int, Int>, co2Score: Double) {
         val userRef = db
             .collection("users")

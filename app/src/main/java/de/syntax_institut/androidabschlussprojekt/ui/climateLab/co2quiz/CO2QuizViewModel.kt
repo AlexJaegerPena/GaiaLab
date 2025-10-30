@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Answer
@@ -39,8 +40,19 @@ class CO2QuizViewModel(
         viewModelScope.launch {
             _questions.value = repository.loadCO2Quiz()
         }
-        _actualQuestion.value = _questions.value.first()
+        if (_questions.value.isNotEmpty()) {
+            _actualQuestion.value = _questions.value.first()
+        }
     }
+
+    fun resetQuiz() {
+        _userResponses.value = emptyMap()
+        _score.value = 0.0
+        if (_questions.value.isNotEmpty()) {
+            _actualQuestion.value = _questions.value.first()
+        }
+    }
+
 
     fun nextQuestion() {
         val currentIndex = _questions.value.indexOf(_actualQuestion.value)
@@ -62,12 +74,8 @@ class CO2QuizViewModel(
         }
     }
 
-    fun updateScore() {
-        _score.value = calculateScore()
-    }
-
     fun calculateScore(): Double {
-        var totalScore: Double = 0.0
+        var totalScore = 0.0
 
         _userResponses.value.forEach { (questionId, answerId) ->
 
@@ -80,6 +88,8 @@ class CO2QuizViewModel(
                 totalScore *= answer.factor
             }
         }
-        return totalScore
+        _score.value = totalScore
+        Log.d("CO2QuizViewModel", "Berechneter Score: $totalScore")
+       return totalScore
     }
 }

@@ -1,23 +1,57 @@
 package de.syntax_institut.androidabschlussprojekt.ui.authentication
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.AppStart
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AuthWrapper(
     modifier: Modifier = Modifier,
-    authVM: AuthViewModel = koinViewModel()
+    authVM: AuthViewModel = koinViewModel(),
+    userVM: UserViewModel = koinViewModel(),
 ) {
     val fireUser = authVM.currentUser.collectAsState().value
+    val userName = userVM.userName.collectAsState().value
+
 
     if (fireUser != null) {
-        AppStart(modifier)
+
+        var showAppStart by remember { mutableStateOf(false) }
+
+        LaunchedEffect(fireUser) {
+            delay(2000)
+            showAppStart = true
+        }
+
+        if (showAppStart) {
+            AppStart(
+                modifier = modifier,
+                authVM = authVM,
+                userVM = userVM
+            )
+        } else {
+            WelcomeScreen(
+                userName = userName
+            )
+        }
+
     } else (
-        AuthScreen(modifier)
+        AuthScreen(
+            modifier = modifier,
+            authVM = authVM,
+            userVM = userVM
+        )
     )
 }
 

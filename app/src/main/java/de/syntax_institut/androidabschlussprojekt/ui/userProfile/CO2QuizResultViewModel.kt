@@ -1,13 +1,20 @@
 package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.syntax_institut.androidabschlussprojekt.data.model.firestore.CO2Result
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CO2QuizResultRepository
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import org.koin.core.KoinApplication.Companion.init
 
 class CO2QuizResultViewModel(
     private val repo: CO2QuizResultRepository,
@@ -16,15 +23,31 @@ class CO2QuizResultViewModel(
 
     private var userId: String? = null
 
+    private val _lastResult = MutableStateFlow<CO2Result?>(null)
+    val lastResult = _lastResult.asStateFlow()
+
+    private val _resultSaved = MutableStateFlow(false)
+    val resultSaved = _resultSaved.asStateFlow()
+
     init {
         viewModelScope.launch {
             authService.authState.collect { user ->
                 userId = user?.uid
                 if (userId != null) {
-                    repo.listenToCO2Results(userId!!)
+                    listenToResults(userId!!)
                 } else {
                     Log.e("CO2QuizResultViewModel", "Kein User angemeldet.")
                 }
+            }
+        }
+    }
+
+
+    private fun listenToResults(uid: String) {
+        viewModelScope.launch {
+            repo.listenToCO2Results(uid)
+            repo.co2Results.collect { results -> // abfangen der ergebnisse sobald änderung
+                _lastResult.value = results.lastOrNull() // und speichern des letzten
             }
         }
     }
@@ -38,13 +61,19 @@ class CO2QuizResultViewModel(
         viewModelScope.launch {
             try {
                 repo.addCO2Result(uid, qaPair, co2Score)
+                delay(300)
+                _resultSaved.value = true
             } catch (e: Exception) {
                 Log.e("CO2QuizResultViewModel", "Fehler beim Hinzufügen des Results: ${e.toString()}")
             }
         }
     }
 
-    fun removeFavoriteTip(resultId: String) {
+    fun resetResultSaved() {
+        _resultSaved.value = false
+    }
+
+    fun removeQuizResult(resultId: String) {
         val uid = userId
         if (uid == null) {
             Log.e("CO2QuizResultViewModel", "Kein User angemeldet.")

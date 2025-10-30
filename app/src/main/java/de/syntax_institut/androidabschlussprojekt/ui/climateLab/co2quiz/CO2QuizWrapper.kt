@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -13,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +35,6 @@ fun CO2QuizWrapper(
     onPopUpBackStack: () -> Unit,
     quizVM: CO2QuizViewModel = koinViewModel(),
     resultVM: CO2QuizResultViewModel = koinViewModel()
-
 ) {
 
     val hazeState = remember { HazeState() }
@@ -47,12 +48,12 @@ fun CO2QuizWrapper(
         onSecondButtonClick = { showResult = !showResult },
         secondButtonIcon = if (showResult) { Icons.Outlined.Quiz } else { Icons.Outlined.Leaderboard }
     ) {
-        Column(modifier = Modifier) {
+        Column(modifier = Modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             if (showResult) {
                 CO2QuizResultScreen(
                     modifier = modifier,
-                    // onNavigateToCO2Quiz = { onNavigateToCO2Quiz() },
-                    // onNavigateToClimateLab = { onNavigateToClimateLab() },
                     quizVM = quizVM,
                     resultVM = resultVM,
                     hazeState = hazeState
@@ -61,16 +62,16 @@ fun CO2QuizWrapper(
                 CO2QuizScreen(
                     modifier = modifier,
                     onNavigateToResult = { showResult = true },
-                    // onPopUpBackStack = { onPopUpBackStack() },
                     quizVM = quizVM,
+                    resultVM = resultVM,
                     hazeState = hazeState
                 )
             }
             CustomButton(
                 modifier = Modifier
-                    .height(70.dp)
-                    .width(310.dp)
-                    .padding(start = 8.dp),
+                    .height(140.dp)
+                    .width(280.dp)
+                    .padding(top = 60.dp),
                 hazeState = hazeState,
                 buttonIcon = Icons.Default.Info,
                 buttonText = "Climate tips".uppercase(),

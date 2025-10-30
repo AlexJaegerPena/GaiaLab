@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
+import android.R.attr.name
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,12 +16,14 @@ class UserRepository(
     private val _currentUser = MutableStateFlow<User?>(null)
     val currentUser = _currentUser.asStateFlow()
 
+
     suspend fun createUser(user: User) {
         userRef
             .document(user.userId)
             .set(user)
             .await()
     }
+
 
     suspend fun deleteUser(user: User) {
         userRef

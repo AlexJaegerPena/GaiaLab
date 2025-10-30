@@ -3,6 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 import android.R.attr.onClick
 import android.R.attr.textStyle
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,75 +42,75 @@ import org.koin.androidx.compose.koinViewModel
 fun CO2QuizScreen(
     modifier: Modifier = Modifier,
     onNavigateToResult: () -> Unit,
-   // onPopUpBackStack: () -> Unit,
     quizVM: CO2QuizViewModel,
+    resultVM: CO2QuizResultViewModel,
     hazeState: HazeState
 ) {
 
     val actualQuestion by quizVM.actualQuestion.collectAsState()
+    val userResponses by quizVM.userResponses.collectAsState()
+    // val score by quizVM.score.collectAsState()
+
+    val resultSaved by resultVM.resultSaved.collectAsState()
 
     val question = actualQuestion
     if (question == null) return
 
-/*
-    FullScreenBox(
-        bgImage = R.drawable.bg_co2quiz,
-        buttonTopPadding = 40.dp,
-        onClick = { onPopUpBackStack() },
-        showSecondButton = true,
-        onSecondButtonClick = { onNavigateToResult() },
-        secondButtonIcon = Icons.Default.Leaderboard
-    ) {
 
- */
-        Column( modifier = Modifier
-            .fillMaxWidth()
-            .height(600.dp),
-            verticalArrangement = Arrangement.Top
+    LaunchedEffect(resultSaved) {
+        if (resultSaved) {
+            onNavigateToResult()
+            resultVM.resetResultSaved()
+            quizVM.resetQuiz()
+        }
+    }
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .height(600.dp),
+        verticalArrangement = Arrangement.Top
+    ) {
+        QuestionItem(viewModel = quizVM, question = question)
+        Spacer(modifier = modifier.weight(1f))
+        Row(
+            modifier = Modifier.padding(horizontal = 70.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.Bottom
         ) {
-            QuestionItem(viewModel = quizVM, question = question)
+            CustomButton(
+                modifier = Modifier
+                    .height(25.dp)
+                    .width(54.dp)
+                    .alpha(if (question.id == 1) 0f else 1f),
+                hazeState = hazeState,
+                buttonIcon = Icons.Default.ArrowBackIosNew,
+                buttonText = null,
+                onClick = { quizVM.previousQuestion() }
+            )
             Spacer(modifier = modifier.weight(1f))
-            Row(
-                modifier = Modifier.padding(horizontal = 70.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Bottom
-            ) {
+            if (question.id == 12) {
                 CustomButton(
                     modifier = Modifier
-                        .height(25.dp)
-                        .width(54.dp)
-                        .alpha(
-                            if (question.id == 1) {
-                                0f
-                            } else {
-                                1f
-                            }
-                        ),
+                        .height(40.dp),
                     hazeState = hazeState,
-                    buttonIcon = Icons.Default.ArrowBackIosNew,
-                    buttonText = null,
-                    onClick = { quizVM.previousQuestion() }
+                    buttonIcon = null,
+                    buttonText = "See result",
+                    // enabled = if () { true } else { false },
+                    textStyle = MyTypography.bodyMedium,
+                    glowColor = Color(0xFF58DCB8),
+                    bgColor = Color(0xFF6AE7DB),
+                    bgAlpha = 0.2f,
+                    onClick = {
+                        val finalScore = quizVM.calculateScore()
+                        Log.d("CO2QuizScreen", "Submitting score: $finalScore")
+                        resultVM.addCO2QuizResult(userResponses, finalScore)
+                    }
                 )
-                Spacer(modifier = modifier.weight(1f))
-
-                if (question.id == 12) {
-                    CustomButton(
-                        modifier = Modifier
-                            .height(40.dp),
-                        hazeState = hazeState,
-                        buttonIcon = null,
-                        buttonText = "See result",
-                        textStyle = MyTypography.bodyMedium,
-                        glowColor = Color(0xFF58DCB8),
-                        bgColor = Color(0xFF6AE7DB),
-                        bgAlpha = 0.2f,
-                        onClick = { onNavigateToResult() }
-                    )
-                }
             }
         }
     }
-// }
+}
+
 
 
 @Preview(showBackground = true)
@@ -119,6 +120,7 @@ fun CO2QuizScreenPreview() {
         onNavigateToResult = {},
        // onPopUpBackStack = {},
         quizVM = viewModel(),
+        resultVM = viewModel(),
         hazeState = HazeState()
     )
 }

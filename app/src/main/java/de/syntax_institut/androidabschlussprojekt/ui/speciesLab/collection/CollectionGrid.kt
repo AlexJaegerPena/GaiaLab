@@ -47,12 +47,6 @@ fun CollectionGrid(
             modifier = Modifier
                 .height(511.dp)
         ) {
-            item {
-                Spacer(modifier = Modifier.height(0.dp))
-            }
-            item {
-                Spacer(modifier = Modifier.height(0.dp))
-            }
             items(collectedSpecies.value ) { species ->
                 CollectionItem(species = species, hazeState = hazeState, collectedSpeciesVM = collectedSpeciesVM)
             }
