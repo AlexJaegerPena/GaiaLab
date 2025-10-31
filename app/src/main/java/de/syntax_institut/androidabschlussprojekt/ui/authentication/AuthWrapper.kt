@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.authentication
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +20,7 @@ fun AuthWrapper(
     authVM: AuthViewModel = koinViewModel(),
     userVM: UserViewModel = koinViewModel(),
 ) {
+
     val fireUser = authVM.currentUser.collectAsState().value
     val userName = userVM.userName.collectAsState().value
 
