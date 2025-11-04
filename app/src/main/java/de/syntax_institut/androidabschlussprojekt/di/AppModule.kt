@@ -16,21 +16,17 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavT
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.ClimateFactsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips.ClimateTipsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.TipsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.IdentifySpeciesViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection.CollectedSpeciesViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavTipViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizResultViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.FactsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavFactViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavTipViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ImgBBViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -43,10 +39,12 @@ val appModule = module {
     viewModelOf(:: IdentifySpeciesViewModel)
 
 
-    // ----- Questionnaire -----
+    // ----- CO2Quiz -----
     single { CO2QuizRepository(androidContext()) }
+    single { CO2QuizResultRepository(FirebaseFirestore.getInstance()) }
 
     viewModelOf(::CO2QuizViewModel)
+    viewModelOf(::CO2QuizResultViewModel)
     //viewModel { CO2QuizViewModel(get()) }
 
 
@@ -54,11 +52,8 @@ val appModule = module {
     // ----- My API -----
     single { MyAPIRepository(MYAPI.service) }
 
-    viewModelOf(:: SpeciesFactsViewModel)
-    viewModelOf(:: ClimateFactsViewModel)
-    viewModelOf(:: ClimateTipsViewModel)
-    viewModelOf(:: EcoFactsViewModel)
-    viewModelOf(:: EcoTipsViewModel)
+    viewModelOf(:: TipsViewModel)
+    viewModelOf(:: FactsViewModel)
 
 
     // ----- Firebase -----

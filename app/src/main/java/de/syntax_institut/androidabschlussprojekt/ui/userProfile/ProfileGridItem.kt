@@ -1,20 +1,29 @@
-package de.syntax_institut.androidabschlussprojekt.ui.common.card
+package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 
-
+import android.R.attr.enabled
+import android.R.attr.radius
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EmojiNature
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,24 +48,33 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.ui.theme.ButtonContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
+import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun CardButton(
+fun ProfileGridItem(
     modifier: Modifier = Modifier,
+    hazeState: HazeState,
     buttonIcon: ImageVector?,
-    shape: Shape = RoundedCornerShape(18.dp),
-    glowColor: Color = Color(0xFF6BD7B3),
-    onClick: () -> Unit,
+    buttonText: String?,
+    onClick: () -> Unit
 ) {
 
     var isClicked by remember { mutableStateOf(false) }
+
+    val glowColor = Color(0xFF79ADA9)
+    val shape = RoundedCornerShape(18.dp)
+
 
     val scale by animateFloatAsState(
         targetValue = if (isClicked) 0.9f else 1f,
@@ -77,35 +95,39 @@ fun CardButton(
 
     Box(
         modifier = modifier
+            .background(color = Color.Black.copy(alpha = 0.2f), shape = shape)
             .scale(scale)
-            .clip(shape)
+            .hazeChild(state = hazeState, shape = shape)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF8AECE1).copy(alpha = .8f),
-                        Color(0xFF8AECE1).copy(alpha = .2f),
+                        Color(0xFF6BC6F1).copy(alpha = .8f),
+                        Color(0xFF5DBCCB).copy(alpha = .2f),
                     ),
                 ),
                 shape = shape
             )
-            .clickable(onClick = { isClicked = true }),
+            .clickable(
+                onClick = { isClicked = true }
+            ),
         contentAlignment = Alignment.Center
     ) {
 
         // Glowing background
-        Canvas(
-            modifier = Modifier
-                .matchParentSize()
-                .clip(shape)
-                .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-        ) {
-            drawCircle(
-                color = glowColor.copy(alpha = 0.6f),
-                radius = size.height / 2,
-                center = Offset(size.width / 2, size.height / 2)
-            )
-        }
+            Canvas(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clip(shape)
+                    .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+            ) {
+                drawCircle(
+                    color =Color(0xFF649C9C).copy(alpha = 0.3f),
+                    radius = size.width / 2,
+                    center = Offset(size.width / 2, size.height / 2)
+                )
+            }
+        
 
         // Border glow
         Canvas(
@@ -129,10 +151,10 @@ fun CardButton(
                         glowColor.copy(alpha = 0f),
                     ),
                     startX = 0f,
-                    endX = size.width + 1,
+                    endX = size.width + 4,
                 ),
                 style = Stroke(
-                    width = 6f,
+                    width = 12f,
                     pathEffect = PathEffect.dashPathEffect(
                         intervals = floatArrayOf(length / 2, length)
                     )
@@ -140,19 +162,28 @@ fun CardButton(
             )
         }
 
-        Row(modifier = Modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        Column(modifier = Modifier
+            .padding(10.dp)
+            .aspectRatio(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             buttonIcon?.let {
                 Icon(
-                    modifier = Modifier.padding(horizontal = 20.dp),
+                    modifier = Modifier.size(24.dp),
                     imageVector = it,
                     contentDescription = null,
                     tint = ButtonContent
                 )
             }
-
+            Spacer(modifier = Modifier.height(10.dp))
+            buttonText?.let {
+                Text(
+                    text = buttonText,
+                    style = MyTypography.bodyLarge,
+                    color = ButtonContent
+                )
+            }
         }
     }
 }
@@ -160,10 +191,12 @@ fun CardButton(
 
 @Preview(showBackground = true)
 @Composable
-fun CardButtonPreview() {
-    CardButton(
-        // hazeState = HazeState(),
-        onClick = {},
-        buttonIcon = Icons.Default.EmojiNature,
+fun ProfileGridItemPreview() {
+    ProfileGridItem(
+        hazeState = HazeState(),
+        buttonIcon = Icons.Default.Add,
+        buttonText = "Test",
+        onClick = {}
     )
 }
+

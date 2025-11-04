@@ -1,20 +1,22 @@
-package de.syntax_institut.androidabschlussprojekt.ui.common.card
-
+package de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EmojiNature
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,32 +33,41 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.toRect
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathMeasure
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import de.syntax_institut.androidabschlussprojekt.ui.theme.ButtonContent
+import coil3.compose.AsyncImage
+import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
+import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun CardButton(
+fun FavListItem(
     modifier: Modifier = Modifier,
-    buttonIcon: ImageVector?,
-    shape: Shape = RoundedCornerShape(18.dp),
-    glowColor: Color = Color(0xFF6BD7B3),
+    fact: Fact,
+    hazeState: HazeState,
     onClick: () -> Unit,
 ) {
 
     var isClicked by remember { mutableStateOf(false) }
+
+    val glowColor = Color(0xFF45CDBD)
+    val shape = RoundedCornerShape(18.dp)
 
     val scale by animateFloatAsState(
         targetValue = if (isClicked) 0.9f else 1f,
@@ -77,19 +88,22 @@ fun CardButton(
 
     Box(
         modifier = modifier
+            .background(color = Color.Black.copy(alpha = 0.2f), shape = shape)
             .scale(scale)
-            .clip(shape)
+            .hazeChild(state = hazeState, shape = shape)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF8AECE1).copy(alpha = .8f),
-                        Color(0xFF8AECE1).copy(alpha = .2f),
+                        CardCategoryText.copy(alpha = .8f),
+                        CardCategoryText.copy(alpha = .2f),
                     ),
                 ),
                 shape = shape
             )
-            .clickable(onClick = { isClicked = true }),
+            .clickable(
+                onClick = { isClicked = true }
+            ),
         contentAlignment = Alignment.Center
     ) {
 
@@ -101,11 +115,12 @@ fun CardButton(
                 .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
         ) {
             drawCircle(
-                color = glowColor.copy(alpha = 0.6f),
-                radius = size.height / 2,
+                color = glowColor.copy(alpha = 0.3f),
+                radius = size.width / 2,
                 center = Offset(size.width / 2, size.height / 2)
             )
         }
+
 
         // Border glow
         Canvas(
@@ -129,10 +144,10 @@ fun CardButton(
                         glowColor.copy(alpha = 0f),
                     ),
                     startX = 0f,
-                    endX = size.width + 1,
+                    endX = size.width + 4,
                 ),
                 style = Stroke(
-                    width = 6f,
+                    width = 12f,
                     pathEffect = PathEffect.dashPathEffect(
                         intervals = floatArrayOf(length / 2, length)
                     )
@@ -140,30 +155,36 @@ fun CardButton(
             )
         }
 
-        Row(modifier = Modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            buttonIcon?.let {
-                Icon(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    imageVector = it,
-                    contentDescription = null,
-                    tint = ButtonContent
+
+            Row(
+                modifier = Modifier.cardImageBorder().padding(10.dp)
+            ) {
+                AsyncImage(
+                    model = fact.imageUrl,
+                    modifier = Modifier
+                        .height(100.dp)
+                        .width(100.dp)
+                        .cardImageBorder()
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "Image for ${fact.title}",
+                    colorFilter = ColorFilter.tint(color = Color.Black.copy(alpha = 0.2f), blendMode = BlendMode.Darken),
+                    placeholder = painterResource(id = R.drawable.bg_home), // TODO: loading Placeholder image
+                    error = painterResource(id = R.drawable.bg_home), // TODO: error placeholder image
                 )
+                Text(fact.title)
             }
 
-        }
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun CardButtonPreview() {
-    CardButton(
-        // hazeState = HazeState(),
-        onClick = {},
-        buttonIcon = Icons.Default.EmojiNature,
+fun FavListItemPreview() {
+    FavListItem(
+        fact = Fact(1, "text", "text", "category", "url", "url"),
+        hazeState = HazeState(),
+        onClick = {}
     )
 }

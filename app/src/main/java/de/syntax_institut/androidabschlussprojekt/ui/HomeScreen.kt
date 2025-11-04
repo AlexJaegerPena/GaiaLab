@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,40 +51,48 @@ fun HomeScreen(
         Box(modifier = Modifier,
             contentAlignment = Alignment.TopCenter) {
             Box(
-                modifier = Modifier.padding(top = 40.dp, start = 70.dp)
-                    .width(160.dp)
+                modifier = Modifier.padding(top = 30.dp, start = 70.dp)
+                    .width(170.dp)
                     .height(90.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(color = Color.Red.copy(alpha = 0.5f))
+                   // .background(color = Color.Red.copy(alpha = 0.5f))
                     .clickable(onClick = {onNavigateToClimateZone()})
             )
             Box(
-                modifier = Modifier.padding(top = 140.dp, end = 240.dp)
+                modifier = Modifier.padding(top = 130.dp, end = 250.dp)
                     .width(120.dp)
                     .height(70.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(color = Color.Red.copy(alpha = 0.5f))
+                    //.background(color = Color.Red.copy(alpha = 0.5f))
                     .clickable(onClick = {onNavigateToSpeciesLab()})
             )
             Box(
                 modifier = Modifier.padding(top = 150.dp, start = 270.dp)
-                    .width(100.dp)
+                    .width(110.dp)
                     .height(60.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(color = Color.Red.copy(alpha = 0.5f))
+                    //.background(color = Color.Red.copy(alpha = 0.5f))
                     .clickable(onClick = {onNavigateToEcoHub()})
             )
             Box(
                 modifier = Modifier.padding(top = 330.dp, start = 10.dp)
                     .width(160.dp)
-                    .height(280.dp)
+                    .height(290.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(color = Color.Red.copy(alpha = 0.5f))
+                    //.background(color = Color.Red.copy(alpha = 0.5f))
                     .clickable(onClick = {onNavigateToProfile()}),
                 contentAlignment = Alignment.Center
             ) {
+                Icon(
+                    imageVector = Icons.Default.Explore,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(bottom = 80.dp)
+                        .size(40.dp),
+                    tint = CardContent
+                )
                 Text("My discoveries".uppercase(),
-                    style = MyTypography.titleLarge,
+                    style = MyTypography.titleSmall,
                     color = CardContent,
                     textAlign = TextAlign.Center,
                 )

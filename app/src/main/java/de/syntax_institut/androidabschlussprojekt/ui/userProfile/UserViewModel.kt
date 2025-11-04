@@ -7,7 +7,10 @@ import de.syntax_institut.androidabschlussprojekt.data.model.firestore.User
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -18,8 +21,8 @@ class UserViewModel(
 
     private var userId: String? = null
 
-    private val _userName = MutableStateFlow("")
-    val userName = _userName.asStateFlow()
+    val username = repo.currentUser.map { it?.username ?: "" }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     init {
         viewModelScope.launch {
@@ -45,10 +48,27 @@ class UserViewModel(
     }
 
     fun updateUsername(newName: String) {
-        _userName.value = newName
+        val uid = userId
+        if (uid == null) {
+            Log.e("UserViewModel", "Kein User angemeldet")
+            return
+        }
+        viewModelScope.launch {
+            try {
+                repo.updateUsername(uid, newName)
+                Log.d("UserViewModel", "Username gespeichert: $newName")
+            } catch (e: Exception) {
+                Log.e("UserViewModel", "Fehler beim Update: ${e.toString()}")
+            }
+        }
     }
 
     fun deleteUser(user: User) {
+        val uid = userId
+        if (uid == null) {
+            Log.e("UserViewModel", "Kein User angemeldet")
+            return
+        }
         viewModelScope.launch {
             try {
                 repo.deleteUser(user)

@@ -1,14 +1,11 @@
-package de.syntax_institut.androidabschlussprojekt.ui.userProfile
+package de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Tip
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.FavTipRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
-import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import kotlinx.coroutines.launch
 
 class FavTipViewModel(

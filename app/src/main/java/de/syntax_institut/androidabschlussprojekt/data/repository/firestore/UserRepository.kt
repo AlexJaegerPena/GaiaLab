@@ -24,6 +24,13 @@ class UserRepository(
             .await()
     }
 
+    suspend fun updateUsername(userId: String, username: String) {
+        userRef
+            .document(userId)
+            .update("username", username)
+            .await()
+    }
+
 
     suspend fun deleteUser(user: User) {
         userRef

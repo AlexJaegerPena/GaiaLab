@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts
+package de.syntax_institut.androidabschlussprojekt.ui.climateLab
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -23,41 +24,48 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardButtonBar
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardItem
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.TipsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavTipViewModel
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun EcoFactsScreen(
+fun ClimateTipsScreen(
     modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
-    ecoFactsVM: EcoFactsViewModel = koinViewModel(),
-    favFactVM: FavFactViewModel = koinViewModel()
+    tipsVM: TipsViewModel = koinViewModel(),
+    category: String,
+    favTipVM: FavTipViewModel = koinViewModel()
 ) {
 
-    val facts = ecoFactsVM.facts.collectAsState().value
+    LaunchedEffect(category) {
+        tipsVM.setCategory(category)
+    }
+
+    val tips = tipsVM.tips.collectAsState().value
 
     val hazeState = remember { HazeState() }
-    val pagerState = rememberPagerState(pageCount = { facts.size })
+    val pagerState = rememberPagerState(pageCount = { tips.size })
     val animationScope = rememberCoroutineScope()
 
-    val currentFact = facts.getOrNull(pagerState.currentPage)
+    val currentTip = tips.getOrNull(pagerState.currentPage)
 
-    val favIds = favFactVM.favFacts.collectAsState().value.map { it.id } // alle ids holen
-    val isFavorite = currentFact?.id in favIds
+    val favIds = favTipVM.favTips.collectAsState().value.map { it.id } // alle ids holen
+    val isFavorite = currentTip?.id in favIds
 
-    if (facts.isEmpty()) {
-        FullScreenBox(bgImage = R.drawable.bg_ecofacts,
+    if (tips.isEmpty()) {
+        FullScreenBox(
+            bgImage = R.drawable.bg_climatetips,
             alpha = 1f,
             onClick = { onPopUpBackStack() }
         ) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Lade Daten ...", color = Color.White)
+                Text("Lade Daten ...", color = CardContent)
                 CircularProgressIndicator(color = CardContent)
             }
         }
@@ -65,7 +73,7 @@ fun EcoFactsScreen(
     }
 
     FullScreenBox(
-        bgImage = R.drawable.bg_ecofacts,
+        bgImage = R.drawable.bg_climatetips,
         alpha = 1f,
         onClick = { onPopUpBackStack() }
     ) {
@@ -80,7 +88,7 @@ fun EcoFactsScreen(
                 pageSpacing = 12.dp
             ) { page ->
                 CardItem(
-                    data = facts[page],
+                    data = tips[page],
                     pagerState = pagerState,
                     page = page,
                     isFavorite = isFavorite
@@ -90,7 +98,7 @@ fun EcoFactsScreen(
                 modifier = Modifier
                     .padding(top = 4.dp)
                     .align(Alignment.CenterHorizontally),
-                hazeState = hazeState,
+               hazeState = hazeState,
                 onNavigateBack = {
                     if (pagerState.canScrollBackward) {
                         animationScope.launch {
@@ -99,8 +107,8 @@ fun EcoFactsScreen(
                     }
                     pagerState.canScrollBackward },
                 onFavClick = {
-                    currentFact?.let {
-                       favFactVM.toggleFavorite(isFavorite = isFavorite, fact = currentFact)
+                    currentTip?.let {
+                        favTipVM.toggleFavorite(isFavorite = isFavorite, tip = currentTip)
                     }
                 },
                 onNavigateForward = {
@@ -119,6 +127,6 @@ fun EcoFactsScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun EcoFactsScreenPreview() {
-    EcoFactsScreen(onPopUpBackStack = {})
+fun ClimateTipsScreenPreview() {
+    ClimateTipsScreen(onPopUpBackStack = {}, category = "climate")
 }

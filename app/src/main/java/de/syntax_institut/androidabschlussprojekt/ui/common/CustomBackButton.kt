@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.common
 
+import android.widget.Button
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -46,6 +47,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.ui.theme.ButtonContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
@@ -88,7 +90,7 @@ fun CustomBackButton(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        CardCategoryText.copy(alpha = .8f),
+                        ButtonContent.copy(alpha = .8f),
                         CardCategoryText.copy(alpha = .2f),
                     ),
                 ),
@@ -149,7 +151,7 @@ fun CustomBackButton(
             modifier = Modifier.padding(5.dp),
             imageVector = Icons.Default.ArrowBackIosNew,
             contentDescription = null,
-            tint = CardCategoryText
+            tint = ButtonContent
         )
     }
 }

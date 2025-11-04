@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts
+package de.syntax_institut.androidabschlussprojekt.ui.ecoLab
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,27 +20,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardButtonBar
 import de.syntax_institut.androidabschlussprojekt.ui.common.card.CardItem
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.FavFactViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavFactViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
+import de.syntax_institut.androidabschlussprojekt.ui.FactsViewModel
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun SpeciesFactsScreen(
+fun EcoFactsScreen(
     modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
-    speciesFactsVM: SpeciesFactsViewModel = koinViewModel(),
+    factsVM: FactsViewModel = koinViewModel(),
+    category: String,
     favFactVM: FavFactViewModel = koinViewModel()
 ) {
 
-    val facts = speciesFactsVM.facts.collectAsState().value
+    LaunchedEffect(category) {
+        factsVM.setCategory(category)
+    }
+
+    val facts = factsVM.facts.collectAsState().value
 
     val hazeState = remember { HazeState() }
     val pagerState = rememberPagerState(pageCount = { facts.size })
@@ -50,18 +56,15 @@ fun SpeciesFactsScreen(
     val favIds = favFactVM.favFacts.collectAsState().value.map { it.id } // alle ids holen
     val isFavorite = currentFact?.id in favIds
 
-
     if (facts.isEmpty()) {
-        FullScreenBox(
-            bgImage = R.drawable.bg_speciesfacts,
+        FullScreenBox(bgImage = R.drawable.bg_ecofacts,
             alpha = 1f,
             onClick = { onPopUpBackStack() }
         ) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Lade Daten ...", color = Color.White)
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Lade Daten ...", color = CardContent)
                 CircularProgressIndicator(color = CardContent)
             }
         }
@@ -69,7 +72,7 @@ fun SpeciesFactsScreen(
     }
 
     FullScreenBox(
-        bgImage = R.drawable.bg_speciesfacts,
+        bgImage = R.drawable.bg_ecofacts,
         alpha = 1f,
         onClick = { onPopUpBackStack() }
     ) {
@@ -104,7 +107,7 @@ fun SpeciesFactsScreen(
                     pagerState.canScrollBackward },
                 onFavClick = {
                     currentFact?.let {
-                        favFactVM.toggleFavorite(isFavorite = isFavorite, fact = currentFact)
+                       favFactVM.toggleFavorite(isFavorite = isFavorite, fact = currentFact)
                     }
                 },
                 onNavigateForward = {
@@ -123,6 +126,6 @@ fun SpeciesFactsScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun SpeciesFactsScreenPreview() {
-    SpeciesFactsScreen(onPopUpBackStack = { } )
+fun EcoFactsScreenPreview() {
+    EcoFactsScreen(onPopUpBackStack = {}, category = "eco")
 }

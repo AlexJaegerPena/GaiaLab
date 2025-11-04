@@ -1,20 +1,15 @@
-package de.syntax_institut.androidabschlussprojekt.ui.userProfile
+package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.CO2Result
 import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.CO2QuizResultRepository
-import de.syntax_institut.androidabschlussprojekt.data.repository.firestore.UserRepository
 import de.syntax_institut.androidabschlussprojekt.service.AuthService
-import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
-import org.koin.core.KoinApplication.Companion.init
 
 class CO2QuizResultViewModel(
     private val repo: CO2QuizResultRepository,

@@ -35,7 +35,7 @@ fun CO2InfoRow(
         Text(
             text = text,
             color = CardContent,
-            style = MyTypography.bodyLarge
+            style = MyTypography.bodyMedium
         )
     }
 }

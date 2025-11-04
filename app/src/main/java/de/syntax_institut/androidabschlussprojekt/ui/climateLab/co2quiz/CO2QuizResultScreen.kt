@@ -12,12 +12,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.TrendingDown
-import androidx.compose.material.icons.automirrored.outlined.TrendingUp
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.NaturePeople
-import androidx.compose.material.icons.outlined.Public
+import androidx.compose.material.icons.outlined.Quiz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,37 +29,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.CO2InfoData
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.ScoreDisplay
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.ScoreEvaluation
+import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.infoRowContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
 import dev.chrisbanes.haze.HazeState
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun CO2QuizResultScreen(
     modifier: Modifier = Modifier,
-    quizVM: CO2QuizViewModel,
-    resultVM: CO2QuizResultViewModel,
-    hazeState: HazeState
+    onNavigateToTips: () -> Unit,
+    onPopupBackStack: () -> Unit,
+    onSecondButtonClick: () -> Unit,
+    quizVM: CO2QuizViewModel = koinViewModel(),
+    resultVM: CO2QuizResultViewModel = koinViewModel(),
 ) {
 
     val questions by quizVM.questions.collectAsState()
     val lastResult by resultVM.lastResult.collectAsState()
+
     var previousResultId by remember { mutableStateOf<String?>(null) }
 
-    val infoRowContent: List<CO2InfoData> = listOf(
-        CO2InfoData(Icons.Outlined.Public, "The average global CO₂ footprint per person is approximately 6.4 tons per year."),
-        CO2InfoData(Icons.Outlined.LocationOn, "In Germany, the average CO₂ footprint per person is around 10.4 tons per year."),
-        CO2InfoData(Icons.AutoMirrored.Outlined.TrendingUp, "Qatar has the highest per capita CO₂ footprint worldwide, reaching up to 38.8 tons per year."),
-        CO2InfoData(Icons.AutoMirrored.Filled.TrendingDown, "Countries like Somalia and the Democratic Republic of Congo have the lowest CO₂ footprints, close to 0 tons per person per year."),
-        CO2InfoData(Icons.Outlined.Info, "A person's CO₂ footprint includes:\n" +
-                "• Direct emissions: heating, driving, electricity use\n" +
-                "• Indirect emissions: production of goods, infrastructure, public transport, energy generation\n" +
-                "• Imported emissions: CO₂ from goods produced abroad and consumed locally")
-    )
+    val hazeState = remember { HazeState() }
+
 
     LaunchedEffect(lastResult?.quizId) {
         if (lastResult != null && lastResult!!.quizId != previousResultId) {
@@ -72,70 +63,79 @@ fun CO2QuizResultScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .height(600.dp)
-            .padding(horizontal = 50.dp)
-            .padding(top = 145.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    CO2ScreenBox(
+        onNavigateToTips = { onNavigateToTips() },
+        onPopupBackStack = { onPopupBackStack() },
+        onSecondButtonClick = { onSecondButtonClick() },
+        quizVM = quizVM,
+        resultVM = resultVM,
+        secondButtonIcon = Icons.Outlined.Quiz,
+        hazeState = hazeState
     ) {
-        Text(
-            text = "Your footprint result".uppercase(),
-            color = CardContent,
-            style = MyTypography.titleMedium
-        )
-        if (lastResult != null) {
-            Column(modifier = Modifier.padding(vertical = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(
+            modifier = Modifier
+                .height(600.dp)
+                .padding(horizontal = 50.dp)
+                .padding(top = 145.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Your footprint result".uppercase(),
+                color = CardContent,
+                style = MyTypography.titleMedium
+            )
+            if (lastResult != null) {
+                Column(modifier = Modifier.padding(vertical = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)) {
 
-                val scoreInTons = lastResult!!.co2Score / 1000
-                val scoreFormatted = String.format("%.2f", scoreInTons)
-                val evaluation = getScoreEvaluation(scoreInTons)
-                val displayScore = ScoreDisplay(scoreInTons, evaluation)
+                    val scoreInTons = lastResult!!.co2Score / 1000
+                    val scoreFormatted = String.format("%.2f", scoreInTons)
+                    val evaluation = getScoreEvaluation(scoreInTons)
+                    val displayScore = ScoreDisplay(scoreInTons, evaluation)
 
-                Row(
-                    modifier = Modifier
-                        .border(width = 2.dp, color = displayScore.evaluation.color, shape = RoundedCornerShape(20.dp))
-                        .padding(20.dp),
-                    verticalAlignment = Alignment.Bottom,
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    Text(
-                        (scoreFormatted),
-                        color = displayScore.evaluation.color,
-                        style = MyTypography.titleLarge
-                    )
-                    Text(("/tons CO₂ per year"),
-                        color = displayScore.evaluation.color,
-                        style = MyTypography.bodyMedium
-                    )
+                    Row(
+                        modifier = Modifier
+                            .border(width = 2.dp, color = displayScore.evaluation.color, shape = RoundedCornerShape(20.dp))
+                            .padding(20.dp),
+                        verticalAlignment = Alignment.Bottom,
+                        horizontalArrangement = Arrangement.spacedBy(5.dp)
+                    ) {
+                        Text(
+                            (scoreFormatted),
+                            color = displayScore.evaluation.color,
+                            style = MyTypography.titleLarge
+                        )
+                        Text(("/tons CO₂ per year"),
+                            color = displayScore.evaluation.color,
+                            style = MyTypography.bodyMedium
+                        )
+                    }
+                    Row(modifier = Modifier,
+                        horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                        Icon(displayScore.evaluation.icon, contentDescription = null, tint = displayScore.evaluation.color )
+                        Text(displayScore.evaluation.text, color = displayScore.evaluation.color)
+                    }
                 }
-                Row(modifier = Modifier,
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                    Icon(displayScore.evaluation.icon, contentDescription = null, tint = displayScore.evaluation.color )
-                    Text(displayScore.evaluation.text, color = displayScore.evaluation.color)
-                }
+            } else {
+                Icon(
+                    imageVector = Icons.Outlined.NaturePeople,
+                    contentDescription = null,
+                    modifier = Modifier.size(60.dp),
+                    tint = Color(0xFFEC9F48)
+                )
+                Text("No quiz results yet. Take the quiz to see your footprint.",
+                    color = Color(0xFFEC9F48),
+                    style = MyTypography.titleLarge,
+                    modifier = modifier.padding(start = 16.dp, bottom = 20.dp)
+                )
             }
-        } else {
-            Icon(
-                imageVector = Icons.Outlined.NaturePeople,
-                contentDescription = null,
-                modifier = Modifier.size(60.dp),
-                tint = Color(0xFFEC9F48)
+            Text("Did you know?",
+                color = CardContent,
+                style = MyTypography.titleSmall,
+                modifier = Modifier.padding(top = 10.dp, start = 8.dp).align(Alignment.Start)
             )
-            Text("No quiz results yet. Take the quiz to see your footprint.",
-                color = Color(0xFFEC9F48),
-                style = MyTypography.titleLarge,
-                modifier = modifier.padding(start = 16.dp, bottom = 20.dp)
-            )
-        }
-        Text("Did you know?",
-            color = CardContent,
-            style = MyTypography.titleSmall,
-            modifier = Modifier.padding(top = 10.dp, start = 8.dp).align(Alignment.Start)
-        )
             LazyColumn(
                 modifier = Modifier.height(400.dp)
             ) {
@@ -143,8 +143,12 @@ fun CO2QuizResultScreen(
                     CO2InfoRow(icon = item.icon, text = item.text)
                 }
             }
+    }
+
+
 
         // TODO: auslagern in Dialog
+        /*
             Text(
                 "Your answers:",
                 color = CardContent,
@@ -167,6 +171,8 @@ fun CO2QuizResultScreen(
                     Text(answerText, color = CardContent, style = MyTypography.bodyMedium, modifier = modifier.padding(bottom = 10.dp))
                 }
             }
+
+         */
     }
 }
 
@@ -185,8 +191,10 @@ private fun getScoreEvaluation(score: Double): ScoreEvaluation {
 @Composable
 fun CO2ResultScreenPreview() {
     CO2QuizResultScreen(
+        onNavigateToTips = {},
+        onPopupBackStack = {},
+        onSecondButtonClick = {},
         quizVM = viewModel(),
         resultVM = viewModel(),
-        hazeState = HazeState()
     )
 }

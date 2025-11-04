@@ -20,25 +20,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.ui.HomeScreen
-import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.climateLab.ClimateLabScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateFacts.ClimateFactsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.climateTips.ClimateTipsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizWrapper
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.ClimateFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.ClimateTipsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizResultScreen
+import de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz.CO2QuizScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesLabScreen
 import de.syntax_institut.androidabschlussprojekt.ui.common.bottomBar.GlassmorphicBottomBar
 import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.EcoLabScreen
-import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoTips.EcoTipsScreen
-import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.ecoFacts.EcoFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.EcoTipsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.ecoLab.EcoFactsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification.CollectionIdentifyScreen
-import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.facts.SpeciesFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.SpeciesFactsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavFactScreen
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ProfileScreen
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.UserViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavTipsScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import kotlinx.serialization.Serializable
@@ -48,6 +48,12 @@ object HomeRoute
 
 @Serializable
 object ProfileRoute
+
+@Serializable
+object FavFactsRoute
+
+@Serializable
+object FavTipsRoute
 
 // Species
 @Serializable
@@ -70,10 +76,10 @@ object ClimateFactsRoute
 object ClimateTipsRoute
 
 @Serializable
-object CO2QuizWrapperRoute
+object CO2QuizRoute
 
 @Serializable
-object CO2QuizRoute
+object CO2QuizResultRoute
 
 
 // Eco
@@ -106,8 +112,6 @@ enum class TabItem(
 @Composable
 fun AppStart(
     modifier: Modifier = Modifier,
-    authVM: AuthViewModel,
-    userVM: UserViewModel
 ) {
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(TabItem.HOME) }
@@ -128,29 +132,50 @@ fun AppStart(
         ) {
             composable<HomeRoute> {
                 HomeScreen(
-                    onNavigateToSpeciesLab = { navController.navigate(SpeciesLabRoute)},
-                    onNavigateToClimateZone = { navController.navigate(ClimateLabRoute)},
-                    onNavigateToEcoHub = { navController.navigate(EcoLabRoute)},
-                    onNavigateToProfile = { navController.navigate(ProfileRoute)}
+                    onNavigateToSpeciesLab = { navController.navigate(SpeciesLabRoute) },
+                    onNavigateToClimateZone = { navController.navigate(ClimateLabRoute) },
+                    onNavigateToEcoHub = { navController.navigate(EcoLabRoute) },
+                    onNavigateToProfile = { navController.navigate(ProfileRoute) }
                 )
             }
             composable<ProfileRoute> {
                 ProfileScreen(
                     onPopUpBackStack = { navController.popBackStack() },
-                    authVM = authVM,
-                    userVM = userVM
+                    onShowCO2Result = { navController.navigate(CO2QuizResultRoute) },
+                    onShowSpecies = { navController.navigate(SpeciesIdentRoute) },
+                    onShowFavFacts = { navController.navigate(FavFactsRoute) },
+                    onShowFavTips = { },
+                   // authVM = authVM,
+                    // userVM = userVM
                 )
             }
+            composable<FavFactsRoute> {
+                FavFactScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "all"
+                )
+            }
+            composable<FavTipsRoute> {
+                FavTipsScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "all"
+                )
+            }
+
+
 
             // ----- Species -----
             composable<SpeciesLabRoute> {
                 SpeciesLabScreen(
-                    onNavigateToFacts = { navController.navigate(SpeciesFactsRoute)},
-                    onNavigateToIdentSpecies = { navController.navigate(SpeciesIdentRoute)}
+                    onNavigateToFacts = { navController.navigate(SpeciesFactsRoute) },
+                    onNavigateToIdentSpecies = { navController.navigate(SpeciesIdentRoute) }
                 )
             }
             composable<SpeciesFactsRoute> {
-                SpeciesFactsScreen(onPopUpBackStack = { navController.popBackStack() })
+                SpeciesFactsScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "species"
+                )
             }
             composable<SpeciesIdentRoute> {
                 CollectionIdentifyScreen(onPopUpBackStack = { navController.popBackStack() })
@@ -159,53 +184,55 @@ fun AppStart(
             // ----- Climate -----
             composable<ClimateLabRoute> {
                 ClimateLabScreen(
-                    onNavigateToFacts = { navController.navigate(ClimateFactsRoute)},
-                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizWrapperRoute)},
-                    onNavigateToTips = { navController.navigate(ClimateTipsRoute)},
-                    // onNavigateToCO2QuizResult = { navController.navigate(CO2QuizResultRoute)}
+                    onNavigateToFacts = { navController.navigate(ClimateFactsRoute) },
+                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizRoute) }
                 )
             }
             composable<ClimateFactsRoute> {
-                ClimateFactsScreen(onPopUpBackStack = { navController.popBackStack() })
-            }
-            composable<ClimateTipsRoute> {
-                ClimateTipsScreen(onPopUpBackStack = { navController.popBackStack() })
-            }
-            composable<CO2QuizWrapperRoute> {
-                CO2QuizWrapper(
-                    onNavigateToTips = { navController.navigate(ClimateTipsRoute)},
-                    onPopUpBackStack = { navController.popBackStack()}
+                ClimateFactsScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "climate"
                 )
             }
-            /*
+            composable<ClimateTipsRoute> {
+                ClimateTipsScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "climate"
+                )
+            }
             composable<CO2QuizRoute> {
-
                 CO2QuizScreen(
-                    onNavigateToResult = { navController.navigate(CO2QuizResultRoute)},
-                    onNavigateToTips = { navController.navigate(ClimateTipsRoute)},
-                    onPopUpBackStack = { navController.popBackStack() }
+                    onNavigateToTips = { navController.navigate(ClimateTipsRoute) },
+                    onPopupBackStack = {  navController.popBackStack() },
+                    onSecondButtonClick = { navController.navigate(CO2QuizResultRoute) }
                 )
             }
             composable<CO2QuizResultRoute> {
                 CO2QuizResultScreen(
-                    onNavigateToCO2Quiz = { navController.navigate(CO2QuizRoute)},
-                    onNavigateToClimateLab = { navController.navigate(ClimateLabRoute)},
+                    onNavigateToTips = { navController.navigate(ClimateTipsRoute) },
+                    onPopupBackStack = {  navController.popBackStack() },
+                    onSecondButtonClick = { navController.navigate(CO2QuizRoute) }
                 )
             }
-             */
 
             // ----- Eco -----
             composable<EcoLabRoute> {
                 EcoLabScreen(
-                    onNavigateToFacts = { navController.navigate(EcoFactsRoute)},
-                    onNavigateToTips = { navController.navigate(EcoTipsRoute)},
+                    onNavigateToFacts = { navController.navigate(EcoFactsRoute) },
+                    onNavigateToTips = { navController.navigate(EcoTipsRoute) }
                 )
             }
             composable<EcoFactsRoute> {
-                EcoFactsScreen(onPopUpBackStack = { navController.popBackStack() })
+                EcoFactsScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "eco"
+                )
             }
             composable<EcoTipsRoute> {
-                EcoTipsScreen(onPopUpBackStack = { navController.popBackStack() })
+                EcoTipsScreen(
+                    onPopUpBackStack = { navController.popBackStack() },
+                    category = "eco"
+                )
             }
         }
 
@@ -236,8 +263,5 @@ fun AppStart(
 @Preview(showBackground = true)
 @Composable
 fun AppStartPreview() {
-    AppStart(
-        authVM = viewModel(),
-        userVM = viewModel()
-    )
+    AppStart()
 }

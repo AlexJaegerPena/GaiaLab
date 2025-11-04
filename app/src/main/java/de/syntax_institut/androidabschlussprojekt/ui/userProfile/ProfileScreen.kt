@@ -1,19 +1,17 @@
 package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 
+import android.R.attr.bottom
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,29 +19,39 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.common.CustomTextField
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
-import de.syntax_institut.androidabschlussprojekt.ui.common.NeonTextField
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
+import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
+import dev.chrisbanes.haze.HazeState
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    authVM: AuthViewModel,
-    userVM: UserViewModel,
-    onPopUpBackStack: () -> Unit
+    authVM: AuthViewModel = koinViewModel(),
+    userVM: UserViewModel = koinViewModel(),
+    onPopUpBackStack: () -> Unit,
+    onShowCO2Result: () -> Unit,
+    onShowSpecies: () -> Unit,
+    onShowFavFacts: () -> Unit,
+    onShowFavTips: () -> Unit
 ) {
-    val email = authVM.email.collectAsState().value
-    val password = authVM.password.collectAsState().value
-    val userName = userVM.userName.collectAsState().value
-    var error = authVM.error.collectAsState().value
 
-    var readOnly by remember { mutableStateOf(true)}
+    val username by userVM.username.collectAsState()
+
+    var newUsername by remember(username) {mutableStateOf(username)} // remember(username) um namen zu aktualisieren
+
+    var enabled by remember { mutableStateOf(false)}
+    val hazeState = remember { HazeState() }
 
     FullScreenBox(
         bgImage = R.drawable.bg_profile,
@@ -51,61 +59,49 @@ fun ProfileScreen(
         showSecondButton = true,
         secondButtonIcon = Icons.AutoMirrored.Filled.Logout,
         secondButtonText = "Exit",
-        buttonTopPadding = 20.dp,
+        buttonTopPadding = 55.dp,
         onSecondButtonClick = { authVM.logout() }
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 50.dp)
+                .padding(top = 180.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("${username}'s log".uppercase(),
+                style = MyTypography.titleLarge,
+                color = CardContent
+            )
             Column(modifier = modifier) {
-                IconButton(
-                    onClick = { readOnly = !readOnly }
-                ) {
-                    Icon(if (readOnly) Icons.Default.Edit else Icons.Default.Check,
-                        contentDescription = "edit"
+                CustomTextField(
+                    modifier = modifier,
+                    value = newUsername,
+                    enabled = enabled,
+                    onValueChange = { newUsername = it },
+                    leadingIcon = Icons.Default.Person,
+                    trailingIcon = if (enabled) Icons.Default.Check else Icons.Default.Edit,
+                    onTrailingIconClick = {
+                        if (enabled) {
+                            userVM.updateUsername(newUsername)
+                        }
+                        enabled = !enabled
+                    },
+                    placeholder = { "Name" },
+                    hazeState = hazeState,
                     )
-                }
-                NeonTextField(
-                    modifier = modifier,
-                    value = userName,
-                    readOnly = readOnly,
-                    onValueChange = { userVM.updateUsername(it)},
-                    leadingIcon = Icons.Default.Email,
-                    trailingIcon = Icons.Default.Cancel,
-                    onTrailingIconClick = {  } ,
-                    placeholder = { Text("Explorer name") }
-
-                )
-                NeonTextField(
-                    modifier = modifier,
-                    value = email,
-                    readOnly = readOnly,
-                    onValueChange = { authVM.updateEmail(it)},
-                    leadingIcon = Icons.Default.Email,
-                    trailingIcon = Icons.Default.Cancel,
-                    onTrailingIconClick = {  } ,
-                    placeholder = { Text("Email") }
-                )
-                NeonTextField(
-                    modifier = modifier,
-                    value = password,
-                    readOnly = true,
-                    onValueChange = { authVM.updatePassword(it)},
-                    leadingIcon = Icons.Default.Email,
-                    trailingIcon = Icons.Default.Cancel,
-                    onTrailingIconClick = {  } ,
-                    placeholder = { Text("Password") }
-                )
-                if (error != null) {
-                    Text(error)
-                }
             }
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(35.dp),
-                verticalArrangement = Arrangement.spacedBy(35.dp),
-                modifier = Modifier
-                    .height(511.dp)) { }
-
+            Spacer(modifier = Modifier.height(20.dp))
+            ProfileGrid(
+                hazeState = hazeState,
+                onShowCO2Result = { onShowCO2Result()},
+                onShowSpecies = {onShowSpecies()},
+                onShowFavFacts = { onShowFavFacts()},
+                onShowFavTips = { onShowFavTips()}
+            )
         }
     }
 }
@@ -116,7 +112,10 @@ fun ProfileScreen(
 fun ProfileScreenPreview() {
     ProfileScreen(
         onPopUpBackStack = {},
-        authVM = viewModel(),
+        onShowCO2Result = {},
+        onShowSpecies = {},
+        onShowFavFacts = {},
+        onShowFavTips = {},
         userVM = viewModel()
     )
 }

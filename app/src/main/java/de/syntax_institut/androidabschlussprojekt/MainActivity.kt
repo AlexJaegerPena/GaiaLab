@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthWrapper
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 
@@ -41,9 +40,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     AndroidAbschlussprojektTheme {
-        AppStart(
-            authVM = viewModel(),
-            userVM = viewModel()
-        )
+        AppStart()
     }
 }

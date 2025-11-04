@@ -36,6 +36,8 @@ import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryBg
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
+import de.syntax_institut.androidabschlussprojekt.ui.theme.ButtonContent
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
 import kotlin.math.absoluteValue
 
 
@@ -90,7 +92,7 @@ fun CardItem(
                 )
                 Text(data.text,
                     style = MyTypography.bodyMedium,
-                    color = CardContent,
+                    color = ButtonContent,
                     modifier = modifier.padding(horizontal = 12.dp)
                 )
             }
@@ -113,7 +115,7 @@ fun CardItem(
                 .matchParentSize()
             ) {
                 Text(data.category.replaceFirstChar { it.uppercase() },
-                    color = Color.Black.copy(alpha = 0.7f),
+                    color = CardCategoryText,
                     style = MyTypography.bodySmall,
                     modifier = Modifier
                         .padding(top = 24.dp, start = 17.dp)
@@ -133,7 +135,7 @@ fun CardItem(
                     modifier = Modifier.padding(top = 26.dp, end = 30.dp),
                     imageVector = if (isFavorite) { Icons.Default.Bookmark } else { Icons.Default.BookmarkBorder },
                     contentDescription = "bookmark",
-                    tint = Color.Black.copy(alpha = 0.7f)
+                    tint = CardCategoryText
                 )
             }
             CustomUrlButton(

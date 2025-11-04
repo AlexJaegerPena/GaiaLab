@@ -10,44 +10,23 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 interface MyAPIService {
 
-    // ----- Species -----
-    @GET("/api/species/facts")
-    suspend fun getSpeciesFacts(): Response<List<Fact>>
+    @GET("/api/facts/{category}")
+    suspend fun getFacts(@Path("category") category: String): Response<List<Fact>>
 
-    @GET("/api/species/facts/random")
-    suspend fun getRandomSpeciesFact(): Response<Fact>
+    @GET("/api/facts/{category}/random")
+    suspend fun getRandomFact(@Path("category") category: String): Response<Fact>
 
+    @GET("/api/tips/{category}")
+    suspend fun getTips(@Path("category") category: String): Response<List<Tip>>
 
-    // ----- Climate -----
-    @GET("/api/climate/facts")
-    suspend fun getClimateFacts(): Response<List<Fact>>
+    @GET("/api/tips/{category}/random")
+    suspend fun getRandomTip(@Path("category") category: String): Response<Tip>
 
-    @GET("/api/climate/facts/random")
-    suspend fun getRandomClimateFact(): Response<Fact>
-
-    @GET("/api/climate/tips")
-    suspend fun getClimateTips(): Response<List<Tip>>
-
-    @GET("/api/climate/tips/random")
-    suspend fun getRandomClimateTip(): Response<Tip>
-
-
-    // ----- Eco -----
-    @GET("/api/eco/facts")
-    suspend fun getEcoFacts(): Response<List<Fact>>
-
-    @GET("/api/eco/facts/random")
-    suspend fun getRandomEcoFact(): Response<Fact>
-
-    @GET("/api/eco/tips")
-    suspend fun getEcoTips(): Response<List<Tip>>
-
-    @GET("/api/eco/tips/random")
-    suspend fun getRandomEcoTip(): Response<Tip>
 }
 
 

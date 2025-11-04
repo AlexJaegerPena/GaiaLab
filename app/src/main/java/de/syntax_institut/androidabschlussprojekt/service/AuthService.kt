@@ -33,6 +33,7 @@ class AuthService {
         return result.user
     }
 
+
     fun logoutUser() {
         auth.signOut()
     }

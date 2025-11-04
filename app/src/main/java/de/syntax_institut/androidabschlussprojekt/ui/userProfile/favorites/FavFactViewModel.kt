@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.ui.userProfile
+package de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 
 class FavFactViewModel(
     private val repo: FavFactRepository,
+
     private val authService: AuthService
 ): ViewModel() {
 

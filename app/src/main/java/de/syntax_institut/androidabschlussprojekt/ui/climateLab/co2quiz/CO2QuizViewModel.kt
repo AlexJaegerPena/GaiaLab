@@ -3,20 +3,17 @@ package de.syntax_institut.androidabschlussprojekt.ui.climateLab.co2quiz
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Answer
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.FactorType
 import de.syntax_institut.androidabschlussprojekt.data.model.co2quiz.Question
 import de.syntax_institut.androidabschlussprojekt.data.repository.local.CO2QuizRepository
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.CO2QuizResultViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.koin.core.KoinApplication.Companion.init
 
-// application, da ich hier nicht auf context zugreifen kann aber application ist selbst ein context
+
 class CO2QuizViewModel(
     private val repository: CO2QuizRepository,
+
 ) : ViewModel() {
 
     private val _questions = MutableStateFlow<List<Question>>(emptyList())
@@ -28,8 +25,8 @@ class CO2QuizViewModel(
     private val _userResponses = MutableStateFlow<Map<Int, Int>>(emptyMap())
     val userResponses = _userResponses.asStateFlow()
 
-    private val _score = MutableStateFlow(0.0)
-    val score = _score.asStateFlow()
+    // private val _score = MutableStateFlow(0.0)
+    // val score = _score.asStateFlow()
 
 
     init {
@@ -47,7 +44,7 @@ class CO2QuizViewModel(
 
     fun resetQuiz() {
         _userResponses.value = emptyMap()
-        _score.value = 0.0
+        //_score.value = 0.0
         if (_questions.value.isNotEmpty()) {
             _actualQuestion.value = _questions.value.first()
         }
@@ -88,7 +85,7 @@ class CO2QuizViewModel(
                 totalScore *= answer.factor
             }
         }
-        _score.value = totalScore
+        // _score.value = totalScore
         Log.d("CO2QuizViewModel", "Berechneter Score: $totalScore")
        return totalScore
     }

@@ -33,6 +33,7 @@ fun CollectionIdentifyScreen(
     val hazeState = remember { HazeState() }
 
     FullScreenBox(
+        modifier = modifier,
         bgImage = R.drawable.bg_speciescollection,
         buttonTopPadding = 40.dp,
         onClick = { onPopUpBackStack() }

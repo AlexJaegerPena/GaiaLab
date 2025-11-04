@@ -47,6 +47,8 @@ fun CollectionGrid(
             modifier = Modifier
                 .height(511.dp)
         ) {
+            item{}
+            item{}
             items(collectedSpecies.value ) { species ->
                 CollectionItem(species = species, hazeState = hazeState, collectedSpeciesVM = collectedSpeciesVM)
             }

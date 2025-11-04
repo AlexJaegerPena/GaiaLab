@@ -22,7 +22,7 @@ fun AuthWrapper(
 ) {
 
     val fireUser = authVM.currentUser.collectAsState().value
-    val userName = userVM.userName.collectAsState().value
+    val username = userVM.username.collectAsState().value
 
 
     if (fireUser != null) {
@@ -35,15 +35,9 @@ fun AuthWrapper(
         }
 
         if (showAppStart) {
-            AppStart(
-                modifier = modifier,
-                authVM = authVM,
-                userVM = userVM
-            )
+            AppStart(modifier = modifier)
         } else {
-            WelcomeScreen(
-                userName = userName
-            )
+            WelcomeScreen(username = username)
         }
 
     } else (

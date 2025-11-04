@@ -40,22 +40,16 @@ class FavFactRepository(
     }
 
     fun removeFavoriteFact(userId: String, factId: Int) {
-        val userRef = db
-            .collection("users")
+        db.collection("users")
             .document(userId)
-
-            userRef
-                .collection(collectionPath)
-                .document(factId.toString())
-                .delete()
+            .collection(collectionPath)
+            .document(factId.toString())
+            .delete()
     }
 
     fun listenToFavorites(userId: String) {
-        val userRef = db
-            .collection("users")
+        db.collection("users")
             .document(userId)
-
-        userRef
             .collection(collectionPath)
             .addSnapshotListener { data, error ->
                 val list = data?.toObjects(FavoriteFact::class.java)
