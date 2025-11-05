@@ -8,4 +8,4 @@ data class Fact (
     override val category: String,
     override val imageUrl: String? = null,
     override val infoUrl: String
-) : CardContent
+) : SharedItemData

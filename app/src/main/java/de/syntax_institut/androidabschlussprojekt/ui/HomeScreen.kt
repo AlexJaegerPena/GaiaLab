@@ -56,7 +56,7 @@ fun HomeScreen(
                     .height(90.dp)
                     .clip(RoundedCornerShape(20.dp))
                    // .background(color = Color.Red.copy(alpha = 0.5f))
-                    .clickable(onClick = {onNavigateToClimateZone()})
+                    .clickable(onClick = { onNavigateToClimateZone() })
             )
             Box(
                 modifier = Modifier.padding(top = 130.dp, end = 250.dp)
@@ -64,7 +64,7 @@ fun HomeScreen(
                     .height(70.dp)
                     .clip(RoundedCornerShape(20.dp))
                     //.background(color = Color.Red.copy(alpha = 0.5f))
-                    .clickable(onClick = {onNavigateToSpeciesLab()})
+                    .clickable(onClick = { onNavigateToSpeciesLab() })
             )
             Box(
                 modifier = Modifier.padding(top = 150.dp, start = 270.dp)
@@ -72,15 +72,15 @@ fun HomeScreen(
                     .height(60.dp)
                     .clip(RoundedCornerShape(20.dp))
                     //.background(color = Color.Red.copy(alpha = 0.5f))
-                    .clickable(onClick = {onNavigateToEcoHub()})
+                    .clickable(onClick = { onNavigateToEcoHub() })
             )
             Box(
-                modifier = Modifier.padding(top = 330.dp, start = 10.dp)
+                modifier = Modifier.padding(top = 380.dp, start = 15.dp)
                     .width(160.dp)
                     .height(290.dp)
                     .clip(RoundedCornerShape(20.dp))
                     //.background(color = Color.Red.copy(alpha = 0.5f))
-                    .clickable(onClick = {onNavigateToProfile()}),
+                    .clickable(onClick = { onNavigateToProfile() }),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -89,11 +89,11 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(bottom = 80.dp)
                         .size(40.dp),
-                    tint = CardContent
+                    tint = CardContent.copy(alpha = 0.8f)
                 )
                 Text("My discoveries".uppercase(),
                     style = MyTypography.titleSmall,
-                    color = CardContent,
+                    color = CardContent.copy(alpha = 0.8f),
                     textAlign = TextAlign.Center,
                 )
             }

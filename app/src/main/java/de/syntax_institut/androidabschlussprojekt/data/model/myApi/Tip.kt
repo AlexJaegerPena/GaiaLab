@@ -8,4 +8,4 @@ data class Tip (
     override val category: String,
     override val imageUrl: String? = null,
     override val infoUrl: String
-) : CardContent
+) : SharedItemData

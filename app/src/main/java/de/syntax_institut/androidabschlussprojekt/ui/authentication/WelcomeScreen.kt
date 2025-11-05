@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,6 +46,7 @@ fun WelcomeScreen(
             Text(welcomeText,
                 color = CardContent,
                 style = MyTypography.headlineMedium,
+                textAlign = TextAlign.Center,
                 lineHeight = 30.sp
             )
         }

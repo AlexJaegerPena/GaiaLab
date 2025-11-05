@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import dev.chrisbanes.haze.HazeState
 import org.koin.androidx.compose.koinViewModel
@@ -80,7 +80,7 @@ fun CO2QuizScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.Bottom
             ) {
-                CustomButton(
+                GlassmorphicButton(
                     modifier = Modifier
                         .height(25.dp)
                         .width(54.dp)
@@ -92,7 +92,7 @@ fun CO2QuizScreen(
                 )
                 Spacer(modifier = modifier.weight(1f))
                 if (question.id == 12) {
-                    CustomButton(
+                    GlassmorphicButton(
                         modifier = Modifier
                             .height(40.dp),
                         hazeState = hazeState,

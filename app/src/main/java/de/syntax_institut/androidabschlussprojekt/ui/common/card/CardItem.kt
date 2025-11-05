@@ -24,14 +24,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.data.model.myApi.CardContent
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.SharedItemData
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryBg
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
@@ -44,7 +43,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun CardItem(
     modifier: Modifier = Modifier,
-    data: CardContent,
+    data: SharedItemData,
     pagerState: PagerState,
     page: Int,
     isFavorite: Boolean
@@ -132,10 +131,19 @@ fun CardItem(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(
-                    modifier = Modifier.padding(top = 26.dp, end = 30.dp),
+                    modifier = Modifier.padding(top = 26.dp, end = 30.dp).background(
+                        color = CardCategoryBg,
+                        shape = RoundedCornerShape(
+                            topStart = 0.dp,
+                            topEnd = 20.dp,
+                            bottomStart = 20.dp,
+                            bottomEnd = 0.dp
+                        )
+                    ),
                     imageVector = if (isFavorite) { Icons.Default.Bookmark } else { Icons.Default.BookmarkBorder },
                     contentDescription = "bookmark",
-                    tint = CardCategoryText
+                    tint = CardCategoryText,
+
                 )
             }
             CustomUrlButton(

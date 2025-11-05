@@ -144,9 +144,7 @@ fun AppStart(
                     onShowCO2Result = { navController.navigate(CO2QuizResultRoute) },
                     onShowSpecies = { navController.navigate(SpeciesIdentRoute) },
                     onShowFavFacts = { navController.navigate(FavFactsRoute) },
-                    onShowFavTips = { },
-                   // authVM = authVM,
-                    // userVM = userVM
+                    onShowFavTips = { navController.navigate(FavTipsRoute) }
                 )
             }
             composable<FavFactsRoute> {

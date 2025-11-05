@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -35,7 +36,7 @@ import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.SpeciesApiResponse
-import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection.CollectedSpeciesViewModel
@@ -101,8 +102,6 @@ fun IdentifyDialog(
                         style = MyTypography.titleLarge,
                         color = CardContent
                     )
-                    HorizontalDivider(modifier.padding(start = 28.dp, end = 28.dp, bottom = 20.dp),thickness = 3.dp, color = CardContent)
-
 
                     ImageLayoutView(selectedImage = selectedImage)
 
@@ -138,17 +137,19 @@ fun IdentifyDialog(
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                        CustomButton(
+                        GlassmorphicButton(
                             modifier = Modifier.height(40.dp),
                             hazeState = hazeState,
                             buttonIcon = Icons.Default.Close,
+                            glowColor = Color(0xFFFF5E5E),
                             buttonText = "Cancel",
                             onClick = { onDismiss() }
                         )
-                        CustomButton(
+                        GlassmorphicButton(
                             modifier = Modifier.height(40.dp),
                             hazeState = hazeState,
                             buttonIcon = Icons.Default.Save,
+                            glowColor = Color(0xFF0AFFCE),
                             buttonText = "Save",
                             enabled = !isUploading && selectedImage != null,
                             onClick = {

@@ -1,7 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection
 
-import android.R.attr.onClick
-import android.graphics.Color.red
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -38,7 +35,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.CollectedSpecies
-import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicBorder
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
@@ -86,23 +84,25 @@ fun DetailDialog(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(species.name.uppercase(),
-                            style = MyTypography.titleLarge,
+                            style = MyTypography.titleMedium,
                             color = CardContent,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
+                            modifier = Modifier.fillMaxWidth().padding(top = 30.dp)
                         )
-                        HorizontalDivider(modifier.padding(start = 28.dp, end = 28.dp, bottom = 20.dp),thickness = 3.dp, color = CardContent)
-
-                        AsyncImage(
-                            model = species.imageUrl,
-                            contentDescription = species.name,
-                            modifier = Modifier
-                                .width(200.dp)
-                                .height(200.dp)
-                                .cardImageBorder()
-                                .clip(RoundedCornerShape(8.dp)),
-                            contentScale = ContentScale.Crop
-                        )
+                        GlassmorphicBorder(
+                            hazeState = hazeState
+                        ) {
+                            AsyncImage(
+                                model = species.imageUrl,
+                                contentDescription = species.name,
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(200.dp)
+                                    .padding(2.dp)
+                                    .clip(RoundedCornerShape(18.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
 
                         Text(
                             "Collected: ${formattedDate}",
@@ -112,7 +112,7 @@ fun DetailDialog(
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                            CustomButton(
+                            GlassmorphicButton(
                                 modifier = Modifier.height(40.dp),
                                 hazeState = hazeState,
                                 buttonIcon = Icons.Default.Delete,
@@ -124,7 +124,7 @@ fun DetailDialog(
                                     onDismiss()
                                 }
                             )
-                            CustomButton(
+                            GlassmorphicButton(
                                 modifier = Modifier.height(40.dp),
                                 hazeState = hazeState,
                                 buttonIcon = Icons.Default.Check,

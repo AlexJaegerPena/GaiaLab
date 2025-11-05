@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 
-import android.R.attr.bottom
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.authentication.AuthViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.common.CustomTextField
+import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicTextField
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
@@ -59,7 +58,7 @@ fun ProfileScreen(
         showSecondButton = true,
         secondButtonIcon = Icons.AutoMirrored.Filled.Logout,
         secondButtonText = "Exit",
-        buttonTopPadding = 55.dp,
+        buttonTopPadding = 35.dp,
         onSecondButtonClick = { authVM.logout() }
     ) {
 
@@ -68,16 +67,16 @@ fun ProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 50.dp)
-                .padding(top = 180.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+                .padding(top = 160.dp),
+            verticalArrangement = Arrangement.spacedBy(40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("${username}'s log".uppercase(),
-                style = MyTypography.titleLarge,
+                style = MyTypography.headlineMedium,
                 color = CardContent
             )
-            Column(modifier = modifier) {
-                CustomTextField(
+            Column(modifier = modifier.padding(top = 20.dp)) {
+                GlassmorphicTextField(
                     modifier = modifier,
                     value = newUsername,
                     enabled = enabled,
@@ -94,7 +93,6 @@ fun ProfileScreen(
                     hazeState = hazeState,
                     )
             }
-            Spacer(modifier = Modifier.height(20.dp))
             ProfileGrid(
                 hazeState = hazeState,
                 onShowCO2Result = { onShowCO2Result()},

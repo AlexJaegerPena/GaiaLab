@@ -1,10 +1,11 @@
 package de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites
 
-import android.R.attr.onClick
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -22,10 +23,9 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.FactsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
-import de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites.FavFactViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import dev.chrisbanes.haze.HazeState
 import org.koin.androidx.compose.koinViewModel
-import org.koin.core.KoinApplication.Companion.init
 
 
 @Composable
@@ -54,7 +54,7 @@ fun FavFactScreen(
     if (favFactDetails.isEmpty()) {
         FullScreenBox(bgImage = R.drawable.bg_profile,
             onClick = { onPopUpBackStack() },
-            buttonTopPadding = 55.dp
+            buttonTopPadding = 35.dp
             ) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -69,16 +69,25 @@ fun FavFactScreen(
     FullScreenBox(
         bgImage = R.drawable.bg_profile,
         onClick = { onPopUpBackStack() },
-        buttonTopPadding = 55.dp,
+        buttonTopPadding = 35.dp,
     ) {
-        Column(modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+        Column(modifier = Modifier.fillMaxSize().padding(top = 60.dp),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("My Favorite Facts")
-            LazyColumn {
+            Text("My Favorite Facts".uppercase(),
+                style = MyTypography.headlineMedium,
+                color = CardContent
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+            LazyColumn(modifier = Modifier.padding(horizontal = 18.dp).height(630.dp)) {
                 items(favFactDetails) { fact ->
-                    FavListItem(fact = fact, hazeState = hazeState, onClick = {})
+                    FavListItem(
+                        item = fact,
+                        hazeState = hazeState,
+                        onClick = {}
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
                 }
             }
         }

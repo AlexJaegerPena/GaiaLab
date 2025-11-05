@@ -42,10 +42,10 @@ fun CollectionGrid(
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(35.dp),
-            verticalArrangement = Arrangement.spacedBy(35.dp),
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
             modifier = Modifier
-                .height(511.dp)
+                .height(515.dp)
         ) {
             item{}
             item{}
@@ -54,7 +54,7 @@ fun CollectionGrid(
             }
         }
         HorizontalDivider(
-            color = Color(0xFF63AEA5),
+            color = Color(0xFF88B4A3),
             thickness = 3.dp,
             modifier = Modifier.padding(horizontal = 0.dp)
         )

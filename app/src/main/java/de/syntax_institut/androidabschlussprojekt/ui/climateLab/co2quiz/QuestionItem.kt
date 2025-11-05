@@ -83,7 +83,7 @@ fun QuestionItem(
                         .clickable(onClick = {
                             viewModel.saveQAPairs(questionId = question.id, answerId = answer.id)
                             scope.launch {
-                                delay(1000)
+                                delay(500)
                                 viewModel.nextQuestion()
                             }
                         }),

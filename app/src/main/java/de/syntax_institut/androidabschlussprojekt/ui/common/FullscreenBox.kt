@@ -1,15 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.ui.common
 
-import android.R.attr.buttonStyle
-import android.R.attr.enabled
-import android.R.attr.onClick
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,7 +52,7 @@ fun FullScreenBox(
         if (showButton) {
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp).padding(top = buttonTopPadding),
                 horizontalArrangement = Arrangement.SpaceBetween) {
-                CustomBackButton(
+                GlassmorphicBackButton(
                     modifier = Modifier
                         .height(40.dp)
                         .width(40.dp),
@@ -65,7 +60,7 @@ fun FullScreenBox(
                     onClick = onClick
                 )
                 if (showSecondButton) {
-                    CustomButton(
+                    GlassmorphicButton(
                         modifier = Modifier
                             .height(40.dp),
                             //.width(40.dp),

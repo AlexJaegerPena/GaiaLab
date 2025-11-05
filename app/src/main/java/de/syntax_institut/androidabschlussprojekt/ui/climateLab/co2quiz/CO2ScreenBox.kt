@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.common.CustomButton
+import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicButton
 import de.syntax_institut.androidabschlussprojekt.ui.common.FullScreenBox
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import dev.chrisbanes.haze.HazeState
@@ -51,7 +51,7 @@ fun CO2ScreenBox(
 
             content()
 
-            CustomButton(
+            GlassmorphicButton(
                 modifier = Modifier
                     .height(140.dp)
                     .width(280.dp)

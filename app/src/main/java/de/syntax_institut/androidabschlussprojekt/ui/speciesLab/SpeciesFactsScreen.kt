@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,7 +82,10 @@ fun SpeciesFactsScreen(
     FullScreenBox(
         bgImage = R.drawable.bg_speciesfacts,
         alpha = 1f,
-        onClick = { onPopUpBackStack() }
+        onClick = { onPopUpBackStack() },
+        showSecondButton = true,
+        secondButtonIcon = Icons.Default.FilterAlt,
+        onSecondButtonClick = { }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(top = 140.dp),

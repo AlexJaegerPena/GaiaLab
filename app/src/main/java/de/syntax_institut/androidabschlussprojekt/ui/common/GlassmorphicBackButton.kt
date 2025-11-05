@@ -4,22 +4,14 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EmojiNature
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,30 +35,22 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.ui.theme.ButtonContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
-import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.delay
 
+
 @Composable
-fun CustomButton(
+fun GlassmorphicBackButton(
     modifier: Modifier = Modifier,
     hazeState: HazeState,
-    buttonIcon: ImageVector?,
-    buttonText: String?,
-    textStyle: TextStyle = MyTypography.titleMedium,
     shape: Shape = RoundedCornerShape(18.dp),
     glowColor: Color = Color(0xFF6FD2C6),
-    bgColor: Color = Color.Black,
-    bgAlpha: Float = 0.0f,
-    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
 
@@ -91,40 +75,35 @@ fun CustomButton(
 
     Box(
         modifier = modifier
-            .background(color = bgColor.copy(alpha = bgAlpha), shape = shape)
             .scale(scale)
             .hazeChild(state = hazeState, shape = shape)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        CardCategoryText.copy(alpha = .8f),
+                        ButtonContent.copy(alpha = .8f),
                         CardCategoryText.copy(alpha = .2f),
                     ),
                 ),
                 shape = shape
             )
-            .clickable(
-                enabled = enabled,
-                onClick = { if (enabled) isClicked = true }
-            ),
+
+            .clickable(onClick = { isClicked = true }),
         contentAlignment = Alignment.Center
     ) {
 
         // Glowing background
-        if (enabled) {
-            Canvas(
-                modifier = Modifier
-                    .matchParentSize()
-                    .clip(shape)
-                    .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-            ) {
-                drawCircle(
-                    color = glowColor.copy(alpha = 0.5f),
-                    radius = size.width / 4,
-                    center = Offset(size.width / 2, size.height / 2)
-                )
-            }
+        Canvas(
+            modifier = Modifier
+                .matchParentSize()
+                .clip(shape)
+                .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+        ) {
+            drawCircle(
+                color = glowColor.copy(alpha = 0.7f),
+                radius = size.height / 2,
+                center = Offset(size.width / 2, size.height / 2)
+            )
         }
 
         // Border glow
@@ -159,40 +138,21 @@ fun CustomButton(
                 )
             )
         }
-
-        Row(modifier = Modifier
-            .padding(5.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            buttonIcon?.let {
-                Icon(
-                    modifier = Modifier.padding(horizontal = 5.dp),
-                    imageVector = it,
-                    contentDescription = null,
-                    tint = ButtonContent.copy(alpha = if (enabled) 1f else 0.5f)
-                )
-            }
-            buttonText?.let {
-                Text(
-                    modifier = Modifier.padding(horizontal = 5.dp),
-                    text = buttonText,
-                    style = textStyle,
-                    color = ButtonContent.copy(alpha = if (enabled) 1f else 0.5f)
-                )
-            }
-        }
+        Icon(
+            modifier = Modifier.padding(5.dp),
+            imageVector = Icons.Default.ArrowBackIosNew,
+            contentDescription = null,
+            tint = ButtonContent
+        )
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun CardButtonPreview() {
-    CustomButton(
+fun GlassmorphicBackButtonPreview() {
+    GlassmorphicBackButton(
         hazeState = HazeState(),
-        onClick = {},
-        buttonIcon = Icons.Default.EmojiNature,
-        buttonText = "Testbutton",
-        enabled = true
+        onClick = {}
     )
 }

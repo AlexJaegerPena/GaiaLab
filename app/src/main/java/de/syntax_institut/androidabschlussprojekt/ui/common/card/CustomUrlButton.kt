@@ -40,12 +40,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun CustomUrlButton(
     modifier: Modifier = Modifier,
-   // hazeState: HazeState,
-    buttonIcon: ImageVector = Icons.Outlined.Info,
-    buttonText: String = "more info",
     url: String
 ) {
-
     val context = LocalContext.current
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 
@@ -66,7 +62,6 @@ fun CustomUrlButton(
             context.startActivity(intent)
             isClicked = false
         }
-
     }
 
     Box(
@@ -90,13 +85,10 @@ fun CustomUrlButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            buttonIcon?.let {
-                Icon(imageVector = it,
-                    contentDescription = null,
-                    tint = CardContent,
-                    modifier = Modifier
-                )
-            }
+            Icon(imageVector = Icons.Outlined.Info,
+                contentDescription = null,
+                tint = CardContent
+            )
         }
     }
 }
@@ -106,9 +98,6 @@ fun CustomUrlButton(
 @Composable
 fun CustomUrlButtonPreview() {
     CustomUrlButton(
-       // hazeState = HazeState(),
-        buttonIcon = Icons.Default.EmojiNature,
-        buttonText = "Testbutton",
         url = "https://www.google.com/"
     )
 }

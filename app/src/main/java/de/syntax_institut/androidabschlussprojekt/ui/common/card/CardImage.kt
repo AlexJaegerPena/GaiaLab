@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.data.model.myApi.CardContent
+import de.syntax_institut.androidabschlussprojekt.data.model.myApi.SharedItemData
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 
@@ -26,7 +26,7 @@ import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 @Composable
 fun CardImage(
     modifier: Modifier = Modifier,
-    data: CardContent
+    data: SharedItemData
 ) {
 
     data.imageUrl?.let { url ->
