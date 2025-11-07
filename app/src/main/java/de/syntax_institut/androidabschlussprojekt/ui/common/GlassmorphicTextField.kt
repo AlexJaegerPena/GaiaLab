@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -49,7 +51,8 @@ fun GlassmorphicTextField(
     hazeState: HazeState,
     shape: Shape = RoundedCornerShape(18.dp),
     glowColor: Color = Color(0xFF79ADA9),
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    showPassword: Boolean = false
 ) {
 
     Box(
@@ -140,7 +143,9 @@ fun GlassmorphicTextField(
                 unfocusedPlaceholderColor = Color(0xAEADDBD8)
             ),
             textStyle = MyTypography.bodyMedium,
-
+            visualTransformation =
+                if (showPassword) VisualTransformation.None
+                else PasswordVisualTransformation(),
             shape = RoundedCornerShape(18.dp),
             value = value,
             onValueChange = onValueChange,
@@ -169,5 +174,6 @@ fun GlassmorphicTextFieldPreview() {
         value = "test",
         onValueChange = {},
         placeholder = {},
+        showPassword = true
     )
 }

@@ -3,23 +3,16 @@ package de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,14 +32,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.Fact
 import de.syntax_institut.androidabschlussprojekt.data.model.myApi.SharedItemData
 import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicBorder
-import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryBg
-import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryText
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import dev.chrisbanes.haze.HazeState
@@ -92,7 +82,6 @@ fun <T: SharedItemData> FavListItem(
             AsyncImage(
                 model = item.imageUrl,
                 modifier = Modifier
-                    //.height(80.dp)
                     .fillMaxHeight()
                     .width(100.dp)
                     .clip(RoundedCornerShape(24.dp))
@@ -100,8 +89,8 @@ fun <T: SharedItemData> FavListItem(
                 contentScale = ContentScale.Crop,
                 contentDescription = "Image for ${item.title}",
                 colorFilter = ColorFilter.tint(color = Color.Black.copy(alpha = 0.2f), blendMode = BlendMode.Darken),
-                placeholder = painterResource(id = R.drawable.bg_home), // TODO: loading Placeholder image
-                error = painterResource(id = R.drawable.bg_home), // TODO: error placeholder image
+                placeholder = painterResource(id = R.drawable.placeholder_image),
+                error = painterResource(id = R.drawable.placeholder_image)
             )
             Column(modifier = Modifier
                 .fillMaxWidth()

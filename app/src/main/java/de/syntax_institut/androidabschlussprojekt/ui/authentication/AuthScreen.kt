@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.authentication
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,31 +47,28 @@ fun AuthScreen(
     authVM: AuthViewModel,
     userVM: UserViewModel
 ) {
-
     val email = authVM.email.collectAsState().value
     val password = authVM.password.collectAsState().value
-    var error = authVM.error.collectAsState().value
+    val error = authVM.error.collectAsState().value
 
     var showRegister by remember { mutableStateOf(false) }
-    var showPassword by remember { mutableStateOf(false)}
+    var showPassword by remember { mutableStateOf(false) }
 
-    val authButtonText = if (showRegister) "Register" else "Enter"
     val infoText = if (showRegister) "Already have an account? Login." else "No account yet? Register first."
-    var bgImage = if (error != null ) R.drawable.bg_authdenied else R.drawable.bg_auth
+    val bgImage = if (error != null ) R.drawable.bg_authdenied else R.drawable.bg_auth
 
     val hazeState = remember { HazeState() }
-
 
     FullScreenBox(
         modifier = Modifier,
         bgImage = bgImage,
         showButton = false
     ) {
-        Box() {
+        Box {
             Column(modifier = Modifier.fillMaxSize().padding(top = 400.dp).padding(horizontal = 30.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(3.dp)
             ) {
-
                 GlassmorphicTextField(
                     modifier = Modifier.width(260.dp),
                     hazeState = hazeState,
@@ -78,8 +76,9 @@ fun AuthScreen(
                     onValueChange = { authVM.updateEmail(it) },
                     leadingIcon = Icons.Default.Email,
                     trailingIcon = Icons.Default.Cancel,
-                    onTrailingIconClick = {  } ,
-                    placeholder = { Text("Email") }
+                    onTrailingIconClick = { authVM.clearEmail() } ,
+                    placeholder = { Text("Email") },
+                    showPassword = true
                 )
                 GlassmorphicTextField(
                     modifier = Modifier.width(260.dp),
@@ -87,16 +86,16 @@ fun AuthScreen(
                     value = password,
                     onValueChange = { authVM.updatePassword(it)},
                     leadingIcon = Icons.Default.Lock,
-                    trailingIcon = if (showPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                    trailingIcon = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                     onTrailingIconClick = { showPassword = !showPassword },
-                    placeholder = { Text("Password") }
+                    placeholder = { Text("Password") },
+                    showPassword = showPassword
                 )
-
                 Text(infoText,
                     style = MyTypography.bodySmall,
                     color = CardContent,
                     modifier = Modifier
-                        .padding(top = 9.dp)
+                        .padding(top = 5.dp)
                         .clickable(onClick = { showRegister = !showRegister }
                         )
                 )
@@ -111,17 +110,13 @@ fun AuthScreen(
                             .padding(top = 40.dp)
                     )
                 }
-        }
+            }
 
-        Box() {
-            if (error != null) {
-
-            } else {
+            Box {
                 GlassmorphicButton(
                     modifier = Modifier.padding(start = 365.dp, top = 497.dp).height(80.dp),
                     hazeState = hazeState,
                     buttonIcon = Icons.AutoMirrored.Filled.Login,
-                   //  buttonText = authButtonText,
                     buttonText = null,
                     bgColor = Color.Black,
                     bgAlpha = 0.7f,
@@ -136,17 +131,13 @@ fun AuthScreen(
                                     email = it.email
                                 )
                                 userVM.saveUser(newUser)
-                                error = null
                             }
                         } else {
                             authVM.login()
-                            error = null
                         }
                     }
                 )
             }
-        }
-
         }
     }
 }

@@ -67,6 +67,17 @@ class AuthViewModel(val authService: AuthService) : ViewModel() {
 
     fun logout() {
         authService.logoutUser()
+        clearFields()
+    }
+
+    fun clearEmail() {
+        _email.value = ""
+    }
+
+    fun clearFields() {
+        _email.value = ""
+        _password.value = ""
+        _error.value = null
     }
 
     fun updateEmail(newEmail: String) {

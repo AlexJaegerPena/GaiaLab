@@ -2,9 +2,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.userProfile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
@@ -61,8 +59,6 @@ fun ProfileScreen(
         buttonTopPadding = 35.dp,
         onSecondButtonClick = { authVM.logout() }
     ) {
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,6 +87,7 @@ fun ProfileScreen(
                     },
                     placeholder = { "Name" },
                     hazeState = hazeState,
+                    showPassword = true
                     )
             }
             ProfileGrid(

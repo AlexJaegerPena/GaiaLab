@@ -25,7 +25,6 @@ import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 
 @Composable
 fun CardImage(
-    modifier: Modifier = Modifier,
     data: SharedItemData
 ) {
 
@@ -45,8 +44,8 @@ fun CardImage(
                 contentScale = ContentScale.Crop,
                 contentDescription = "Image for ${data.title}",
                 colorFilter = ColorFilter.tint(color = Color.Black.copy(alpha = 0.2f), blendMode = BlendMode.Darken),
-                placeholder = painterResource(id = R.drawable.bg_home), // TODO: loading Placeholder image
-                error = painterResource(id = R.drawable.bg_home), // TODO: error placeholder image
+                placeholder = painterResource(id = R.drawable.placeholder_image),
+                error = painterResource(id = R.drawable.placeholder_image)
             )
         }
     }

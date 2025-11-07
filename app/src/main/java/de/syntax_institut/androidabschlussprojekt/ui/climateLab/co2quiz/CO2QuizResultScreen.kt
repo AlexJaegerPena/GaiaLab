@@ -45,23 +45,11 @@ fun CO2QuizResultScreen(
     onPopupBackStack: () -> Unit,
     onSecondButtonClick: () -> Unit,
     quizVM: CO2QuizViewModel = koinViewModel(),
-    resultVM: CO2QuizResultViewModel = koinViewModel(),
+    resultVM: CO2QuizResultViewModel = koinViewModel()
 ) {
-
-    val questions by quizVM.questions.collectAsState()
-    val lastResult by resultVM.lastResult.collectAsState()
-
-    var previousResultId by remember { mutableStateOf<String?>(null) }
 
     val hazeState = remember { HazeState() }
 
-
-    LaunchedEffect(lastResult?.quizId) {
-        if (lastResult != null && lastResult!!.quizId != previousResultId) {
-            previousResultId = lastResult!!.quizId
-            Log.d("QuizresultScreen","Neues Result erkannt: ${lastResult!!.co2Score}")
-        }
-    }
 
     CO2ScreenBox(
         onNavigateToTips = { onNavigateToTips() },
@@ -72,6 +60,19 @@ fun CO2QuizResultScreen(
         secondButtonIcon = Icons.Outlined.Quiz,
         hazeState = hazeState
     ) {
+
+        val questions by quizVM.questions.collectAsState()
+        val lastResult by resultVM.lastResult.collectAsState()
+
+        var previousResultId by remember { mutableStateOf<String?>(null) }
+
+        LaunchedEffect(lastResult?.quizId) {
+            if (lastResult != null && lastResult!!.quizId != previousResultId) {
+                previousResultId = lastResult!!.quizId
+                Log.d("QuizresultScreen","Neues Result erkannt: ${lastResult!!.co2Score}")
+            }
+        }
+
         Column(
             modifier = Modifier
                 .height(600.dp)

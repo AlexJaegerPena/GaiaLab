@@ -1,7 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.speciesLab.identification
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -19,16 +18,11 @@ class IdentifySpeciesViewModel(
     private val repo: IdentifySpeciesRepository
 ) : ViewModel() {
 
-
     private val _result = MutableStateFlow<SpeciesApiResponse?>(null)
     val result = _result.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
-
-    // private val _uploadedBitmap = MutableStateFlow<Bitmap?>(null)
-    // var uploadedBitmap = _uploadedBitmap.asStateFlow()
-
 
     fun identifyImage(uri: Uri?, context: Context) {
         if (uri == null) return

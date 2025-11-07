@@ -37,7 +37,6 @@ import kotlinx.coroutines.launch
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun QuestionItem(
-    modifier: Modifier = Modifier,
     viewModel: CO2QuizViewModel,
     question: Question
 ) {
@@ -60,7 +59,7 @@ fun QuestionItem(
             style = MyTypography.bodyMedium,
             modifier = Modifier
                 .background(
-                    color = Color(0xFFA4CCC5),
+                    color = Color(0xFFD9DDC4),
                     shape = RoundedCornerShape(20.dp, 0.dp, 20.dp, 0.dp)
                 )
                 .align(Alignment.Start)
@@ -98,7 +97,6 @@ fun QuestionItem(
                             contentDescription = null,
                             tint = CardContent
                         )
-
                         Text(answer.text,
                             color = CardContent,
                             style = MyTypography.bodyLarge

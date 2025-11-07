@@ -22,7 +22,6 @@ import dev.chrisbanes.haze.HazeState
 
 @Composable
 fun CO2ScreenBox(
-    modifier: Modifier = Modifier,
     onNavigateToTips: () -> Unit,
     onPopupBackStack: () -> Unit,
     onSecondButtonClick: () -> Unit,
@@ -32,8 +31,6 @@ fun CO2ScreenBox(
     secondButtonIcon: ImageVector,
     content: @Composable (() -> Unit)
 ) {
-
-
 
     FullScreenBox(
         bgImage = R.drawable.bg_co2quiz,

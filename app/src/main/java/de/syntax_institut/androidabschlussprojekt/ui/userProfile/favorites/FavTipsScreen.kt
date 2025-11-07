@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.userProfile.favorites
 
-import android.R.attr.category
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +29,6 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FavTipsScreen(
-    modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
     tipsVM: TipsViewModel = koinViewModel(),
     category: String,
@@ -74,7 +71,7 @@ fun FavTipsScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("My Favorite Facts".uppercase(),
+            Text("My Favorite Tips".uppercase(),
                 style = MyTypography.headlineMedium,
                 color = CardContent
             )

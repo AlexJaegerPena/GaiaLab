@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
@@ -37,7 +34,6 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SpeciesFactsScreen(
-    modifier: Modifier = Modifier,
     onPopUpBackStack: () -> Unit,
     factsVM: FactsViewModel = koinViewModel(),
     category: String,
@@ -82,10 +78,7 @@ fun SpeciesFactsScreen(
     FullScreenBox(
         bgImage = R.drawable.bg_speciesfacts,
         alpha = 1f,
-        onClick = { onPopUpBackStack() },
-        showSecondButton = true,
-        secondButtonIcon = Icons.Default.FilterAlt,
-        onSecondButtonClick = { }
+        onClick = { onPopUpBackStack() }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(top = 140.dp),

@@ -38,18 +38,18 @@ fun CO2QuizScreen(
     onSecondButtonClick: () -> Unit,
     quizVM: CO2QuizViewModel = koinViewModel(),
     resultVM: CO2QuizResultViewModel = koinViewModel(),
+    //quizVM: CO2QuizViewModel,
+    // resultVM: CO2QuizResultViewModel
 ) {
 
     val actualQuestion by quizVM.actualQuestion.collectAsState()
     val userResponses by quizVM.userResponses.collectAsState()
-
     val resultSaved by resultVM.resultSaved.collectAsState()
 
     val hazeState = remember { HazeState() }
 
     val question = actualQuestion
     if (question == null) return
-
 
     LaunchedEffect(resultSaved) {
         if (resultSaved) {
@@ -98,7 +98,6 @@ fun CO2QuizScreen(
                         hazeState = hazeState,
                         buttonIcon = null,
                         buttonText = "See result",
-                        // enabled = if () { true } else { false },
                         textStyle = MyTypography.bodyMedium,
                         glowColor = Color(0xFF58DCB8),
                         bgColor = Color(0xFF6AE7DB),

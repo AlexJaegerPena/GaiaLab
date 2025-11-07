@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +39,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.common.GlassmorphicButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.CardContent
 import de.syntax_institut.androidabschlussprojekt.ui.theme.MyTypography
 import de.syntax_institut.androidabschlussprojekt.ui.speciesLab.collection.CollectedSpeciesViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.theme.CardCategoryBg
 import de.syntax_institut.androidabschlussprojekt.ui.userProfile.ImgBBViewModel
 import de.syntax_institut.androidabschlussprojekt.util.cardImageBorder
 import dev.chrisbanes.haze.HazeState
@@ -120,13 +120,13 @@ fun IdentifyDialog(
                      */
 
                     if (isLoading || isUploading) {
-                        LinearProgressIndicator(color = CardContent, modifier = Modifier.padding(vertical = 5.dp, horizontal = 40.dp))
+                        LinearProgressIndicator(color = CardCategoryBg, modifier = Modifier.padding(vertical = 5.dp, horizontal = 40.dp))
                     }
 
                     val firstItem = result?.predictions?.firstOrNull()?.taxa?.items?.firstOrNull()
                     firstItem?.let {
-                        var name = firstItem.scientific_name
-                        var probability = ceil(firstItem.probability * 100).toInt()
+                        val name = firstItem.scientific_name
+                        val probability = ceil(firstItem.probability * 100).toInt()
                         Text(
                             "${name} (${probability}%)",
                             style = MyTypography.titleMedium,

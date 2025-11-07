@@ -1,7 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository.firestore
 
 import android.util.Log
-import androidx.compose.runtime.State
 import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.model.firestore.CO2Result
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,6 +53,7 @@ class CO2QuizResultRepository(
 
         userRef
             .collection(collectionPath)
+            .orderBy("timestamp")
             .addSnapshotListener { data, error ->
                 val list = data?.toObjects(CO2Result::class.java)
                 list?.let {
