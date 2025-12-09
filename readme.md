@@ -1,4 +1,4 @@
-# 🌍 GaiaLab
+# 🌍 Gaia Lab
 **Entdecke die Welt – und schütze sie.**
 
 GaiaLab ist eine interaktive Android-App, die Neugierde und Entdeckergeist weckt.
