@@ -1,5 +1,10 @@
-# 🌍 Gaia Lab
-**Entdecke die Welt – und schütze sie.**
+# 🌍 GaiaLab – Entdecke die Welt & schütze sie
+
+GaiaLab ist eine interaktive Android-App, die Neugierde weckt und spielerisch zeigt, wie man durch bewusstes Handeln unsere Umwelt schützen kann. 🌱✨
+
+Berechne deinen CO₂-Fußabdruck, entdecke Tier- und Pflanzenarten anhand deiner Fotos, erstelle deine persönliche Sammlung und lerne spannende Fakten über unseren Planeten.
+
+<!-- Screenshot hier einfügen -->
 
 GaiaLab ist eine interaktive Android-App, die Neugierde und Entdeckergeist weckt.
 Sie verbindet Technik und Natur spielerisch und zeigt, wie bewusstes Handeln uns näher an die Umwelt bringt.
@@ -68,25 +73,25 @@ Die App liefert wertvolle Einblicke, zeigt Fortschritte und motiviert zu eigenem
 ---
 
 ### 💾 Datenspeicherung
-- **Room (lokal):** Quiz-Ergebnisse, Nutzerdaten, Offline-Cache
-- **Firebase (cloud):** Nutzersammlungen & Bilder
+- **Firebase (cloud):** Quiz-Ergebnisse, Nutzerdaten, Nutzersammlungen & Bilder (Verlinkungen zu ImgBB)
 - **Sicherheit:** Keine sensiblen Schlüssel im Client
 
 ---
 
 ### 🌐 APIs
-- **Eigene REST-API:**
+- **Eigene REST-API mit Ktor**
     - Aggregiert Umweltdaten (z.B. CO₂, Recycling, Artenvielfalt) weltweit und pro Kontinent
     - Enthält positive Fakten & Trends
 - **Nature Identification API v2 (https://multi-source.identify.biodiversityanalysis.eu):**
     - Bestimmt Pflanzen & Tiere anhand von Bildern
     - Rückgabe: Artname, Confidence
-
+- **ImgBB (https:             ):**
+    - Speichern der User Arten-Fotos
 ---
 
 ### 🧰 3rd-Party Libraries
 - Kotlin, Jetpack Compose, ViewModel
-- Room, Retrofit, Moshi
+- Retrofit, Moshi
 - Coil (Image Loading)
 - Firebase SDK (Realtime DB, Storage, Auth)
 - Coroutines / Flow
