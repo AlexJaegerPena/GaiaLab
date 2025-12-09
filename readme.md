@@ -1,10 +1,10 @@
-# 🌍 GreenExpedition
+# 🌍 GaiaLab
 **Entdecke die Welt – und schütze sie.**
 
-GreenExpedition ist eine interaktive Android-App, die Neugierde und Entdeckergeist wecken soll.  
-Die App verbindet Technik und Natur auf spielerische Weise und zeigt, wie man durch bewusstes Handeln wieder stärker in Verbindung mit der Umwelt treten kann.
+GaiaLab ist eine interaktive Android-App, die Neugierde und Entdeckergeist weckt.
+Sie verbindet Technik und Natur spielerisch und zeigt, wie bewusstes Handeln uns näher an die Umwelt bringt.
 
-Nutzer:innen können ihren CO₂-Fußabdruck berechnen, spannende Fakten über unseren Planeten entdecken und eine persönliche Sammlung von entdeckten Tier- und Pflanzenarten anlegen.
+Berechne deinen CO₂-Fußabdruck, entdecke Tier- und Pflanzenarten anhand deiner Fotos, erstelle deine eigene Sammlung und erfahre spannende Fakten über unseren Planeten.
 
 ---
 
@@ -27,8 +27,8 @@ Nutzer:innen können ihren CO₂-Fußabdruck berechnen, spannende Fakten über u
 
 ## 🎯 Ziel der App
 
-GreenExpedition richtet sich an neugierige Nutzer:innen, die auf interaktive und positive Weise mehr über Umwelt- und Naturschutz lernen möchten.  
-Die App liefert wertvolle Einblicke in ökologische Themen, macht Fortschritte sichtbar und motiviert zu eigenem, nachhaltigem Handeln.
+GaiaLab richtet sich an neugierige Nutzer:innen, die auf spielerische und positive Weise mehr über Umwelt- und Naturschutz lernen möchten.
+Die App liefert wertvolle Einblicke, zeigt Fortschritte und motiviert zu eigenem, nachhaltigem Handeln.
 
 ---
 
@@ -64,22 +64,6 @@ Die App liefert wertvolle Einblicke in ökologische Themen, macht Fortschritte s
 - **Jetpack Compose** für UI
 - **Repositories** als Schnittstelle zwischen ViewModels, Room & APIs
 - **Coroutines / Flow** für asynchrone Datenverarbeitung
-
----
-
-### 🗂️ Projektaufbau
-
-**App-Struktur (Kotlin + Compose)**
-- `ui/` → Composables, Screens
-- `viewmodel/` → ViewModels & State-Handling
-- `data/`
-    - `local/` → Room, Entities, DAOs
-    - `remote/` → Retrofit, API-Clients
-    - `repository/` → zentrale Datenlogik
-- `model/` → Datenklassen
-- `util/` → Hilfsfunktionen, Mappings
-- `res/` → Layouts, Farben, Icons
-- `img/` → Screenshots, App-Assets
 
 ---
 
@@ -125,7 +109,6 @@ Ziel war es, eine App zu entwickeln, die informiert, inspiriert und motiviert, s
 
 **Wesentliche Learnings:**
 - MVVM & Clean Architecture mit Compose
-- Offline-First-Design mit Room
 - Eigenes API-Konzept & Datenaggregation
 - Integration externer APIs & Firebase
 
