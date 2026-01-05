@@ -97,7 +97,6 @@ The app combines education, interaction, and modern Android development to raise
 - Jetpack Compose
 - Repository pattern
 - Coroutines & Flow
-- Offline-first approach
 
 ---
 
@@ -200,7 +199,6 @@ Die App verbindet moderne App-Entwicklung mit Umweltbildung und nachhaltigem Den
 - Jetpack Compose
 - Repository Pattern
 - Coroutines & Flow
-- Offline-First
 
 ---
 
