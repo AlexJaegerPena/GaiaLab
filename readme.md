@@ -1,146 +1,233 @@
-# 🌍 GaiaLab – Entdecke die Welt & schütze sie
+# 🌍 GaiaLab – Virtual Environmental Lab (Android)
 
-GaiaLab ist eine interaktive Android-App, die Neugierde weckt und spielerisch zeigt, wie man durch bewusstes Handeln unsere Umwelt schützen kann. 🌱✨
+An interactive Android app that explores environmental topics through a virtual laboratory concept.
 
-Berechne deinen CO₂-Fußabdruck, entdecke Tier- und Pflanzenarten anhand deiner Fotos, erstelle deine persönliche Sammlung und lerne spannende Fakten über unseren Planeten.
+## TL;DR
 
-<!-- Screenshot hier einfügen -->
+- Android app built with **Kotlin & Jetpack Compose**
+- Virtual lab concept: **Species, Climate & Eco Lab**
+- Features include **species recognition**, **CO₂ footprint quiz** and **sustainability tips**
+- **MVVM architecture**, offline-first, Firebase-backed
+- Portfolio & learning project
 
-GaiaLab ist eine interaktive Android-App, die Neugierde und Entdeckergeist weckt.
-Sie verbindet Technik und Natur spielerisch und zeigt, wie bewusstes Handeln uns näher an die Umwelt bringt.
+<br/>
 
-Berechne deinen CO₂-Fußabdruck, entdecke Tier- und Pflanzenarten anhand deiner Fotos, erstelle deine eigene Sammlung und erfahre spannende Fakten über unseren Planeten.
+<p align="center">
+  <img width="600" alt="1"
+       src="https://github.com/user-attachments/assets/cfbc6abb-841e-4e22-a6ad-c3e74f3811f5" />
+</p>
 
----
+<br/>
 
-## 📚 Inhaltsverzeichnis
-- [Ziel der App](#-ziel-der-app)
-- [Features](#-features)
-- [Technischer Aufbau](#-technischer-aufbau)
-    - [Architektur](#🏗️-architektur)
-    - [Projektaufbau](#-projektaufbau)
-    - [Datenspeicherung](#-datenspeicherung)
-    - [APIs](#-apis)
-    - [3rd-Party Libraries](#-3rd-party-libraries)
-- [Usage / Kurzanleitung](#usage--kurzanleitung)
-- [Learnings & Motivation](#-learnings--motivation)
-- [Ausblick / Roadmap](#-ausblick--roadmap)
-- [Design / Screenshots](#-design--screenshots)
-- [Lizenz & Kontakt](#-lizenz--kontakt)
+<details close>
+<summary><strong>🇬🇧 English</strong></summary>
 
----
+## 🧪 Concept
 
-## 🎯 Ziel der App
-
-GaiaLab richtet sich an neugierige Nutzer:innen, die auf spielerische und positive Weise mehr über Umwelt- und Naturschutz lernen möchten.
-Die App liefert wertvolle Einblicke, zeigt Fortschritte und motiviert zu eigenem, nachhaltigem Handeln.
+**GaiaLab** is an Android application that lets users explore environmental topics through a virtual laboratory.  
+The app combines education, interaction, and modern Android development to raise awareness for biodiversity, climate change, and sustainable behavior.
 
 ---
 
 ## ✨ Features
 
-- 🧭 **Interaktive Weltkarte**
-    - Kontinent-Ansichten mit faktenbasierten Daten: Meeresspiegelveränderungen, Müll- und Recyclingstatistiken, Artensterben.
-    - **Positive Facts**: Erfolgreiche Umweltschutzprojekte, CO₂-Verbesserungen, Fortschritte im Recycling.
+### 🧬 Species Lab
+- Curated facts about animals, plants & biodiversity
+- Save facts to favorites
+- External links for deeper research
+- **Species recognition**
+  - upload an image of a plant or animal
+  - species identification via external API
+  - confidence score included
+  - save results to personal collection
 
-- 🌿 **CO₂-Fußabdruck-Quiz**
-    - Kurzes Quiz zur Abschätzung des persönlichen Fußabdrucks.
-    - Individuelle Tipps zur Verbesserung.
-    - **Vergleich mit anderen:** weltweit, pro Kontinent und Deutschland.
+<br/>
 
-- 📸 **Artenerkennung & Sammlung**
-    - Bilder hochladen → automatische Artbestimmung via API.
-    - Erkannte Arten werden in einer persönlichen Sammlung gespeichert.
-    - Synchronisierung mit Firebase.
-
-- ☁️ **Firebase-Integration**
-    - Speicherung & Synchronisierung der Nutzersammlung.
-    - Authentifizierung & Sicherheitsregeln integriert.
-
-- 🔁 **Offline-First**
-    - Datenhaltung über Room für Offline-Nutzung.
-
----
-
-## 🧩 Technischer Aufbau
-
-### 🏗️ Architektur
-- **MVVM (Model-View-ViewModel)**
-- **Jetpack Compose** für UI
-- **Repositories** als Schnittstelle zwischen ViewModels, Room & APIs
-- **Coroutines / Flow** für asynchrone Datenverarbeitung
-
----
-
-### 💾 Datenspeicherung
-- **Firebase (cloud):** Quiz-Ergebnisse, Nutzerdaten, Nutzersammlungen & Bilder (Verlinkungen zu ImgBB)
-- **Sicherheit:** Keine sensiblen Schlüssel im Client
-
----
-
-### 🌐 APIs
-- **Eigene REST-API mit Ktor**
-    - Aggregiert Umweltdaten (z.B. CO₂, Recycling, Artenvielfalt) weltweit und pro Kontinent
-    - Enthält positive Fakten & Trends
-- **Nature Identification API v2 (https://multi-source.identify.biodiversityanalysis.eu):**
-    - Bestimmt Pflanzen & Tiere anhand von Bildern
-    - Rückgabe: Artname, Confidence
-- **ImgBB (https:             ):**
-    - Speichern der User Arten-Fotos
----
-
-### 🧰 3rd-Party Libraries
-- Kotlin, Jetpack Compose, ViewModel
-- Retrofit, Moshi
-- Coil (Image Loading)
-- Firebase SDK (Realtime DB, Storage, Auth)
-- Coroutines / Flow
-- Koin (Dependency Injection)
-
----
-
-## ⚙️ Usage / Kurzanleitung
-1. Quiz starten → CO₂-Fußabdruck berechnen.
-2. Ergebnis vergleichen → weltweit, pro Kontinent, Deutschland.
-3. Weltkarte erkunden → Fakten & positive Entwicklungen entdecken.
-4. Foto einer Pflanze/Tiers hochladen → Art erkennen → speichern.
-5. Sammlung jederzeit ansehen und erweitern.
-
----
-
-## 🧠 Learnings & Motivation
-Dieses Projekt verbindet Technik mit Umweltbewusstsein.  
-Ziel war es, eine App zu entwickeln, die informiert, inspiriert und motiviert, sich aktiv mit der Natur auseinanderzusetzen.
-
-**Wesentliche Learnings:**
-- MVVM & Clean Architecture mit Compose
-- Eigenes API-Konzept & Datenaggregation
-- Integration externer APIs & Firebase
-
----
-
-## 🔮 Ausblick / Roadmap
-- [ ] Erweiterte CO₂-Analysen (Lebensstile, Altersgruppen)
-- [ ] Interaktive Diagramme & Visualisierungen
-- [ ] Gamification (Badges, Challenges)
-- [ ] Community-Features (Beobachtungen teilen)
-- [ ] iOS-Portierung (SwiftUI)
-
----
-
-## 🎨 Design / Screenshots
-
-<p>
-  tbd
+<p align="center">
+  <img width="800" alt="2"
+       src="https://github.com/user-attachments/assets/eb64a59f-d39d-40eb-bc54-d9e0a1bb67b0" />
 </p>
 
+<br/>
 
 ---
 
-## 📜 Lizenz & Kontakt
-- **Lizenz:** MIT
-- **Kontakt:** Alex Jäger Peña — siehe GitHub-Profil `@AlexJaegerPena`
+### 🌡️ Climate Lab
+- Climate-related facts
+- **CO₂ footprint scanner**
+  - 12-question quiz
+  - personal footprint calculation
+- Comparison with:
+  - Germany average
+  - global average
+- Tips to reduce CO₂ emissions (savable)
+
+<br/>
+
+<p align="center">
+  <img width="800" height="545" alt="3"
+       src="https://github.com/user-attachments/assets/50c40511-2178-4eee-ab18-00bbf353fd66" />
+</p>
+
+<br/>
 
 ---
 
-**Danke fürs Anschauen!** 🌱  
+### ♻️ Eco Lab
+- Sustainability facts & tips
+- Topics include recycling, waste separation & circular economy
+- Favorite system
+
+**Planned:**
+- Waste recognition via image upload
+
+<br/>
+
+<p align="center">
+  <img width="800" height="541" alt="5"
+       src="https://github.com/user-attachments/assets/85f160b9-e65b-41d5-a98d-e6ac623b8922" />
+</p>
+
+<br/>
+
+---
+
+## 🏗️ Architecture
+- MVVM
+- Jetpack Compose
+- Repository pattern
+- Coroutines & Flow
+- Offline-first approach
+
+---
+
+## 🧰 Tech Stack
+- Kotlin
+- Jetpack Compose
+- Retrofit, Moshi
+- Firebase
+- Room
+- Koin
+- Coroutines / Flow
+
+---
+
+## 🔮 Roadmap
+- Extended CO₂ analytics
+- Gamification
+- Community features
+- Waste recognition
+- iOS version (SwiftUI)
+
+</details>
+
+
+<details>
+<summary><strong>🇩🇪 Deutsch</strong></summary>
+
+## 🧪 Konzept
+
+**GaiaLab** ist eine Android-App, die Nutzer:innen in ein virtuelles Labor eintauchen lässt, um Umwelt- und Klimathemen interaktiv zu erkunden.  
+Die App verbindet moderne App-Entwicklung mit Umweltbildung und nachhaltigem Denken.
+
+---
+
+## ✨ Funktionen
+
+### 🧬 Species Lab
+- Kuratierte Fakten zu Tieren, Pflanzen & Artenvielfalt
+- Favoriten-System für Fakten
+- Weiterführende externe Links
+- **Artenerkennung**
+  - Foto-Upload von Tier oder Pflanze
+  - Analyse über externe API
+  - Confidence-Wert
+  - Speicherung in persönlicher Sammlung
+
+<br/>
+
+<p align="center">
+  <img width="800" height="1103" alt="Species Lab Screenshot"
+       src="https://github.com/user-attachments/assets/eb64a59f-d39d-40eb-bc54-d9e0a1bb67b0" />
+</p>
+
+<br/>
+
+---
+
+### 🌡️ Climate Lab
+- Fakten rund um Klima & Klimawandel
+- **CO₂-Fußabdruck-Scanner**
+  - Quiz mit 12 Fragen
+  - Berechnung des persönlichen Fußabdrucks
+- Vergleich mit:
+  - Deutschland
+  - weltweiten Durchschnittswerten
+- Individuelle Spartipps (speicherbar)
+
+<br/>
+
+<p align="center">
+  <img width="800" height="545" alt="Climate Lab Screenshot"
+       src="https://github.com/user-attachments/assets/50c40511-2178-4eee-ab18-00bbf353fd66" />
+</p>
+
+<br/>
+
+---
+
+### ♻️ Eco Lab
+- Fakten & Tipps zu Nachhaltigkeit
+- Recycling, Mülltrennung & Kreislaufwirtschaft
+- Favoriten-System
+
+**Geplant:**
+- Müll-Erkennung per Foto-Upload
+
+<br/>
+
+<p align="center">
+  <img width="800" height="541" alt="Eco Lab Screenshot"
+       src="https://github.com/user-attachments/assets/85f160b9-e65b-41d5-a98d-e6ac623b8922" />
+</p>
+
+<br/>
+
+---
+
+## 🏗️ Architektur
+- MVVM
+- Jetpack Compose
+- Repository Pattern
+- Coroutines & Flow
+- Offline-First
+
+---
+
+## 🧰 Tech Stack
+- Kotlin
+- Jetpack Compose
+- Retrofit, Moshi
+- Firebase
+- Room
+- Koin
+- Coroutines / Flow
+
+---
+
+## 🔮 Roadmap
+- Erweiterte CO₂-Analysen
+- Gamification
+- Community-Features
+- Müll-Erkennung
+- iOS-Version (SwiftUI)
+
+</details>
+
+
+---
+
+## 👩‍💻 Author
+
+**Alex Jäger Peña**  
+Android & iOS App Developer  
