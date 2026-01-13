@@ -92,22 +92,18 @@ The app combines education, interaction, and modern Android development to raise
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Tech
 - MVVM
+- Repository Pattern
 - Jetpack Compose
-- Repository pattern
-- Coroutines & Flow
-
----
-
-## 🧰 Tech Stack
 - Kotlin
-- Jetpack Compose
+- Coroutines & Flow
 - Retrofit, Moshi
+- REST APIs
 - Firebase
-- Room
+- Ktor
 - Koin
-- Coroutines / Flow
+
 
 ---
 
@@ -194,22 +190,18 @@ Die App verbindet moderne App-Entwicklung mit Umweltbildung und nachhaltigem Den
 
 ---
 
-## 🏗️ Architektur
+## 🏗️ Architektur & Tech
 - MVVM
-- Jetpack Compose
 - Repository Pattern
-- Coroutines & Flow
-
----
-
-## 🧰 Tech Stack
-- Kotlin
 - Jetpack Compose
+- Kotlin
+- Coroutines & Flow
 - Retrofit, Moshi
+- REST APIs
 - Firebase
-- Room
+- Ktor
 - Koin
-- Coroutines / Flow
+
 
 ---
 
