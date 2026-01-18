@@ -3,7 +3,7 @@
 GaiaLab is an interactive Android app that explores environmental topics through a virtual laboratory concept.  
 The app combines education, interaction, and modern mobile development to raise awareness for biodiversity, climate change, and sustainable behavior.
 
->Built as a 6-week iOS graduation project, from concept to finished app, using using Kotlin and Jetpack Compose.
+>Built as a 6-week Android graduation project, from concept to finished app, using using Kotlin and Jetpack Compose.
 
 <p align="center">
   <img width="600" alt="1"
