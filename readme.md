@@ -39,11 +39,10 @@ The app combines education, interaction, and modern mobile development to raise 
 - **Retrofit & Moshi**
 - **Firebase**
 - **Koin**
-
-- #### Backend & External Services
-- **Custom Ktor API** for environmental and educational data
-- **Nature Identification API (NIA)** by Naturalis Biodiversity Center for species recognition
-- **imgBB API** for image upload and storage
+- **Backend & External Services**
+  - **Custom Ktor API** for environmental and educational data
+  - **Nature Identification API (NIA)** by Naturalis Biodiversity Center for species recognition
+  - **imgBB API** for image upload and storage
 
 ---
 
