@@ -100,9 +100,5 @@ Learn about sustainability topics such as recycling and waste separation and sav
 ### 👤 Author
 
 **Alexandra Jäger Peña**  
-Android & iOS App Developer  
-
-Portfolio: https://appsbyalex.com
-
-------
+https://appsbyalex.com
 
