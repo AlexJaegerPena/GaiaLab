@@ -1,4 +1,6 @@
 # 🌍 GaiaLab (Android)
+[![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=Clones&query=count&url=https://gist.githubusercontent.com/AlexJaegerPena/d25fb5be0aaf34a4775674d0b25d8d8f/raw/clone.json&logo=github)](https://github.com/MShawon/github-clone-count-badge)
+
 
 GaiaLab is an interactive Android app that explores environmental topics through a virtual laboratory concept.  
 The app combines education, interaction, and modern mobile development to raise awareness for biodiversity, climate change, and sustainable behavior.
