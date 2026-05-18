@@ -62,7 +62,7 @@ Explore biodiversity facts, save favorites, and identify plants or animals using
 Calculate your CO₂ footprint, compare results, and discover actionable tips to reduce emissions.
 
 <p align="center">
-  <img width="600" height="545" alt="3"
+  <img width="600" alt="3"
        src="https://github.com/user-attachments/assets/50c40511-2178-4eee-ab18-00bbf353fd66" />
 </p>
 
@@ -72,7 +72,7 @@ Calculate your CO₂ footprint, compare results, and discover actionable tips to
 Learn about sustainability topics such as recycling and waste separation and save useful tips.
 
 <p align="center">
-  <img width="600" height="541" alt="5"
+  <img width="600" alt="5"
        src="https://github.com/user-attachments/assets/85f160b9-e65b-41d5-a98d-e6ac623b8922" />
 </p>
 
